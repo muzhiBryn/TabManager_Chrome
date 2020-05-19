@@ -1,3 +1,5 @@
+# Features
+
 # 2 Many Tabz
 
 ![Team Photo]()
@@ -6,6 +8,37 @@
 TODO: short project description, some sample screenshots or mockups
 
 ## Architecture
+
+### Front-end: 
+ * Welcome...
+ * A button for history
+     * Could open new tab altogether
+ * A button for project folders
+     * Button for view change / straightforward UI
+     * List (grid view?) of Tabs in this project
+         * Icon
+         * URL
+         * Title
+         * Tags/description
+         * Importance?
+     * delete button
+     * search button (specific tab or tags)
+ * Div of options for this particular tab...
+     * Add to database (specify options)
+     
+### Back-end: 
+ * Tab Model
+     * Opened At
+     * URL
+     * Name
+     * Tags 
+     * Custom Notes
+ * Project/Folder Model
+     * Name
+     * List of tabs
+     * Custom Notes
+ * User model?
+     * Definitely don't want on front-end, should be able to derive info from computer/browser..
 
 TODO:  descriptions of code organization and tools and libraries used
 
@@ -27,11 +60,6 @@ Once you've finished the above, just click the new 2ManyTabs icon in your chrome
 * Jialing Wu
 * Katherine Taylor
 * Jackson Harris
+* Nathan Albrinck
 * Yunjin Tong
-* John Albrinck
-
 ## Acknowledgments
-
-### Reference: 
-* https://developer.chrome.com/extensions/tabs
-* https://github.com/stefanXO
