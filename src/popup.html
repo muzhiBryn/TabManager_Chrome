@@ -3,8 +3,20 @@
 <link href='https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Montserrat&family=Poiret+One&family=Spectral:wght@400;600&display=swap' rel='stylesheet'    type='text/css' />
 
 <html>
+    <head>
+        <title>2ManyTabs</title>
+    </head>
     <body>
-        <h1>Welcome to 2ManyTabz!</h1>
-        <h2>Your new favorite chrome extension..</h2>
+        <div id = "main"></div>
+        <!-- Load React. -->
+        <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+        <!-- <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script> -->
+
+        <!-- Can not load from remote source, so let's use them from local files! -->
+        <script src="libs/react.development.js"></script>
+        <script src="libs/react-dom.development.js"></script>
+        <script src="components/tab-manager.js"></script>
+        <script src="components/app.js"></script>
     </body>
 </html>

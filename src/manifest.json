@@ -3,6 +3,11 @@
     "name": "2ManyTabz",
     "description": "This extension allows you to organize your tabs!",
     "version": "1.0",
+    "permissions": [
+		"tabs",
+		"contextMenus",
+		"storage"
+	],
     "content_scripts": [
         {
         "matches": ["https://www.google.com/*"],
@@ -16,4 +21,4 @@
     "icons": { "16": "icon/icon16.png",
         "48": "icon/icon48.png",
         "128": "icon/icon128.png" }
-   }
+}
