@@ -22,6 +22,6 @@ TODO: how to deploy the project
 * Jialing Wu
 * Katherine Taylor
 * Jackson Harris
-* A few others..?
+* A few others we have yet to meet..?
 
 ## Acknowledgments
