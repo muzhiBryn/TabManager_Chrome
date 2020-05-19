@@ -1,6 +1,6 @@
 # 2 Many Tabz
 
-![Team Photo](Insert a Team Photo URL here)
+![Team Photo]()
 [*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
 
 TODO: short project description, some sample screenshots or mockups
@@ -15,7 +15,7 @@ TODO: how to get the project dev environment up and running, npm install etc
 
 ## Deployment
 
-TODO: how to deploy the project
+TODO: google chrome extention?
 
 ## Authors
 * Yaorui Zhang
