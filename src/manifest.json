@@ -1,0 +1,16 @@
+{
+    "manifest_version": 2,
+    "name": "Custom Google Homepage",
+    "description": "This extension allows you to organize your tabs!",
+    "version": "1.0",
+    "content_scripts": [
+        {
+        "matches": ["https://www.google.com/*"],
+        "css": ["main.css"]
+        }
+        ],
+    "browser_action": {
+        "default_title": "My personalized google page!",
+        "default_popup": "popup.html"
+        }
+   }
