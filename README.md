@@ -18,7 +18,10 @@ TODO: how to get the project dev environment up and running, npm install etc
 TODO: how to deploy the project
 
 ## Authors
-
-TODO: list of authors
+* Yaorui Zhang
+* Jialing Wu
+* Katherine Taylor
+* Jackson Harris
+* A few others we have yet to meet..?
 
 ## Acknowledgments
