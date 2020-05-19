@@ -27,6 +27,7 @@ Once you've finished the above, just click the new 2ManyTabs icon in your chrome
 * Jialing Wu
 * Katherine Taylor
 * Jackson Harris
-* A few others we have yet to meet..?
+* Yunjin Tong
+* John Albrinck
 
 ## Acknowledgments
