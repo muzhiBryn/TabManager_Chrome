@@ -1,0 +1,29 @@
+body{
+  /* color: #f4a261; */
+  width: 480px;
+  padding: 1rem 2rem;
+}
+
+ul {
+    padding: 0;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+h1{
+  color: #264653;
+  font-family: 'Poiret One', cursive;
+}
+
+h2 {
+  color: #2a9d8f;
+}
+
+li {
+  margin-bottom: 1rem;
+}
+
+li img{
+  width: 1rem;
+  margin-right: 1rem; 
+}

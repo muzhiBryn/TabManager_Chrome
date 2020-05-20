@@ -13,7 +13,8 @@ class App extends React.Component {
       ),
       e(
         'h2', null, 'Your new favorite chrome extension.',
-      )
+      ),
+      e(TabManager)
     );
   }
 }

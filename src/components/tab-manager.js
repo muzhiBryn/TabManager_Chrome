@@ -2,6 +2,9 @@
 
 // Reference: https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples/api/tabs/inspector/tabs_api.js
 const e = React.createElement; // Basically it takes the place of tags(<>)
+const port = chrome.extension.connect({
+  name: "Tabs Comminication"
+});
 
 class TabManager extends React.Component {
   constructor(props){
@@ -9,20 +12,35 @@ class TabManager extends React.Component {
     this.state = {
       tabs: [],
     };
-    // chrome.tabs.query({active: true}, (res)=>{
-    //   console.log(res);
-    //   this.setState = {
-    //     tabs: res,
-    //   }
-    // });
+    this.updateTabs = this.updateTabs.bind(this);
+  }
+
+  updateTabs(tabs_str){
+    const tabs = JSON.parse(tabs_str);
+    console.log(tabs);
+    this.setState({
+      tabs,
+    })
+  }
+
+  componentDidMount(){
+    port.onMessage.addListener(this.updateTabs);
+  }
+
+  componentWillUnmount(){
+    port.onMessage.removeListener(this.updateTabs);
   }
 
   render() {
+    const tabs = this.state.tabs.map((tab)=>
+      (e('li', null, 
+        e('img', {'src': tab.icon}),
+        tab.title
+      ))
+    );
+    console.log(...tabs);
     return e(
-      'ul', null,
-      this.state.tabs.map((tab)=>{
-        e('li', null, tab.title)
-      })
+      'ul', null, ...tabs
     );
   }
 }
