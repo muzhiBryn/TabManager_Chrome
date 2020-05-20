@@ -20,9 +20,18 @@ h2 {
 }
 
 li {
-  width: calc(480px - 4rem);
-  margin-bottom: 1rem;
-  transform: translateY(2px);
+  padding: 0.5rem;
+}
+
+li:hover{
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+
+li span:first-of-type {
+  width: calc(480px - 7rem);
+  display: inline-block;
+  margin-right: 1rem;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -30,6 +39,19 @@ li {
 
 li img{
   width: 1rem;
-  margin-top: 2px;
+  height: 1rem;
+  margin-top: 1px;
   margin-right: 1rem; 
+}
+
+li .btn{
+  margin-left: auto;
+  padding: 0 0.4rem;
+  color: #aaa;
+  transition: color ease-in-out 0.2s;
+}
+
+.btn:hover{
+  cursor: pointer;
+  color: #888;
 }
