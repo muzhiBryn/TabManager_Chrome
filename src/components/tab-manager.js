@@ -33,7 +33,7 @@ class TabManager extends React.Component {
 
   render() {
     const tabs = this.state.tabs.map((tab)=>
-      (e('li', null, 
+      (e('li', {'title': tab.title}, 
         e('img', {'src': tab.icon}),
         tab.title
       ))

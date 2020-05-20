@@ -20,10 +20,16 @@ h2 {
 }
 
 li {
+  width: calc(480px - 4rem);
   margin-bottom: 1rem;
+  transform: translateY(2px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 li img{
   width: 1rem;
+  margin-top: 2px;
   margin-right: 1rem; 
 }
