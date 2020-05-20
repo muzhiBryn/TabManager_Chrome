@@ -15,6 +15,7 @@ class TabManager extends React.Component {
     this.updateTabs = this.updateTabs.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
     this.jumpto = this.jumpto.bind(this);
+    this.openTab = this.openTab.bind(this);
   }
 
   updateTabs(tabs){
@@ -48,9 +49,32 @@ class TabManager extends React.Component {
     port.postMessage(JSON.stringify({head: "close", id}));
   }
 
+  openTab(url){
+    port.postMessage(JSON.stringify({head: "open_tab", url}));
+  }
+
+  openTabs(urls){
+    port.postMessage(JSON.stringify({head: "open_tabs", urls}));
+  }
+
   render() {
+    let testTabsUrlInFolder = this.state.tabs.map(function(tab) {
+      return tab.url;
+    });
+    console.log(testTabsUrlInFolder);
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // ATTENTION!!! Here we provided 4 fuctions: jumpto, openTab, openTabs and close. 
+    // This is an example of how the client can use them.
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     const tabs = this.state.tabs.map((tab)=>
-      (e('li', {'title': tab.title, 'onClick': ()=>{this.jumpto(tab.id)}}, 
+      (e('li', {'title': tab.title, 
+                'onClick': ()=>{
+                  this.jumpto(tab.id);
+                  // this.openTab(tab.url);
+                  // this.openTabs(testTabsUrlInFolder);
+                  // this.close(tab.id);
+                }}, 
         e('img', {'src': tab.icon}),
         e('span', null, tab.title),
         e('i', {'className':'btn fa fa-window-close', 'onClick': (e)=>{e.stopPropagation(); e.cancelBubble = true; this.close(tab.id)}})
