@@ -1,13 +1,64 @@
-# Features
-
 # 2 Many Tabz
 
-![Team Photo]()
+![Team Photo](other_img/2.png)
 [*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
 
 TODO: short project description, some sample screenshots or mockups
 
+## Work flow and updates
+5.19 update( A prototype):
+![prototype](other_img/1.png)
+
+5.20 MockUp(UI design)
+![UI](other_img/UI_design/1.png)
+![UI](other_img/UI_design/2.png)
+![UI](other_img/UI_design/3.png)
+![UI](other_img/UI_design/4.png)
+![UI](other_img/UI_design/5.png)
+![UI](other_img/UI_design/6.png)
+![UI](other_img/UI_design/7.png)
+
+
 ## Architecture
+
+In this part, we will explain how did our team split things up and collaborate with each other.
+
+In general, we have three teams each working on a specific task.
+
+### Team 1: UI team
+Members: Katherine Taylor, Yunjin Tong
+
+Responsibility: 
+* design popup UI interface (finished)
+* implement the popup interface
+* cooperate with the other 2 teams.
+
+
+### Team 2: Tab management team
+Members: Yaorui Zhang, Jialing Wu
+
+Responsibility:
+* offer tab management api methods(basically developed from chrome.tabs)
+* interact with all the tab changes in the chrome browser
+* offer tab information to the server team and UI team
+* There are five methods that can be leveraged by the UI and Server teams.
+
+#### Methods we've implemented:
+1. list all the tabs information in the browser(this method is offered for the UI team).
+2. jump to method: if you click the tab, it will direct to the corresponding tab in the chrome(this method is offered for the UI team)
+3. close method: delete tabs you don't want(this method is offered for the UI team)
+4. open tab: facilitate the history data to be opened in the chrome browser. In general, The history data are stored in different project folders, each time we want to open one tab, this method can help open the current tab in the chrome browser(this method is for the server team and UI team).
+5. open tabs: this method is also for the server team. This method can opens all the tabs in one project folder(this method is for the server team and UI team).
+
+### Team 3: Server team
+Members: Jackson Harris, Nathan Albrinck
+
+Responsibility:
+* User Auth
+* Database
+* collaborate with the other teams
+
+
 
 ### Front-end: 
  * Welcome...
