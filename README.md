@@ -22,14 +22,15 @@ TODO: short project description, some sample screenshots or mockups
 ## Architecture
 
 In this part, we will explain how did our team split things up and collaborate with each other.
+![architecture](other_img/3.jpeg)
 
 In general, we have three teams each working on a specific task.
 
 ### Team 1: UI team
-Members: Katherine Taylor, Yunjin Tong
+Members: Katherine Taylor, Yunjin Tong（Jackson Harris）
 
 Responsibility: 
-* design popup UI interface (finished)
+* design popup UI (finished)
 * implement the popup interface
 * cooperate with the other 2 teams.
 
@@ -51,7 +52,7 @@ Responsibility:
 5. open tabs: this method is also for the server team. This method can opens all the tabs in one project folder(this method is for the server team and UI team).
 
 ### Team 3: Server team
-Members: Jackson Harris, Nathan Albrinck
+Members: Nathan Albrinck, Jackson Harris
 
 Responsibility:
 * User Auth
@@ -113,4 +114,5 @@ Once you've finished the above, just click the new 2ManyTabs icon in your chrome
 * Jackson Harris
 * Nathan Albrinck
 * Yunjin Tong
+  
 ## Acknowledgments
