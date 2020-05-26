@@ -1,0 +1,13 @@
+const ActionTypes = {
+  OPEN_TAB: 'OPEN_TAB',
+  OPEN_TABS: 'OPEN_TABS',
+  CLOSE_TAB: 'CLOSE_TAB',
+  SWITCH_PROJ: 'SWITCH_PROJ',
+  CLOSE_PROJ: 'CLOSE_PROJ',
+
+  AUTH_USER: 'AUTH_USER',
+  DEAUTH_USER: 'DEAUTH_USER',
+  AUTH_ERROR: 'AUTH_ERROR',
+};
+
+export default ActionTypes;
