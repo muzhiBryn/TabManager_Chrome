@@ -23,7 +23,7 @@ const TabList = (props) => {
       >
         <img src={tab.icon} />
         <span>{tab.title}</span>
-        <FontAwesomeIcon className="btn" icon="window-close" onClick={(event) => { event.stopPropagation(); event.cancelBubble = true; close(tab.id); }} />
+        <FontAwesomeIcon className="btn" icon="window-close" onClick={(e) => { e.stopPropagation(); e.cancelBubble = true; close(tab.id); }} />
       </li>
     );
   });

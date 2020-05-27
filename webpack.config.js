@@ -35,7 +35,7 @@ module.exports = {
   },
   mode: 'development',
   output: {
-    path: path.resolve('dist/pages'),
+    path: path.resolve('dist/pages/'),
     filename: '[name].js',
   },
   module: {
@@ -97,4 +97,8 @@ module.exports = {
       ],
     ),
   ],
+  devServer: {
+    hot: true,
+    historyApiFallback: true,
+  },
 };

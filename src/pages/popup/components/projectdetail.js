@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import DisplaySetting from './displayset';
 import TabGrid from './tabgrid';
 import TabList from './tablist';
-import ProjectList from './projectlist';
+import ResourceList from './resourcelist';
 
 const port = chrome.extension.connect({
   name: 'Tabs Comminication',
@@ -17,31 +18,14 @@ const close = (id) => {
   port.postMessage(JSON.stringify({ head: 'close', id }));
 };
 
-// const openTab = (url) => {
-//   port.postMessage(JSON.stringify({ head: 'open_tab', url }));
-// };
-
-// const openTabs = (urls) => {
-//   port.postMessage(JSON.stringify({ head: 'open_tabs', urls }));
-// };
-
-// const openTab = (url) => {
-//   port.postMessage(JSON.stringify({ head: 'open_tab', url }));
-// };
-
-// const openTabs = (urls) => {
-//   port.postMessage(JSON.stringify({ head: 'open_tabs', urls }));
-// };
-
-class TabManager extends Component {
+class ProjectDetail extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       tabs: {},
       projects: ['General', 'Other'],
       displayType: 0, // Grid view
-      activeProj: 'General', // Default Proj
+      activeProj: props.match.params.proj,
       movingTab: null,
       filter: {},
     };
@@ -49,9 +33,6 @@ class TabManager extends Component {
     this.updateTabs = this.updateTabs.bind(this);
     this.setFilter = this.setFilter.bind(this);
     this.switchView = this.switchView.bind(this);
-    this.dragOutTab = this.dragOutTab.bind(this);
-    this.switchProject = this.switchProject.bind(this);
-    this.newProject = this.newProject.bind(this);
   }
 
   componentDidMount() {
@@ -93,25 +74,6 @@ class TabManager extends Component {
     }
   }
 
-  dragOutTab(tab) {
-    this.setState({ movingTab: tab });
-  }
-
-  switchProject(project) {
-    this.setState((prevState) => {
-      if (prevState.activeProj !== project) {
-        // Todo: switchProject, hide and open!
-        return { activeProj: project };
-      } else return {};
-    });
-  }
-
-  newProject(name) {
-    this.setState((prevState) => ({
-      activeProj: name,
-    }));
-  }
-
   render() {
     let tabView;
     const tabShow = [];
@@ -134,12 +96,13 @@ class TabManager extends Component {
 
     return (
       <div>
+        <NavLink exact to="/">Go Back</NavLink>
         <DisplaySetting setFilter={this.setFilter} switchView={this.switchView} />
         { tabView }
-        <ProjectList projects={this.state.projects} tabs={this.state.tabs} switchProject={this.switchProject} dragOutTab={this.dragOutTag} movingTab={this.state.movingTab} />
+        <ResourceList projects={this.state.projects} tabs={this.state.tabs} switchProject={this.switchProject} dragOutTab={this.dragOutTag} movingTab={this.state.movingTab} />
       </div>
     );
   }
 }
 
-export default TabManager;
+export default ProjectDetail;
