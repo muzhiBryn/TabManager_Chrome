@@ -1,12 +1,17 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-require('babel-core/register');
-require('babel-polyfill');
+require('@babel/register');
+require('@babel/polyfill');
 
 const PAGES_PATH = './src/pages';
+
+const env = process.env.NODE_ENV || 'development';
+// set to 'production' or 'development' in your env
+
+const finalCSSLoader = (env === 'production') ? MiniCssExtractPlugin.loader : { loader: 'style-loader' };
 
 function generateHtmlPlugins(items) {
   return items.map((name) => new HtmlPlugin(
@@ -28,6 +33,7 @@ module.exports = {
       `${PAGES_PATH}/popup`,
     ],
   },
+  mode: 'development',
   output: {
     path: path.resolve('dist/pages'),
     filename: '[name].js',
@@ -43,17 +49,38 @@ module.exports = {
         use: 'file-loader?name=[name].[ext]?[hash]',
       },
       {
+        test: /\.s?css/,
+        use: [
+          finalCSSLoader,
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [autoprefixer()],
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=10000&mimetype=application/fontwoff',
       },
     ],
   },
   plugins: [
-    new ExtractTextPlugin(
-      {
-        filename: '[name].[contenthash].css',
-      },
-    ),
+    new MiniCssExtractPlugin(),
     new CopyPlugin(
       [
         {

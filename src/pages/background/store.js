@@ -3,7 +3,6 @@ import { wrapStore, alias } from 'react-chrome-redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import aliases from './aliases';
 import reducer from './reducers/index';
 
 const logger = createLogger({

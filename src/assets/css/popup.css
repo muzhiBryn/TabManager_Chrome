@@ -4,10 +4,17 @@ body{
   padding: 1rem 2rem;
 }
 
-ul {
+#tab-list,
+#tab-grid {
     padding: 0;
-    height: 400px;
+    height: 250px;
     overflow-y: scroll;
+}
+
+#project-list {
+  padding: 0;
+  height: 120px;
+  overflow-y: scroll;
 }
 
 h1{
