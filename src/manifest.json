@@ -5,7 +5,7 @@
     "version": "1.0",
     "background": {
         "persistent": false,
-        "scripts": ["background.js"]
+        "scripts": ["pages/background.js"]
     },
     "permissions": [
 		"tabs",
@@ -16,7 +16,8 @@
         "default_title": "My personalized google page!",
         "default_popup": "popup.html"
         },
-    "icons": { "16": "icon/icon16.png",
-        "48": "icon/icon48.png",
-        "128": "icon/icon128.png" }
+    "icons": { "16": "assets/icon/icon16.png",
+        "48": "assets/icon/icon48.png",
+        "128": "assets/icon/icon128.png" },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
