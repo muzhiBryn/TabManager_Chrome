@@ -2,7 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { wrapStore, alias } from 'react-chrome-redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-
+import aliases from './aliases';
 import reducer from './reducers/index';
 
 const logger = createLogger({
@@ -10,9 +10,18 @@ const logger = createLogger({
 });
 
 const initialState = {
-  lists: {
-    activeId: null,
-    records: [],
+  tabs: {
+    tabList: {},
+    activeTab: -1,
+    movingTab: null,
+  },
+  projects: {
+    projectList: ['General', 'Other'],
+    projectResouces: [],
+    activeProj: 'General',
+  },
+  preferences: {
+    displayType: '0', // List view
   },
 };
 

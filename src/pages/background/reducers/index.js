@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
 
-import listsReducer from './listsReducer';
+import tabReducer from './tabReducer';
+import projectReducer from './projectReducer';
+import preferenceReducer from './preferenceReducer';
 
 export default combineReducers({
-  lists: listsReducer,
+  tabs: tabReducer,
+  projects: projectReducer,
+  preferences: preferenceReducer,
 });

@@ -1,12 +1,14 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { requestSwitchTab, requestCloseTabs } from '../../../shared/actions/tabActions';
 
 const TabGrid = (props) => {
   // ATTENTION!!! Here we provided 4 fuctions: jumpto, openTab, openTabs and close.
   // This is an example of how the client can use them.
   const {
-    tabs, jumpto, close,
+    tabs,
   } = props;
   const tabList = tabs.map((tab) => {
     return (
@@ -14,18 +16,27 @@ const TabGrid = (props) => {
         key={tab.id}
         title={tab.title}
         onClick={() => {
-          jumpto(tab.id);
+          props.requestSwitchTab(tab.id);
           // this.openTab(tab.url);
           // this.openTabs(testTabsUrlInFolder);
           // this.close(tab.id);
         }}
       >
-        <img alt="icon" src={tab.icon} />
+        <img alt=" " src={tab.icon} />
         <span>{tab.title}</span>
-        <FontAwesomeIcon className="btn" icon="window-close" onClick={(event) => { event.stopPropagation(); event.cancelBubble = true; close(tab.id); }} />
+        <FontAwesomeIcon
+          className="btn"
+          icon="window-close"
+          onClick={(e) => { e.stopPropagation(); e.cancelBubble = true; props.requestCloseTabs(tab.id, props.activeProj); }}
+        />
       </li>
     );
   });
-  return <ul id="tab-grid">{tabList}</ul>;
+  return <ul id="tab-grid"> I am the grid view {tabList}</ul>;
 };
-export default TabGrid;
+
+const mapStateToProps = (reduxState) => ({
+  activeProj: reduxState.projects.activeProj,
+});
+
+export default connect(mapStateToProps, { requestSwitchTab, requestCloseTabs })(TabGrid);

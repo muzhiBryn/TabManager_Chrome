@@ -1,15 +1,21 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { requestSwitchProject } from '../../../shared/actions/projectActions';
 
 const Project = (props) => {
-  const { switchProject, projectTitle } = props;
+  const { projectTitle } = props;
   return (
-    <li onClick={() => { switchProject(projectTitle); }}>
+    <li onClick={() => { props.requestSwitchProject(projectTitle); }}>
       {projectTitle}
-      <button onClick={(e) => { e.stopPropagation(); e.cancelBubble = true; }}><NavLink exact to={`/project/:${projectTitle}`}>Edit</NavLink></button>
+      <button><NavLink exact to={`/project/:${projectTitle}`}>Edit</NavLink></button>
     </li>
   );
 };
 
-export default Project;
+const mapStateToProps = (reduxState) => ({
+  activeProj: reduxState.projects.activeProj,
+}); // Maybe display it differently?
+
+export default connect(mapStateToProps, { requestSwitchProject })(Project);
