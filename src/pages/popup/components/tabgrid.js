@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { requestSwitchTab, requestCloseTabs } from '../../../shared/actions/tabActions';
+import { requestSwitchTab, requestCloseTabs } from '../../../shared/actions/tabactions';
 
 const TabGrid = (props) => {
   // ATTENTION!!! Here we provided 4 fuctions: jumpto, openTab, openTabs and close.

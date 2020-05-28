@@ -5,7 +5,7 @@ import DisplaySetting from './displayset';
 import TabGrid from './tabgrid';
 import TabList from './tablist';
 import ProjectList from './projectlist';
-import { requestGetTabs } from '../../../shared/actions/tabActions';
+import { requestGetTabs } from '../../../shared/actions/tabactions';
 
 class TabManager extends Component {
   constructor(props) {

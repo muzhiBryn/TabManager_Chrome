@@ -6,8 +6,8 @@ import DisplaySetting from './displayset';
 import TabGrid from './tabgrid';
 import TabList from './tablist';
 import ResourceList from './resourcelist';
-import { requestGetTabs } from '../../../shared/actions/tabActions';
-import { requestSwitchProject } from '../../../shared/actions/projectActions';
+import { requestGetTabs } from '../../../shared/actions/tabactions';
+import { requestSwitchProject } from '../../../shared/actions/projectactions';
 
 class ProjectDetail extends Component {
   constructor(props) {

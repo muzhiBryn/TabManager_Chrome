@@ -14,6 +14,7 @@ export function requestLoadProjects() {
 }
 
 export function requestNewProject(projectName) {
+  console.log('new project requested');
   return {
     type: ActionTypes.NEW_PROJECT_REQUESTED,
     payload: projectName,

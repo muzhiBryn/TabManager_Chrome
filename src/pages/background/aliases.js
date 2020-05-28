@@ -84,6 +84,15 @@ const loadProjectsAlias = () => {
   };
 };
 
+const newProjectAlias = (req) => {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.NEW_PROJECT_FULLFILLED,
+      projectName: req.payload,
+    });
+  };
+};
+
 const switchViewAlisa = (req) => {
   return (dispatch) => {
     dispatch({
@@ -98,6 +107,7 @@ export default {
   SWITCH_TAB_REQUESTED: switchTabAlias,
   CLOSE_TABS_REQUESTED: closeTabsAlias,
   SWITCH_PROJECT_REQUESTED: switchProjectAlias,
+  NEW_PROJECT_REQUESTED: newProjectAlias,
   LOAD_PROJECTS_REQUESTED: loadProjectsAlias,
   SWITCH_VIEW_REQUESTED: switchViewAlisa,
 };

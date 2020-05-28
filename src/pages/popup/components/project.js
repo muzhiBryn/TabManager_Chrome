@@ -2,12 +2,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { requestSwitchProject } from '../../../shared/actions/projectActions';
+import { requestSwitchProject } from '../../../shared/actions/projectactions';
 
 const Project = (props) => {
   const { projectTitle } = props;
+  const style = projectTitle === props.activeProj ? { backgroundColor: 'yellow' } : {};
   return (
-    <li onClick={() => { props.requestSwitchProject(projectTitle); }}>
+    <li style={style} onClick={() => { props.requestSwitchProject(projectTitle); }}>
       {projectTitle}
       <button><NavLink exact to={`/project/:${projectTitle}`}>Edit</NavLink></button>
     </li>
@@ -16,6 +17,6 @@ const Project = (props) => {
 
 const mapStateToProps = (reduxState) => ({
   activeProj: reduxState.projects.activeProj,
-}); // Maybe display it differently?
+});
 
 export default connect(mapStateToProps, { requestSwitchProject })(Project);
