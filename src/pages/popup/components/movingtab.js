@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import throttle from 'lodash.throttle';
 import { moveTab } from '../../../shared/actions/tabactions';
 
 class MovingTab extends Component {
@@ -20,7 +21,11 @@ class MovingTab extends Component {
   }
 
   handleMouseMove(e) {
+    // throttle(() => {
+    //   this.props.moveTab({ tab: this.props.movingTab.tab, x: e.pageX, y: e.pageY });
+    // }, 100);
     this.props.moveTab({ tab: this.props.movingTab.tab, x: e.pageX, y: e.pageY });
+    // Might cause trouble if moving too fast??
   }
 
   handleMouseUp() {
@@ -33,10 +38,11 @@ class MovingTab extends Component {
       const { movingTab } = this.props;
       console.log(movingTab);
       const style = {
-        cursor: 'grabbing', position: 'fixed', zIndex: '1', width: '24px', height: '24px', left: movingTab.x - 10, top: movingTab.y - 10,
+        left: movingTab.x - 10,
+        top: movingTab.y - 10,
       };
       return (
-        <img style={style} alt={`${movingTab.tab.title.substr(0, 10)}...`} src={movingTab.tab.icon} />
+        <img id="moving-tab" style={style} alt={`${movingTab.tab.title.substr(0, 10)}...`} src={movingTab.tab.icon} />
       );
     } else return null;
   }

@@ -17,7 +17,7 @@ const TabGrid = (props) => {
         key={tab.id}
         title={tab.title}
         onMouseDown={(e) => { e.preventDefault(); props.moveTab({ tab, x: e.pageX, y: e.pageY }); }}
-        onClick={() => {
+        onMouseUp={() => {
           props.requestSwitchTab(tab.id);
         }}
       >
@@ -27,12 +27,14 @@ const TabGrid = (props) => {
           <FontAwesomeIcon
             className="btn"
             icon="save"
+            onMouseDown={(e) => { e.stopPropagation(); }}
             onClick={(e) => { e.stopPropagation(); e.cancelBubble = true; props.requestAddResource(tab, props.activeProj); }}
           />
         ) : null}
         <FontAwesomeIcon
           className="btn"
           icon="window-close"
+          onMouseDown={(e) => { e.stopPropagation(); }}
           onClick={(e) => { e.stopPropagation(); e.cancelBubble = true; props.requestCloseTabs(tab.id, props.activeProj); }}
         />
       </li>

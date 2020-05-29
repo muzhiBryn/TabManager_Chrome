@@ -16,8 +16,12 @@ const TabList = (props) => {
       <li
         key={tab.id}
         title={tab.title}
-        onMouseDown={(e) => { e.preventDefault(); props.moveTab({ tab, x: e.pageX, y: e.pageY }); }}
-        onClick={() => {
+        onMouseDown={(e) => {
+          e.preventDefault();
+          const x = e.pageX; const y = e.pageY;
+          setTimeout(() => { props.moveTab({ tab, x, y }); }, 200);
+        }}
+        onMouseUp={() => {
           props.requestSwitchTab(tab.id);
         }}
       >
@@ -27,12 +31,14 @@ const TabList = (props) => {
           <FontAwesomeIcon
             className="btn"
             icon="save"
+            onMouseDown={(e) => { e.stopPropagation(); }}
             onClick={(e) => { e.stopPropagation(); e.cancelBubble = true; props.requestAddResource(tab, props.activeProj); }}
           />
         ) : null}
         <FontAwesomeIcon
           className="btn"
           icon="window-close"
+          onMouseDown={(e) => { e.stopPropagation(); }}
           onClick={(e) => { e.stopPropagation(); e.cancelBubble = true; props.requestCloseTabs(tab.id, props.activeProj); }}
         />
       </li>

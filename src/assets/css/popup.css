@@ -89,3 +89,14 @@ li .btn{
 #project-list li.choosen{
   background-color: yellow;
 }
+
+#moving-tab{
+  position: fixed;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+
+#moving-tab:hover{
+  cursor: grabbing; 
+}
