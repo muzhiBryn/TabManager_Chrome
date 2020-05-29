@@ -35,18 +35,21 @@ class TabManager extends Component {
     const tabShow = [];
     const projectOverview = {};
     this.props.projectList.forEach((project) => {
-      projectOverview[project] = { example: '', ids: [] };
+      projectOverview[project] = { example: '', ids: [], contains: false };
     });
     if (this.props.activeWindow !== -1) {
       Object.values(this.props.tabs[this.props.activeWindow]).forEach((tab) => {
         projectOverview[tab.project].ids.push(tab.id);
         if (projectOverview[tab.project].example === '')projectOverview[tab.project].example = tab.title;
-        if (tab.project !== this.props.activeProj) return;
         let flag = true;
         Object.keys(this.state.filter).forEach((key) => {
           if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
         });
-        if (flag) tabShow.push(tab);
+        if (!flag) return;
+        if (Object.keys(this.state.filter).length)projectOverview[tab.project].contains = true; // Contains tabs that fits the filter
+        if (tab.project === this.props.activeProj) {
+          tabShow.push(tab);
+        }
       });
     }
     switch (this.props.displayType) {

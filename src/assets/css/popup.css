@@ -63,3 +63,11 @@ li .btn{
   cursor: pointer;
   color: #888;
 }
+
+#project-list li.fits-filter{
+  font-weight: 700;
+}
+
+#project-list li.choosen{
+  background-color: yellow;
+}

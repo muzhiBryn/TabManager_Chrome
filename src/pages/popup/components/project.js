@@ -7,11 +7,15 @@ import { requestSwitchProject } from '../../../shared/actions/projectactions';
 import { requestCloseTabs } from '../../../shared/actions/tabactions';
 
 const Project = (props) => {
-  const { projectTitle, example, ids } = props;
+  const {
+    projectTitle, example, ids, contains,
+  } = props;
+  const projectClass = [];
+  if (projectTitle === props.activeProj) projectClass.push('choosen');
+  if (contains) projectClass.push('fits-filter');
   const exampleTrim = example.length > 35 ? `${example.substr(0, 32)}...` : example;
-  const style = projectTitle === props.activeProj ? { backgroundColor: 'yellow' } : {};
   return (
-    <li style={style} onClick={() => { props.requestSwitchProject(projectTitle); }}>
+    <li className={projectClass.join(' ')} onClick={() => { props.requestSwitchProject(projectTitle); }}>
       {projectTitle}&nbsp;
       {example ? `: ${exampleTrim} ` : ''}
       {ids.length > 1 ? `and ${ids.length - 1} other tabs ` : ''}

@@ -11,6 +11,7 @@ const ProjectList = (props) => {
         key={`project-${project}`}
         projectTitle={project}
         example={projectOverview[project].example}
+        contains={projectOverview[project].contains}
         ids={projectOverview[project].ids}
       />
     );
