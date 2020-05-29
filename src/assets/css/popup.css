@@ -64,6 +64,24 @@ li .btn{
   color: #888;
 }
 
+#project-list li{
+  position: relative;
+}
+
+#project-list .waiting-for-tab-mask{
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#project-list .waiting-for-tab-mask:hover{
+  border: solid 2px #ddd;
+  cursor: grab;
+}
+
 #project-list li.fits-filter{
   font-weight: 700;
 }

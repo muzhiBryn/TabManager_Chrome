@@ -3,19 +3,29 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { requestSwitchProject } from '../../../shared/actions/projectactions';
-import { requestCloseTabs } from '../../../shared/actions/tabactions';
+import { switchProject } from '../../../shared/actions/projectactions';
+import { requestCloseTabs, updateTabProj } from '../../../shared/actions/tabactions';
 
 const Project = (props) => {
   const {
-    projectTitle, example, ids, contains,
+    projectTitle, example, ids, contains, movingTab,
   } = props;
   const projectClass = [];
   if (projectTitle === props.activeProj) projectClass.push('choosen');
   if (contains) projectClass.push('fits-filter');
   const exampleTrim = example.length > 35 ? `${example.substr(0, 32)}...` : example;
   return (
-    <li className={projectClass.join(' ')} onClick={() => { props.requestSwitchProject(projectTitle); }}>
+    <li
+      className={projectClass.join(' ')}
+      onClick={() => { props.switchProject(projectTitle); }}
+    >
+      { movingTab ? (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div
+          className="waiting-for-tab-mask"
+          onMouseUp={() => { if (movingTab) props.updateTabProj(movingTab.tab.id, projectTitle); }}
+        />
+      ) : null}
       {projectTitle}&nbsp;
       {example ? `: ${exampleTrim} ` : ''}
       {ids.length > 1 ? `and ${ids.length - 1} other tabs ` : ''}
@@ -33,6 +43,7 @@ const Project = (props) => {
 
 const mapStateToProps = (reduxState) => ({
   activeProj: reduxState.projects.activeProj,
+  movingTab: reduxState.tabs.movingTab,
 });
 
-export default connect(mapStateToProps, { requestSwitchProject, requestCloseTabs })(Project);
+export default connect(mapStateToProps, { switchProject, requestCloseTabs, updateTabProj })(Project);

@@ -1,9 +1,9 @@
 import ActionTypes from '../actionTypes';
 
-export function requestSwitchProject(projectName) {
+export function switchProject(projectName) {
   return {
-    type: ActionTypes.SWITCH_PROJECT_REQUESTED,
-    payload: projectName,
+    type: ActionTypes.SWITCH_PROJECT,
+    projectName,
   };
 }
 

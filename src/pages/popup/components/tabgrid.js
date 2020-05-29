@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { requestSwitchTab, requestCloseTabs } from '../../../shared/actions/tabactions';
+import { requestSwitchTab, requestCloseTabs, moveTab } from '../../../shared/actions/tabactions';
 import { requestAddResource } from '../../../shared/actions/projectactions';
 
 const TabGrid = (props) => {
@@ -16,11 +16,9 @@ const TabGrid = (props) => {
       <li
         key={tab.id}
         title={tab.title}
+        onMouseDown={(e) => { e.preventDefault(); props.moveTab({ tab, x: e.pageX, y: e.pageY }); }}
         onClick={() => {
           props.requestSwitchTab(tab.id);
-          // this.openTab(tab.url);
-          // this.openTabs(testTabsUrlInFolder);
-          // this.close(tab.id);
         }}
       >
         <img alt=" " src={tab.icon} />
@@ -47,4 +45,6 @@ const mapStateToProps = (reduxState) => ({
   activeProj: reduxState.projects.activeProj,
 });
 
-export default connect(mapStateToProps, { requestSwitchTab, requestCloseTabs, requestAddResource })(TabGrid);
+export default connect(mapStateToProps, {
+  requestSwitchTab, requestCloseTabs, requestAddResource, moveTab,
+})(TabGrid);

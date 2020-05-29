@@ -7,7 +7,7 @@ import TabGrid from './tabgrid';
 import TabList from './tablist';
 import ResourceList from './resourcelist';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
-import { requestLoadResources, requestSwitchProject } from '../../../shared/actions/projectactions';
+import { requestLoadResources, switchProject } from '../../../shared/actions/projectactions';
 
 class ProjectDetail extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class ProjectDetail extends Component {
     const newActive = this.props.match.params.proj.substr(1);
     console.log(newActive);
     if (activeProj !== newActive) {
-      this.props.requestSwitchProject(newActive);
+      this.props.switchProject(newActive);
     }
     // if (activeWindow === -1) {
     this.props.requestGetTabs(activeProj);
@@ -75,4 +75,4 @@ const mapStateToProps = (reduxState) => ({
   displayType: reduxState.preferences.displayType,
 });
 
-export default connect(mapStateToProps, { requestGetTabs, requestLoadResources, requestSwitchProject })(ProjectDetail);
+export default connect(mapStateToProps, { requestGetTabs, requestLoadResources, switchProject })(ProjectDetail);

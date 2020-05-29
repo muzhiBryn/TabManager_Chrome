@@ -5,6 +5,7 @@ import DisplaySetting from './displayset';
 import TabGrid from './tabgrid';
 import TabList from './tablist';
 import ProjectList from './projectlist';
+import MovingTab from './movingtab';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
 
 class TabManager extends Component {
@@ -66,6 +67,7 @@ class TabManager extends Component {
         <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
         { tabView }
         <ProjectList projectOverview={projectOverview} />
+        { this.props.movingTab ? <MovingTab /> : null }
       </div>
     );
   }
@@ -73,6 +75,7 @@ class TabManager extends Component {
 
 const mapStateToProps = (reduxState) => ({
   tabs: reduxState.tabs.tabList,
+  movingTab: reduxState.tabs.movingTab,
   activeWindow: reduxState.tabs.activeWindow,
   projectList: reduxState.projects.projectList,
   activeProj: reduxState.projects.activeProj,

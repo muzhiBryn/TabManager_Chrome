@@ -23,6 +23,21 @@ export default function tabReducer(state = {}, action) {
       };
     case ActionTypes.SWITCH_TAB_FULLFILLED:
       return { ...state, activeTab: action.activeTab };
+    case ActionTypes.MOVE_TAB:
+      return { ...state, movingTab: action.movingTab };
+    case ActionTypes.UPDATE_TAB_PROJ:
+      return {
+        ...state,
+        tabList: {
+          ...state.tabList,
+          [state.activeWindow]: {
+            ...state.tabList[state.activeWindow],
+            [action.tabId]: {
+              ...state.tabList[state.activeWindow][action.tabId], project: action.project,
+            },
+          },
+        },
+      };
     default:
       return state;
   }

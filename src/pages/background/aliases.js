@@ -55,7 +55,7 @@ const closeTabsAlias = (req) => {
       dispatch({
         type: ActionTypes.CLOSE_TABS_FULLFILLED,
       });
-      setTimeout(() => { updateTabs(dispatch, req.payload.activeProj); }, 100);
+      setTimeout(() => { updateTabs(dispatch, req.payload.activeProj); }, 200);
     });
   };
 };
@@ -78,25 +78,7 @@ const openTabsAlias = (req) => {
     dispatch({
       type: ActionTypes.OPEN_TABS_FULLFILLED,
     });
-    setTimeout(() => { updateTabs(dispatch, req.payload.activeProj); }, 100);
-  };
-};
-
-const switchViewAlisa = (req) => {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SWITCH_VIEW_FULLFILLED,
-      view: req.payload,
-    });
-  };
-};
-
-const switchProjectAlias = (req) => {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.SWITCH_PROJECT_FULLFILLED,
-      activeProj: req.payload,
-    });
+    setTimeout(() => { updateTabs(dispatch, req.payload.activeProj); }, 200);
   };
 };
 
@@ -148,12 +130,9 @@ export default {
   SWITCH_TAB_REQUESTED: switchTabAlias,
   CLOSE_TABS_REQUESTED: closeTabsAlias,
   OPEN_TABS_REQUESTED: openTabsAlias,
-  SWITCH_PROJECT_REQUESTED: switchProjectAlias,
 
   NEW_PROJECT_REQUESTED: newProjectAlias,
   LOAD_PROJECTS_REQUESTED: loadProjectsAlias,
   ADD_RESOURCE_REQUESTED: addResourceAlias,
   LOAD_RESOURCES_REQUESTED: loadResourcesAlias,
-
-  SWITCH_VIEW_REQUESTED: switchViewAlisa,
 };
