@@ -1,25 +1,42 @@
 // Reference: https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
 
-export const loadProjects = () => {
+export const loadProjectList = () => {
   try {
-    const serializedState = localStorage.getItem('projects');
+    const serializedState = localStorage.getItem('projectList');
     if (serializedState === null) {
-      return {
-        projectList: ['General', 'Common'],
-        projectResouces: { General: [], Common: [] },
-        activeProj: 'General',
-      };
+      return ['General'];
     }
     return JSON.parse(serializedState);
   } catch (err) {
-    return undefined;
+    return ['General'];
   }
 };
 
-export const saveProjects = (projects) => {
+export const loadProjectResources = (projectName) => {
   try {
-    const serializedState = JSON.stringify(projects);
-    localStorage.setItem('projects', serializedState);
+    const serializedState = localStorage.getItem(projectName);
+    if (serializedState === null) {
+      return {};
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return {};
+  }
+};
+
+export const saveProjectList = (projectList) => {
+  try {
+    const serializedState = JSON.stringify(projectList);
+    localStorage.setItem('projectList', serializedState);
+  } catch {
+    // ignore write errors
+  }
+};
+
+export const saveProjectResources = (projectName, resourceList) => {
+  try {
+    const serializedState = JSON.stringify(resourceList);
+    localStorage.setItem(projectName, serializedState);
   } catch {
     // ignore write errors
   }

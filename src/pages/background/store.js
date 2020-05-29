@@ -4,7 +4,7 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import throttle from 'lodash.throttle';
 import aliases from './aliases';
-import { loadProjects, saveProjects } from './localstorage';
+import { loadProjectList, saveProjectList, saveProjectResources } from './localstorage';
 import reducer from './reducers/index';
 
 const logger = createLogger({
@@ -15,9 +15,14 @@ const initialState = {
   tabs: {
     tabList: {},
     activeTab: -1,
+    activeWindow: -1,
     movingTab: null,
   },
-  projects: loadProjects(),
+  projects: {
+    projectList: loadProjectList(),
+    projectResources: { projectName: '', resources: {} },
+    activeProj: 'General',
+  },
   preferences: {
     displayType: '0', // List view
   },
@@ -38,7 +43,9 @@ wrapStore(store, {
 });
 
 store.subscribe(throttle(() => {
-  saveProjects(store.getState().projects);
+  saveProjectList(store.getState().projects.projectList);
+  const { projectResources, activeProj } = store.getState().projects;
+  if (projectResources.projectName === activeProj) saveProjectResources(projectResources.projectName, projectResources.resources);
 }, 1000));
 
 export default store;

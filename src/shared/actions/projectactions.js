@@ -21,36 +21,36 @@ export function requestNewProject(projectName) {
   };
 }
 
-export function requestDeleteProject(projectId) {
+export function requestDeleteProject(projectName) {
   return {
     type: ActionTypes.DELETE_PROJECT_REQUESTED,
-    payload: projectId,
+    payload: projectName,
   };
 }
 
-export function requestLoadResources(projectId) {
+export function requestLoadResources(projectName) {
   return {
     type: ActionTypes.LOAD_RESOURCES_REQUESTED,
-    payload: projectId,
+    payload: projectName,
   };
 }
 
-export function requestAddResource(projectId, tab) {
+export function requestAddResource(tab, projectName) {
   return {
     type: ActionTypes.ADD_RESOURCE_REQUESTED,
     payload: {
-      projectId,
       tab,
+      projectName,
     },
   };
 }
 
-export function requestDeleteResource(projectId, tabId) {
+export function requestDeleteResource(projectName, url) {
   return {
     type: ActionTypes.DELETE_RESOUECE_REQUESTED,
     payload: {
-      projectId,
-      tabId,
+      projectName,
+      url,
     },
   };
 }

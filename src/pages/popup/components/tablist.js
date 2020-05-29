@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { requestSwitchTab, requestCloseTabs } from '../../../shared/actions/tabactions';
+import { requestAddResource } from '../../../shared/actions/projectactions';
 
 const TabList = (props) => {
   // ATTENTION!!! Here we provided 4 fuctions: jumpto, openTab, openTabs and close.
@@ -21,6 +22,13 @@ const TabList = (props) => {
       >
         <img alt=" " src={tab.icon} />
         <span>{tab.title}</span>
+        {props.editing ? (
+          <FontAwesomeIcon
+            className="btn"
+            icon="save"
+            onClick={(e) => { e.stopPropagation(); e.cancelBubble = true; props.requestAddResource(tab, props.activeProj); }}
+          />
+        ) : null}
         <FontAwesomeIcon
           className="btn"
           icon="window-close"
@@ -36,4 +44,4 @@ const mapStateToProps = (reduxState) => ({
   activeProj: reduxState.projects.activeProj,
 });
 
-export default connect(mapStateToProps, { requestSwitchTab, requestCloseTabs })(TabList);
+export default connect(mapStateToProps, { requestSwitchTab, requestCloseTabs, requestAddResource })(TabList);

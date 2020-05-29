@@ -9,8 +9,11 @@ export default function projectReducer(state = {}, action) {
     case ActionTypes.NEW_PROJECT_FULLFILLED:
       state.projectList.push(action.projectName);
       // eslint-disable-next-line no-param-reassign
-      state.projectResouces[action.projectName] = {};
       return { ...state, activeProj: action.projectName };
+    case ActionTypes.ADD_RESOURCE_FULLFILLED:
+      return { ...state, projectResources: { ...state.projectResources, resources: { ...state.projectResources.resources, [action.tab.url]: action.tab } } };
+    case ActionTypes.LOAD_RESOURCES_FULLFILLED:
+      return { ...state, projectResources: action.payload };
     default:
       return state;
   }

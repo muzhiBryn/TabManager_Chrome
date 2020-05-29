@@ -17,11 +17,13 @@ class TabManager extends Component {
   }
 
   componentDidMount() {
-    const { tabs, activeProj } = this.props;
-    if (tabs.size === undefined) {
-      console.log(activeProj);
-      this.props.requestGetTabs(activeProj);
-    }
+    // const { activeWindow, activeProj } = this.props;
+    // if (activeWindow === -1) {
+    //   console.log(activeProj);
+    //   this.props.requestGetTabs(activeProj);
+    // }
+    const { activeProj } = this.props;
+    this.props.requestGetTabs(activeProj);
   }
 
   setFilter(filter) {
@@ -31,14 +33,22 @@ class TabManager extends Component {
   render() {
     let tabView;
     const tabShow = [];
-    Object.values(this.props.tabs).forEach((tab) => {
-      if (tab.project !== this.props.activeProj) return;
-      let flag = true;
-      Object.keys(this.state.filter).forEach((key) => {
-        if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
-      });
-      if (flag) tabShow.push(tab);
+    const projectOverview = {};
+    this.props.projectList.forEach((project) => {
+      projectOverview[project] = { example: '', ids: [] };
     });
+    if (this.props.activeWindow !== -1) {
+      Object.values(this.props.tabs[this.props.activeWindow]).forEach((tab) => {
+        projectOverview[tab.project].ids.push(tab.id);
+        if (projectOverview[tab.project].example === '')projectOverview[tab.project].example = tab.title;
+        if (tab.project !== this.props.activeProj) return;
+        let flag = true;
+        Object.keys(this.state.filter).forEach((key) => {
+          if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
+        });
+        if (flag) tabShow.push(tab);
+      });
+    }
     switch (this.props.displayType) {
       case '1':
         tabView = (<TabGrid tabs={tabShow} filter={this.state.filter} />);
@@ -52,7 +62,7 @@ class TabManager extends Component {
       <div>
         <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
         { tabView }
-        <ProjectList />
+        <ProjectList projectOverview={projectOverview} />
       </div>
     );
   }
@@ -60,6 +70,8 @@ class TabManager extends Component {
 
 const mapStateToProps = (reduxState) => ({
   tabs: reduxState.tabs.tabList,
+  activeWindow: reduxState.tabs.activeWindow,
+  projectList: reduxState.projects.projectList,
   activeProj: reduxState.projects.activeProj,
   displayType: reduxState.preferences.displayType,
 });

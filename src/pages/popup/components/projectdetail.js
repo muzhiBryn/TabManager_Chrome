@@ -7,7 +7,7 @@ import TabGrid from './tabgrid';
 import TabList from './tablist';
 import ResourceList from './resourcelist';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
-import { requestSwitchProject } from '../../../shared/actions/projectactions';
+import { requestLoadResources, requestSwitchProject } from '../../../shared/actions/projectactions';
 
 class ProjectDetail extends Component {
   constructor(props) {
@@ -19,14 +19,16 @@ class ProjectDetail extends Component {
   }
 
   componentDidMount() {
-    const { tabs, activeProj } = this.props;
-    console.log(this.props.match.params.proj);
-    if (activeProj !== this.props.match.params.proj) {
-      this.props.requestSwitchProject(activeProj);
+    const { activeProj } = this.props;
+    const newActive = this.props.match.params.proj.substr(1);
+    console.log(newActive);
+    if (activeProj !== newActive) {
+      this.props.requestSwitchProject(newActive);
     }
-    if (tabs.size === undefined) {
-      this.props.requestGetTabs(this.props.match.params.proj);
-    }
+    // if (activeWindow === -1) {
+    this.props.requestGetTabs(activeProj);
+    // }
+    this.props.requestLoadResources(newActive);
   }
 
   setFilter(filter) {
@@ -36,20 +38,22 @@ class ProjectDetail extends Component {
   render() {
     let tabView;
     const tabShow = [];
-    Object.values(this.props.tabs).forEach((tab) => {
-      if (tab.project !== this.props.activeProj) return;
-      let flag = true;
-      Object.keys(this.state.filter).forEach((key) => {
-        if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
+    if (this.props.activeWindow !== -1) {
+      Object.values(this.props.tabs[this.props.activeWindow]).forEach((tab) => {
+        if (tab.project !== this.props.activeProj) return;
+        let flag = true;
+        Object.keys(this.state.filter).forEach((key) => {
+          if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
+        });
+        if (flag) tabShow.push(tab);
       });
-      if (flag) tabShow.push(tab);
-    });
+    }
     switch (this.props.displayType) {
       case '1':
-        tabView = (<TabGrid tabs={tabShow} filter={this.state.filter} />);
+        tabView = (<TabGrid editing tabs={tabShow} filter={this.state.filter} />);
         break;
       default:
-        tabView = (<TabList tabs={tabShow} filter={this.state.filter} />);
+        tabView = (<TabList editing tabs={tabShow} filter={this.state.filter} />);
         break;
     }
 
@@ -66,8 +70,9 @@ class ProjectDetail extends Component {
 
 const mapStateToProps = (reduxState) => ({
   tabs: reduxState.tabs.tabList,
+  activeWindow: reduxState.tabs.activeWindow,
   activeProj: reduxState.projects.activeProj,
   displayType: reduxState.preferences.displayType,
 });
 
-export default connect(mapStateToProps, { requestGetTabs, requestSwitchProject })(ProjectDetail);
+export default connect(mapStateToProps, { requestGetTabs, requestLoadResources, requestSwitchProject })(ProjectDetail);
