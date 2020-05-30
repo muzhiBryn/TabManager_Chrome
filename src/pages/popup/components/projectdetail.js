@@ -1,11 +1,10 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DisplaySetting from './displayset';
-import TabGrid from './tabgrid';
-import TabList from './tablist';
-import ResourceList from './resourcelist';
+import TabView from './tabs/tabview';
+import ResourceList from './projects/resourcelist';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
 import { requestLoadResources, switchProject } from '../../../shared/actions/projectactions';
 
@@ -15,13 +14,14 @@ class ProjectDetail extends Component {
     super(props);
     this.state = {
       isEditing: false,
-      updatedPoroject: {
-        title: '',
-        content: '',
-        tabs: '',
-      },
+      // updatedProject: {
+      //   title: '',
+      //   content: '',
+      // },
       filter: {},
     };
+    // Tabs could be edited seperately
+    // Read tabs from props
     this.setFilter = this.setFilter.bind(this);
     this.renderEdit = this.renderEdit.bind(this);
     this.onEditClick = this.onEditClick.bind(this);
@@ -51,7 +51,7 @@ class ProjectDetail extends Component {
 
   onEditClick = (event) => {
     if (this.state.isEditing) {
-     //this.props.updateProject(this.props.currentProject._id, this.state.updatedProject);
+      // this.props.updateProject(this.props.currentProject._id, this.state.updatedProject);
       this.setState({ isEditing: false });
     } else {
       this.setState({
@@ -67,8 +67,7 @@ class ProjectDetail extends Component {
 
   renderEdit() {
     return (
-      <button type="button" onClick={this.onEditClick} className="note-button"><i className="far fa-edit fa-2x" /></button>
-
+      <button type="button" onClick={this.onEditClick} className="note-button"><FontAwesomeIcon icon={['far', 'edit']} size="2x" /> </button>
     );
   }
 
@@ -82,13 +81,12 @@ class ProjectDetail extends Component {
 
 
   renderTitle() {
+    const { activeProj } = this.props;
     if (this.state.isEditing) {
       return (
         <div>
           <h3>Title</h3>
-          
-          <input id="title-change" type="text"  placeholder="update title" /> 
-
+          <input id="title-change" type="text" placeholder="update title" />
           {this.renderEdit()}
         </div>
       );
@@ -96,7 +94,7 @@ class ProjectDetail extends Component {
       return (
         <div className="title">
           {/* <h1 className="project-title">{this.props.currentProject.title}</h1> */}
-          <h1 className="project-title">Project1</h1>
+          <h1 className="project-title">{ activeProj }</h1>
           {this.renderEdit()}
         </div>
       );
@@ -108,7 +106,7 @@ class ProjectDetail extends Component {
       return (
         <div>
           <h3>Content</h3>
-          <input id="content-change" type="text"  placeholder="update description" /> 
+          <input id="content-change" type="text" placeholder="update description" />
           {/* <input id="content-change" type="text" onChange={this.onContentChange} placeholder="update content" value={this.state.updatedPoroject.content} /> */}
         </div>
       );
@@ -138,14 +136,12 @@ class ProjectDetail extends Component {
     }
   }
 
-  
-
   render() {
-    let tabView;
+    const { activeWindow, activeProj, tabs } = this.props;
     const tabShow = [];
-    if (this.props.activeWindow !== -1) {
-      Object.values(this.props.tabs[this.props.activeWindow]).forEach((tab) => {
-        if (tab.project !== this.props.activeProj) return;
+    if (activeWindow !== -1) {
+      Object.values(tabs[activeWindow]).forEach((tab) => {
+        if (tab.project !== activeProj) return;
         let flag = true;
         Object.keys(this.state.filter).forEach((key) => {
           if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
@@ -153,24 +149,14 @@ class ProjectDetail extends Component {
         if (flag) tabShow.push(tab);
       });
     }
-    switch (this.props.displayType) {
-      case '1':
-        tabView = (<TabGrid editing tabs={tabShow} filter={this.state.filter} />);
-        break;
-      default:
-        tabView = (<TabList editing tabs={tabShow} filter={this.state.filter} />);
-        break;
-    }
-
     return (
       <div>
         <NavLink to="/">Back</NavLink>
         <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
-        { tabView }
-  
-        {this.renderTitle()} 
+        {this.renderTitle()}
         {this.renderContent()}
         {this.renderTabs()}
+        <TabView editing tabs={tabShow} filter={this.state.filter} />
         <ResourceList />
       </div>
     );
@@ -181,7 +167,6 @@ const mapStateToProps = (reduxState) => ({
   tabs: reduxState.tabs.tabList,
   activeWindow: reduxState.tabs.activeWindow,
   activeProj: reduxState.projects.activeProj,
-  displayType: reduxState.preferences.displayType,
 });
 
 export default connect(mapStateToProps, { requestGetTabs, requestLoadResources, switchProject })(ProjectDetail);

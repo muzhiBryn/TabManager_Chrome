@@ -55,7 +55,7 @@ const closeTabsAlias = (req) => {
       dispatch({
         type: ActionTypes.CLOSE_TABS_FULLFILLED,
       });
-      setTimeout(() => { updateTabs(dispatch, req.payload.activeProj); }, 200);
+      setTimeout(() => { updateTabs(dispatch, req.payload.activeProj); }, 300);
     });
   };
 };

@@ -28,6 +28,16 @@ export function requestDeleteProject(projectName) {
   };
 }
 
+export function requestUpdateProject(prevProj, newProj) {
+  return {
+    type: ActionTypes.UPDATE_PROJECT_REQUESTED,
+    payload: {
+      prevProj,
+      newProj,
+    },
+  };
+}
+
 export function requestLoadResources(projectName) {
   return {
     type: ActionTypes.LOAD_RESOURCES_REQUESTED,

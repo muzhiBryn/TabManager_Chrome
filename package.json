@@ -6,11 +6,9 @@
   "author": "project-2-many-tabz group",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server",
-    "test": "eslint src/**.js",
-    "build": "yarn clean; NODE_ENV=production webpack --colors",
     "clean": "rimraf dist",
-    "deploy": "yarn build; surge -p dist -d stela_tong-cs52-starter.surge.sh; yarn clean"
+    "build": "yarn clean; NODE_ENV=production webpack --colors",
+    "winbuild": "yarn clean & SET WEBPACK_ENV=production& webpack --colors"
   },
   "devDependencies": {
     "@babel/core": "^7.10.0",
@@ -48,6 +46,7 @@
     "@babel/register": "^7.9.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-brands-svg-icons": "^5.13.0",
+    "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "@material-ui/core": "^4.10.0",

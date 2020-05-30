@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import throttle from 'lodash.throttle';
-import { moveTab } from '../../../shared/actions/tabactions';
+import { moveTab } from '../../../../shared/actions/tabactions';
 
 class MovingTab extends Component {
   constructor(props) {
@@ -29,14 +29,14 @@ class MovingTab extends Component {
   }
 
   handleMouseUp() {
-    setTimeout(() => this.props.moveTab(null), 100);
+    setTimeout(() => this.props.moveTab(null), 200);
     document.removeEventListener('mousemove', this.handleMouseMove);
   }
 
   render() {
-    if (this.props.movingTab) {
-      const { movingTab } = this.props;
-      console.log(movingTab);
+    const { movingTab } = this.props;
+    console.log(movingTab);
+    if (movingTab) {
       const style = {
         left: movingTab.x - 10,
         top: movingTab.y - 10,

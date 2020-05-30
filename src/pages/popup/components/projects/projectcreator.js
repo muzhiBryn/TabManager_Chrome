@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { requestNewProject } from '../../../shared/actions/projectactions';
+import { requestNewProject } from '../../../../shared/actions/projectactions';
 
 // eslint-disable-next-line no-unused-vars
 class ProjectCreator extends Component {

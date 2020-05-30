@@ -6,9 +6,10 @@ body{
 
 #tab-list,
 #tab-grid {
-    padding: 0;
-    height: 250px;
-    overflow-y: scroll;
+  padding: 0;
+  height: 250px;
+  overflow-y: scroll;
+  user-select: none;
 }
 
 #project-list,
@@ -16,7 +17,17 @@ body{
   padding: 0;
   height: 120px;
   overflow-y: scroll;
+  user-select: none;
 }
+
+/* .grab-tab #tab-list,
+.grab-tab #tab-grid{
+  cursor: grabbing;
+}
+
+.grab-tab #project-list{
+  cursor: grab;
+} */
 
 h1{
   color: #264653;
@@ -70,7 +81,7 @@ li .btn{
 
 #project-list .waiting-for-tab-mask{
   position: absolute;
-  z-index: 2;
+  z-index: 999;
   left: 0;
   right: 0;
   top: 0;
@@ -92,11 +103,11 @@ li .btn{
 
 #moving-tab{
   position: fixed;
-  z-index: 1;
+  z-index: 998;
   width: 24px;
   height: 24px;
 }
 
 #moving-tab:hover{
-  cursor: grabbing; 
+  cursor: grabbing;
 }

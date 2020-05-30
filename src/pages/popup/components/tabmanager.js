@@ -2,10 +2,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DisplaySetting from './displayset';
-import TabGrid from './tabgrid';
-import TabList from './tablist';
-import ProjectList from './projectlist';
-import MovingTab from './movingtab';
+import TabView from './tabs/tabview';
+import ProjectList from './projects/projectlist';
+import MovingTab from './tabs/movingtab';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
 
 class TabManager extends Component {
@@ -32,14 +31,16 @@ class TabManager extends Component {
   }
 
   render() {
-    let tabView;
+    const {
+      projectList, activeWindow, activeProj, tabs, movingTab,
+    } = this.props;
     const tabShow = [];
     const projectOverview = {};
-    this.props.projectList.forEach((project) => {
+    projectList.forEach((project) => {
       projectOverview[project] = { example: '', ids: [], contains: false };
     });
-    if (this.props.activeWindow !== -1) {
-      Object.values(this.props.tabs[this.props.activeWindow]).forEach((tab) => {
+    if (activeWindow !== -1) {
+      Object.values(tabs[activeWindow]).forEach((tab) => {
         projectOverview[tab.project].ids.push(tab.id);
         if (projectOverview[tab.project].example === '')projectOverview[tab.project].example = tab.title;
         let flag = true;
@@ -48,26 +49,18 @@ class TabManager extends Component {
         });
         if (!flag) return;
         if (Object.keys(this.state.filter).length)projectOverview[tab.project].contains = true; // Contains tabs that fits the filter
-        if (tab.project === this.props.activeProj) {
+        if (tab.project === activeProj) {
           tabShow.push(tab);
         }
       });
     }
-    switch (this.props.displayType) {
-      case '1':
-        tabView = (<TabGrid tabs={tabShow} filter={this.state.filter} />);
-        break;
-      default:
-        tabView = (<TabList tabs={tabShow} filter={this.state.filter} />);
-        break;
-    }
 
     return (
-      <div>
+      <div className={movingTab ? 'grab-tab' : ''}>
         <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
-        { tabView }
+        <TabView tabs={tabShow} filter={this.state.filter} />
         <ProjectList projectOverview={projectOverview} />
-        { this.props.movingTab ? <MovingTab /> : null }
+        { movingTab ? <MovingTab /> : null }
       </div>
     );
   }
@@ -79,7 +72,6 @@ const mapStateToProps = (reduxState) => ({
   activeWindow: reduxState.tabs.activeWindow,
   projectList: reduxState.projects.projectList,
   activeProj: reduxState.projects.activeProj,
-  displayType: reduxState.preferences.displayType,
 });
 
 export default connect(mapStateToProps, { requestGetTabs })(TabManager);

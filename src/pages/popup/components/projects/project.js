@@ -3,8 +3,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { switchProject } from '../../../shared/actions/projectactions';
-import { requestCloseTabs, updateTabProj } from '../../../shared/actions/tabactions';
+import { switchProject } from '../../../../shared/actions/projectactions';
+import { requestCloseTabs, updateTabProj } from '../../../../shared/actions/tabactions';
 
 const Project = (props) => {
   const {

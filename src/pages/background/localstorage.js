@@ -1,6 +1,6 @@
 // Reference: https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
 
-export const loadProjectList = () => {
+export function loadProjectList() {
   try {
     const serializedState = localStorage.getItem('projectList');
     if (serializedState === null) {
@@ -12,7 +12,7 @@ export const loadProjectList = () => {
   }
 };
 
-export const loadProjectResources = (projectName) => {
+export function loadProjectResources(projectName) {
   try {
     const serializedState = localStorage.getItem(projectName);
     if (serializedState === null) {
@@ -24,7 +24,19 @@ export const loadProjectResources = (projectName) => {
   }
 };
 
-export const saveProjectList = (projectList) => {
+export function loadPreferences() {
+  try {
+    const serializedState = localStorage.getItem('preferences');
+    if (serializedState === null) {
+      return { displayType: '0' };
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return { displayType: '0' };
+  }
+};
+
+export function saveProjectList(projectList) {
   try {
     const serializedState = JSON.stringify(projectList);
     localStorage.setItem('projectList', serializedState);
@@ -33,10 +45,23 @@ export const saveProjectList = (projectList) => {
   }
 };
 
-export const saveProjectResources = (projectName, resourceList) => {
+export function saveProjectResources(projectName, resourceList) {
   try {
     const serializedState = JSON.stringify(resourceList);
     localStorage.setItem(projectName, serializedState);
+  } catch {
+    // ignore write errors
+  }
+};
+
+export function removeProject(projectName) {
+  localStorage.removeItem(projectName);
+}
+
+export function savePreferences(preferences) { 
+  try {
+    const serializedState = JSON.stringify(preferences);
+    localStorage.setItem('preferences', serializedState);
   } catch {
     // ignore write errors
   }

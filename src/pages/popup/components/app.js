@@ -1,14 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
 import {
-  faWindowClose, faEdit, faPlus, faSave,
+  faEdit as faEditRegular
+} from '@fortawesome/free-regular-svg-icons';
+import {
+  faWindowClose, faPlus, faSave, faArrowDown, faEdit as faEditSolid
 } from '@fortawesome/free-solid-svg-icons';
 import TabManager from './tabmanager';
 import ProjectDetail from './projectdetail';
 
-library.add(fab, faWindowClose, faEdit, faPlus, faSave);
+// FontAwesome notes: https://www.digitalocean.com/community/tutorials/how-to-use-font-awesome-5-with-react
+
+library.add(faWindowClose, faPlus, faSave, faArrowDown, faEditRegular, faEditSolid,);
 
 const App = () => {
   return (
