@@ -10,34 +10,22 @@ const updateTabs = (newTabList, prevTabs, activeProj) => {
 };
 
 export default function tabReducer(state = {}, action) {
+  const tabList = state.tabList;
   switch (action.type) {
-    // case ActionTypes.GET_TABS_ERRORED:
-    //   console.log(action.payload);
-    //   return state;
+    case ActionTypes.CHROME_ERROR:
+      console.log(action.error);
+      return state;
     case ActionTypes.GET_TABS_FULLFILLED:
-      if (!action.activeWindow) return state;
-      return {
-        ...state,
-        activeWindow: action.activeWindow,
-        tabList: { ...state.tabList, [action.activeWindow]: updateTabs(action.tabs, state.tabList[action.activeWindow], action.activeProj) },
-      };
+      if (!action.activeWindow || action.activeWindow==-1) return state;   
+      tabList[action.activeWindow] = updateTabs(action.tabs, state.tabList[action.activeWindow], action.activeProj);
+      return {...state, tabList, activeWindow: action.activeWindow, activeTab: action.activeTab};
     case ActionTypes.SWITCH_TAB_FULLFILLED:
       return { ...state, activeTab: action.activeTab };
     case ActionTypes.MOVE_TAB:
       return { ...state, movingTab: action.movingTab };
     case ActionTypes.UPDATE_TAB_PROJ:
-      return {
-        ...state,
-        tabList: {
-          ...state.tabList,
-          [state.activeWindow]: {
-            ...state.tabList[state.activeWindow],
-            [action.tabId]: {
-              ...state.tabList[state.activeWindow][action.tabId], project: action.project,
-            },
-          },
-        },
-      };
+      tabList = state.tabList[state.activeWindow][action.tabId].project = action.project;
+      return {...State, tabList};
     default:
       return state;
   }

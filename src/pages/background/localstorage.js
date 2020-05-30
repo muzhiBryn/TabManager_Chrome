@@ -14,7 +14,7 @@ export function loadProjectList() {
 
 export function loadProjectResources(projectName) {
   try {
-    const serializedState = localStorage.getItem(projectName);
+    const serializedState = localStorage.getItem('proj-'+projectName);
     if (serializedState === null) {
       return {};
     }
@@ -48,14 +48,14 @@ export function saveProjectList(projectList) {
 export function saveProjectResources(projectName, resourceList) {
   try {
     const serializedState = JSON.stringify(resourceList);
-    localStorage.setItem(projectName, serializedState);
+    localStorage.setItem('proj-'+projectName, serializedState);
   } catch {
     // ignore write errors
   }
 };
 
 export function removeProject(projectName) {
-  localStorage.removeItem(projectName);
+  localStorage.removeItem('proj-'+projectName);
 }
 
 export function savePreferences(preferences) { 
