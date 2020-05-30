@@ -22,7 +22,7 @@ const initialState = {
   },
   projects: {
     projectList: loadProjectList(),
-    projectResources: { projectName: '', projectInfo: '', resources: {} },
+    projectResources: { projectName: '', projectNote: '', resources: {} },
     activeProj: 'General',
   },
   preferences: loadPreferences(),
@@ -47,7 +47,7 @@ store.subscribe(throttle(() => {
   // console.log(store.getState().preferences);
   savePreferences(store.getState().preferences);
   const { projectResources, activeProj } = store.getState().projects;
-  if (projectResources.projectName === activeProj) saveProjectResources(projectResources.projectName, projectResources.resources);
+  if (projectResources.projectName === activeProj) saveProjectResources(projectResources.projectName, projectResources.projectNote, projectResources.resources);
 }, 1000));
 
 export default store;

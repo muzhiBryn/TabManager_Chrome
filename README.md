@@ -116,3 +116,10 @@ Once you've finished the above, just click the new 2ManyTabs icon in your chrome
 * Yunjin Tong
   
 ## Acknowledgments
+
+
+### References:
+
+Redux for Chrome Extensions:
+https://thoughtbot.com/blog/redux-for-chrome-extensions
+(Super useful!!)

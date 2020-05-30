@@ -24,8 +24,8 @@ export default function tabReducer(state = {}, action) {
     case ActionTypes.MOVE_TAB:
       return { ...state, movingTab: action.movingTab };
     case ActionTypes.UPDATE_TAB_PROJ:
-      tabList = state.tabList[state.activeWindow][action.tabId].project = action.project;
-      return {...State, tabList};
+      state.tabList[state.activeWindow][action.tabId].project = action.project;
+      return {...state, tabList};
     default:
       return state;
   }

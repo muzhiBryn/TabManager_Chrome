@@ -2,8 +2,7 @@ import ActionTypes from '../../../shared/actionTypes';
 import { removeProject } from '../localstorage';
 
 export default function projectReducer(state = {}, action) {
-  const projectResources = state.projectResources;
-  const projectList = state.projectList;
+  const { projectResources, projectList } = state;
   switch (action.type) {
     case ActionTypes.SWITCH_PROJECT:
       return { ...state, activeProj: action.projectName };
@@ -13,14 +12,14 @@ export default function projectReducer(state = {}, action) {
       state.projectList.push(action.projectName);
       return { ...state, activeProj: action.projectName };
     case ActionTypes.UPDATE_PROJECT_FULLFILLED:
-      const { prevProj, newProj } = action;
-      if (newProj.projectName !== prevProj.projectName) {
-        removeProject(prevProj.projectName);
-        projectList[projectList.findIndex(prevProj.projectName)] = newProj.projectName;
-        projectResources.projectName = newProj.projectName;
+      const { updatedProj } = action;
+      if (updatedProj.projectName !== projectResources.projectName) {
+        removeProject(projectResources.projectName);
+        projectList[projectList.findIndex((p)=>(p==projectResources.projectName))] = updatedProj.projectName;
+        projectResources.projectName = updatedProj.projectName;
       }
-      projectResources.projectInfo = newProj.projectInfo;
-      return {...state, projectList, projectResources};
+      projectResources.projectNote = updatedProj.projectNote;
+      return {...state, activeProj: updatedProj.projectName, projectList, projectResources};
     case ActionTypes.ADD_RESOURCE_FULLFILLED:
       projectResources.resources[action.tab.url] = action.tab; 
       return {...state, projectResources};

@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import DisplaySetting from './displayset';
-import TabView from './tabs/tabview';
-import ProjectList from './projects/projectlist';
-import MovingTab from './tabs/movingtab';
+import DisplaySetting from './sharedview/displayset';
+import TabView from './sharedview/tabview';
+import ProjectList from './managerview/projectlist';
+import MovingTab from './sharedview/movingtab';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
 
 class TabManager extends Component {

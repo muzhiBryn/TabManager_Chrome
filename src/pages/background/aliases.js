@@ -2,10 +2,10 @@ import ActionTypes from '../../shared/actionTypes';
 import { loadProjectResources } from './localstorage';
 // import * as ajax from '../../modules/ajax';
 
-const backgroundError = (dispatch, error) => {
+const chromeError = (dispatch, error) => {
   console.log(error);
   return dispatch({
-    type: ActionTypes.BACKGROUND_ERRORED,
+    type: ActionTypes.CHROME_ERROR,
     error: error.toString(),
   });
 };
@@ -14,7 +14,7 @@ const updateTabs = (dispatch, activeProj) => {
   try{
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
       const activeWindow = tabs.length ? tabs[0].windowId : -1;
-      const activeTab = -1;
+      let activeTab = -1;
       const tabInfo = tabs.map((tab) => {
         if(tab.active)activeTab = tab.id;
         return ({
@@ -128,8 +128,7 @@ const updateProjectAlias = (req) => {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.UPDATE_PROJECT_FULLFILLED,
-      prevProj: req.payload.prevProj,
-      newProj: req.payload.newProj,
+      updatedProj: req.payload
     })
   }
 }
@@ -145,12 +144,13 @@ const addResourceAlias = (req) => {
 };
 
 const loadResourcesAlias = (req) => {
-  const resources = loadProjectResources(req.payload);
+  const { projectNote, resources } = loadProjectResources(req.payload);
   return (dispatch) => {
     dispatch({
       type: ActionTypes.LOAD_RESOURCES_FULLFILLED,
       payload: {
         projectName: req.payload,
+        projectNote,
         resources,
       },
     });

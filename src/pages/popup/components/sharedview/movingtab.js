@@ -35,7 +35,6 @@ class MovingTab extends Component {
 
   render() {
     const { movingTab } = this.props;
-    console.log(movingTab);
     if (movingTab) {
       const style = {
         left: movingTab.x - 10,

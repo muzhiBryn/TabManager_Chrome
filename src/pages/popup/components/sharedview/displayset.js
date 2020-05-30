@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import switchView from '../../../shared/actions/preferenceactions';
+import switchView from '../../../../shared/actions/preferenceactions';
 
 const DisplaySetting = (props) => {
   return (

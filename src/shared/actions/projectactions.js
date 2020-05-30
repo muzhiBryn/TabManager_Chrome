@@ -28,13 +28,10 @@ export function requestDeleteProject(projectName) {
   };
 }
 
-export function requestUpdateProject(prevProj, newProj) {
+export function requestUpdateProject(updatedProj) {
   return {
     type: ActionTypes.UPDATE_PROJECT_REQUESTED,
-    payload: {
-      prevProj,
-      newProj,
-    },
+    payload: updatedProj,
   };
 }
 
