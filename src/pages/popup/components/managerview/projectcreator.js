@@ -38,7 +38,7 @@ class ProjectCreator extends Component {
     return (
       <form onSubmit={this.handleSubmitNew}>
         <input type="text" name="title" onBlur={this.handleNameChange} />
-        <button type="submit"> Add project </button>
+        <button id ="submit" type="submit"> Add project </button>
         <div className="erroField">{this.state.error}</div>
       </form>
     );
