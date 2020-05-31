@@ -23,16 +23,17 @@ class ProjectEditor extends Component{
 
   onEditClick(event) {
     const { isEditing, updatedProject } = this.state;
-    const { projectList, projectResources } = this.props;
+    const { projectList, currentProject } = this.props;
     if (isEditing) {
-      if(updatedProject.projectName !== projectResources.projectName && projectList.includes(updatedProject.projectName)) {
+      if(updatedProject.projectName !== currentProject.projectName && projectList.includes(updatedProject.projectName)) {
         console.log("exists!");
         // Todo: show the message!
         return;
       }
-      else if(updatedProject.projectName === projectResources.projectName &&
-        updatedProject.projectNote === projectResources.projectNote) {
+      else if(updatedProject.projectName === currentProject.projectName &&
+        updatedProject.projectNote === currentProject.projectNote) {
         console.log("Nothing changed");
+        this.setState({ isEditing: false });
         return;
       }
       this.props.requestUpdateProject(updatedProject);
@@ -40,8 +41,8 @@ class ProjectEditor extends Component{
     } else {
       this.setState({
         updatedProject: {
-          projectName: projectResources.projectName,
-          projectNote: projectResources.projectNote,
+          projectName: currentProject.projectName,
+          projectNote: currentProject.projectNote,
         },
       });
       this.setState({ isEditing: true });
@@ -70,7 +71,7 @@ class ProjectEditor extends Component{
   
   
   renderTitle() {
-    const { projectResources } = this.props;
+    const { currentProject } = this.props;
     if (this.state.isEditing) {
       return (
         <div>
@@ -83,7 +84,7 @@ class ProjectEditor extends Component{
       return (
         <div className="projectName">
           {/* <h1 className="project-projectName">{this.props.currentProject.projectName}</h1> */}
-          <h1 className="project-name">{ projectResources.projectName }</h1>
+          <h1 className="project-name">{ currentProject.projectName }</h1>
           {this.renderEdit()}
         </div>
       );
@@ -91,7 +92,7 @@ class ProjectEditor extends Component{
   }
   
   renderNote() {
-    const { projectResources } = this.props;
+    const { currentProject } = this.props;
     if (this.state.isEditing) {
       return (
         <div>
@@ -102,8 +103,8 @@ class ProjectEditor extends Component{
     } else {
       return (
         <div className="background">
-          {/* <p className="project-note" dangerouslySetInnerHTML={{ __html: marked(projectResources.note || '') }} /> */}
-          <p className="project-note">{ projectResources.projectNote }</p>
+          {/* <p className="project-note" dangerouslySetInnerHTML={{ __html: marked(currentProject.note || '') }} /> */}
+          <p className="project-note">{ currentProject.projectNote }</p>
         </div>
       );
     }
@@ -120,7 +121,7 @@ class ProjectEditor extends Component{
 }
 
 const mapStateToProps = (reduxState) => ({
-  projectResources: reduxState.projects.projectResources,
+  currentProject: reduxState.projects.currentProject,
   projectList: reduxState.projects.projectList,
 });
 

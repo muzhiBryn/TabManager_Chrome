@@ -1,7 +1,8 @@
 // Reference: https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
+import Values from '../../shared/values';
 
 export function loadProjectList() {
-  const defaultVal =  ['General'];
+  const defaultVal =  [Values.defaultProject];
   try {
     const serializedState = localStorage.getItem('projectList');
     if (serializedState === null) {
@@ -13,7 +14,7 @@ export function loadProjectList() {
   }
 };
 
-export function loadProjectResources(projectName) {
+export function loadcurrentProject(projectName) {
   const defaultVal = {projectNote:'', resources:{}};
   try {
     const serializedState = localStorage.getItem('proj-'+projectName);
@@ -27,7 +28,7 @@ export function loadProjectResources(projectName) {
 };
 
 export function loadPreferences() {
-  const defaultVal = { displayType: '0' }
+  const defaultVal = { displayType: '0', synchronize: -1 }
   try {
     const serializedState = localStorage.getItem('preferences');
     if (serializedState === null) {
@@ -48,7 +49,7 @@ export function saveProjectList(projectList) {
   }
 };
 
-export function saveProjectResources(projectName, projectNote, resources) {
+export function savecurrentProject(projectName, projectNote, resources) {
   try {
     const serializedState = JSON.stringify({projectNote, resources});
     localStorage.setItem('proj-'+projectName, serializedState);

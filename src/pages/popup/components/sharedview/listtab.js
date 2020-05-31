@@ -6,11 +6,12 @@ import handleDragTab from './tabcontrols/handledragtab';
 import { moveTab, requestSwitchTab } from '../../../../shared/actions/tabactions';
 
 const ListTab = (props) => {
-  const { tab, editing } = props;
+  const { tab, editing, activeTab } = props;
   return (
     <li
       title={tab.title}
-      onMouseDown={(e) => { handleDragTab(e, props.moveTab, tab); }}
+      className={`list-tab${tab.id == activeTab ? ' active' : ''}`}
+      onMouseDown={(e) => { if(!editing) handleDragTab(e, props.moveTab, tab); }}
       onMouseUp={() => { props.requestSwitchTab(tab.id); }}
     >
       <img alt=" " src={tab.icon} />
@@ -24,7 +25,7 @@ const ListTab = (props) => {
 };
 
 const mapStateToProps = (reduxState) => ({
-  activeProj: reduxState.projects.activeProj,
+  activeTab: reduxState.tabs.activeTab,
 });
 
 export default connect(mapStateToProps, {

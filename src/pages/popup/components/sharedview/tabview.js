@@ -10,8 +10,8 @@ const TabView = (props) => {
     editing,
   } = props;
   const tabItems = tabs.map((tab) => (
-    props.displayType === '1'
-      ? <ListTab tab={tab} key={tab.id} editing={editing} />
+    props.displayType === '0'
+      ? <ListTab key={tab.id} tab={tab} editing={editing} />
       : <GridTab key={tab.id} tab={tab} editing={editing} />
   ));
   return <ul id={props.displayType === '1' ? 'tab-grid' : 'tab-list'}>{tabItems}</ul>;

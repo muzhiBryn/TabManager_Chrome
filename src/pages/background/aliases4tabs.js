@@ -1,6 +1,4 @@
 import ActionTypes from '../../shared/actionTypes';
-import { loadProjectResources } from './localstorage';
-// import * as ajax from '../../modules/ajax';
 
 const chromeError = (dispatch, error) => {
   console.log(error);
@@ -10,23 +8,28 @@ const chromeError = (dispatch, error) => {
   });
 };
 
-const updateTabs = (dispatch, activeProj) => {
+const updateTabs = (dispatch, activeProj, prevState) => {
   try{
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
       const activeWindow = tabs.length ? tabs[0].windowId : -1;
-      let activeTab = -1;
-      const tabInfo = tabs.map((tab) => {
+      const tabList = prevState.tabs.tabList;
+      const prevTabs = prevState.tabs.tabList[activeWindow];
+      if (!prevTabs) tabList[activeWindow] = {};
+      let activeTab = -1; // check active tab
+      tabs.forEach((tab) => {
         if(tab.active)activeTab = tab.id;
-        return ({
+        const project = (prevTabs && prevTabs[tab.id])? prevTabs[tab.id].project : activeProj;
+        tabList[activeWindow][tab.id] = {
           icon: tab.favIconUrl,
           title: tab.title,
-          id: tab.id,
           url: tab.url,
-        });
+          id: tab.id,
+          project
+        };
       });
       dispatch({
         type: ActionTypes.GET_TABS_FULLFILLED,
-        tabs: tabInfo,
+        tabList,
         activeTab,
         activeWindow,
         activeProj,
@@ -38,7 +41,7 @@ const updateTabs = (dispatch, activeProj) => {
 };
 
 const getTabsAlias = (req) => {
-  return (dispatch) => { updateTabs(dispatch, req.payload); };
+  return (dispatch, getState) => { updateTabs(dispatch, req.payload, getState()); };
 };
 
 const switchTabAlias = (req) => {
@@ -63,13 +66,14 @@ const switchTabAlias = (req) => {
 };
 
 const closeTabsAlias = (req) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     try{
       chrome.tabs.remove(req.payload.ids, () => {
         dispatch({
           type: ActionTypes.CLOSE_TABS_FULLFILLED,
         });
-        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj); }, 300);
+        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState()); }, 200);
+        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState()); }, 500); // Well... Just in case
       });
     }catch(error){
       chromeError(dispatch, error);
@@ -103,70 +107,9 @@ const openTabsAlias = (req) => {
   };
 };
 
-// TODO: Methods below should be updated with communication with the server
-
-const loadProjectsAlias = () => {
-  const projects = {};
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.LOAD_PROJECTS_FULLFILLED,
-      projects,
-    });
-  };
-};
-
-const newProjectAlias = (req) => {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.NEW_PROJECT_FULLFILLED,
-      projectName: req.payload,
-    });
-  };
-};
-
-const updateProjectAlias = (req) => {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.UPDATE_PROJECT_FULLFILLED,
-      updatedProj: req.payload
-    })
-  }
-}
-
-const addResourceAlias = (req) => {
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.ADD_RESOURCE_FULLFILLED,
-      projectName: req.payload.projectName,
-      tab: req.payload.tab,
-    });
-  };
-};
-
-const loadResourcesAlias = (req) => {
-  const { projectNote, resources } = loadProjectResources(req.payload);
-  return (dispatch) => {
-    dispatch({
-      type: ActionTypes.LOAD_RESOURCES_FULLFILLED,
-      payload: {
-        projectName: req.payload,
-        projectNote,
-        resources,
-      },
-    });
-  };
-};
-
-
 export default {
   GET_TABS_REQUESTED: getTabsAlias,
   SWITCH_TAB_REQUESTED: switchTabAlias,
   CLOSE_TABS_REQUESTED: closeTabsAlias,
   OPEN_TABS_REQUESTED: openTabsAlias,
-
-  NEW_PROJECT_REQUESTED: newProjectAlias,
-  UPDATE_PROJECT_REQUESTED: updateProjectAlias,
-  LOAD_PROJECTS_REQUESTED: loadProjectsAlias,
-  ADD_RESOURCE_REQUESTED: addResourceAlias,
-  LOAD_RESOURCES_REQUESTED: loadResourcesAlias,
 };

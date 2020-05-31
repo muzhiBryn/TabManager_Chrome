@@ -1,8 +1,9 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Values from '../../../../shared/values';
 import { switchProject } from '../../../../shared/actions/projectactions';
 import { requestCloseTabs, updateTabProj } from '../../../../shared/actions/tabactions';
 
@@ -29,7 +30,7 @@ const Project = (props) => {
       {projectTitle}&nbsp;
       {example ? `: ${exampleTrim} ` : ''}
       {ids.length > 1 ? `and ${ids.length - 1} other tabs ` : ''}
-      {projectTitle === 'General' ? null : <button><NavLink exact to={`/project/:${projectTitle}`}>Edit</NavLink></button> }
+      {projectTitle === Values.defaultProject ? null : <button><Link to={`/project/:${projectTitle}`}>Edit</Link></button> }
       {ids.length > 0 ? (
         <FontAwesomeIcon
           className="btn"

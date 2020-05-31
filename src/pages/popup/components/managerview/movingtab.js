@@ -6,6 +6,11 @@ import { moveTab } from '../../../../shared/actions/tabactions';
 class MovingTab extends Component {
   constructor(props) {
     super(props);
+    const { movingTab } = this.props;
+    this.state = {
+      x: movingTab.x,
+      y: movingTab.y,
+    };
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
   }
@@ -21,11 +26,9 @@ class MovingTab extends Component {
   }
 
   handleMouseMove(e) {
-    // throttle(() => {
-    //   this.props.moveTab({ tab: this.props.movingTab.tab, x: e.pageX, y: e.pageY });
-    // }, 100);
-    this.props.moveTab({ tab: this.props.movingTab.tab, x: e.pageX, y: e.pageY });
-    // Might cause trouble if moving too fast??
+    const x = e.pageX;
+    const y = e.pageY;
+    this.setState({ x, y });
   }
 
   handleMouseUp() {
@@ -34,16 +37,17 @@ class MovingTab extends Component {
   }
 
   render() {
+    const { x, y } = this.state;
     const { movingTab } = this.props;
     if (movingTab) {
       const style = {
-        left: movingTab.x - 10,
-        top: movingTab.y - 10,
+        left: x - 10,
+        top: y - 10,
       };
       return (
         <img id="moving-tab" style={style} alt={`${movingTab.tab.title.substr(0, 10)}...`} src={movingTab.tab.icon} />
       );
-    } else return null;
+    } else return <span> </span>; // Just an empty span
   }
 }
 

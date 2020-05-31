@@ -13,6 +13,12 @@ export function requestLoadProjects() {
   };
 }
 
+export function requestMergeProjects() {
+  return {
+    type: ActionTypes.MERGE_PROJECTS_REQUESTED,
+  }
+}
+
 export function requestNewProject(projectName) {
   console.log('new project requested');
   return {
@@ -42,22 +48,22 @@ export function requestLoadResources(projectName) {
   };
 }
 
-export function requestAddResource(tab, projectName) {
+export function requestAddResources(tabs, projectName) {
   return {
-    type: ActionTypes.ADD_RESOURCE_REQUESTED,
+    type: ActionTypes.ADD_RESOURCES_REQUESTED,
     payload: {
-      tab,
+      tabs,
       projectName,
     },
   };
 }
 
-export function requestDeleteResource(projectName, url) {
+export function requestDeleteResource(urls, projectName) {
   return {
-    type: ActionTypes.DELETE_RESOUECE_REQUESTED,
+    type: ActionTypes.DELETE_RESOURCES_REQUESTED,
     payload: {
+      urls,
       projectName,
-      url,
     },
   };
 }

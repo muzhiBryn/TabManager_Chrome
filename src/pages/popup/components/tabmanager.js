@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import DisplaySetting from './sharedview/displayset';
+import DisplaySetting from './managerview/displayset';
 import TabView from './sharedview/tabview';
 import ProjectList from './managerview/projectlist';
-import MovingTab from './sharedview/movingtab';
+import MovingTab from './managerview/movingtab';
+import Footer from './sharedview/footer';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
+import { requestLoadProjects } from '../../../shared/actions/projectactions';
 
 class TabManager extends Component {
   constructor(props) {
@@ -24,6 +26,7 @@ class TabManager extends Component {
     // }
     const { activeProj } = this.props;
     this.props.requestGetTabs(activeProj);
+    // this.props.requestLoadProjects();
   }
 
   setFilter(filter) {
@@ -61,6 +64,7 @@ class TabManager extends Component {
         <TabView tabs={tabShow} filter={this.state.filter} />
         <ProjectList projectOverview={projectOverview} />
         { movingTab ? <MovingTab /> : null }
+        <Footer />
       </div>
     );
   }
@@ -74,4 +78,4 @@ const mapStateToProps = (reduxState) => ({
   activeProj: reduxState.projects.activeProj,
 });
 
-export default connect(mapStateToProps, { requestGetTabs })(TabManager);
+export default connect(mapStateToProps, { requestGetTabs, requestLoadProjects })(TabManager);

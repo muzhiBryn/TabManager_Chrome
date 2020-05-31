@@ -101,6 +101,10 @@ li .btn{
   background-color: yellow;
 }
 
+.list-tab.active{
+  background-color: yellow;
+}
+
 #moving-tab{
   position: fixed;
   z-index: 998;
@@ -110,4 +114,31 @@ li .btn{
 
 #moving-tab:hover{
   cursor: grabbing;
+}
+
+#footer{
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+}
+
+/* From: https://blog.logrocket.com/building-a-modal-module-for-react-with-react-router/ */
+.modal-wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(50, 50, 50, 0.5);
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
 }

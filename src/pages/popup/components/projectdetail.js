@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import DisplaySetting from './sharedview/displayset';
+import { Link, Redirect } from 'react-router-dom';
+import Values from '../../../shared/values';
 import ProjectEditor from './detailview/projecteditor';
 import TabView from './sharedview/tabview';
-import ResourceList from './detailview/resourcelist';
+import ResourceView from './detailview/resourceview';
+import Footer from './sharedview/footer';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
-import { requestLoadResources, switchProject } from '../../../shared/actions/projectactions';
+import { requestLoadResources, requestDeleteProject, switchProject } from '../../../shared/actions/projectactions';
 
 
 class ProjectDetail extends Component {
@@ -14,10 +15,12 @@ class ProjectDetail extends Component {
     super(props);
     this.state = {
       filter: {},
+      deleteRequested: 0,
     };
     // Tabs could be edited seperately
     // Read tabs from props
     this.setFilter = this.setFilter.bind(this);
+    this.handleDeleteProject = this.handleDeleteProject.bind(this);
   }
 
   componentDidMount() {
@@ -35,9 +38,17 @@ class ProjectDetail extends Component {
     this.setState({ filter });
   }
 
+  handleDeleteProject(){
+    this.setState({deleteRequested:1})
+    this.props.requestDeleteProject(this.props.activeProj);
+  }
+
   render() {
     const { activeWindow, activeProj, tabs } = this.props;
     const tabShow = [];
+    if(activeProj === Values.defaultProject && this.state.deleteRequested) {
+      return <Redirect to='/'/>;
+    }
     if (activeWindow !== -1) {
       Object.values(tabs[activeWindow]).forEach((tab) => {
         if (tab.project !== activeProj) return;
@@ -50,11 +61,13 @@ class ProjectDetail extends Component {
     }
     return (
       <div>
-        <NavLink to="/">Back</NavLink>
-        <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
+        <Link to="/">Back</Link>
+        {/* <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} /> */}
         <ProjectEditor />
         <TabView editing tabs={tabShow} filter={this.state.filter} />
-        <ResourceList />
+        <ResourceView />
+        <button type="button" onClick={this.handleDeleteProject}>Delete Project</button>
+        <Footer />
       </div>
     );
   }
@@ -66,4 +79,4 @@ const mapStateToProps = (reduxState) => ({
   activeProj: reduxState.projects.activeProj,
 });
 
-export default connect(mapStateToProps, { requestGetTabs, requestLoadResources, switchProject })(ProjectDetail);
+export default connect(mapStateToProps, { requestGetTabs, requestDeleteProject, requestLoadResources, switchProject })(ProjectDetail);
