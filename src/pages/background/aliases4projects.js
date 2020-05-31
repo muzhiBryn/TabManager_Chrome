@@ -1,15 +1,14 @@
 import ActionTypes from '../../shared/actionTypes';
 import { loadcurrentProject, removeProject } from './localstorage';
-import Values from '../../shared/values';
 import * as ajax from '../../modules/ajax';
 
 // TODO: Methods below should be updated with communication with the server
 
 const loadProjectsAlias = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const { authenticated } = getState().auth;
-    if(authenticated){
-      ajax.loadProjects(dispatch, localData);
+    if (authenticated) {
+      ajax.loadProjects(dispatch);
     }
     // else: Use local data
   };
@@ -22,37 +21,35 @@ const mergeProjectsAlias = () => {
     const { projectList } = getState().projects;
     const { authenticated } = getState().auth;
     projectList.forEach((projectName) => {
-      projects.push({projectName, ...loadcurrentProject(projectName)});
-    }) // So it would become: projectName, projectNote, resources 
-    if(authenticated){
-      ajax.mergeProjects(dispatch, projects, ()=>{
+      projects.push({ projectName, ...loadcurrentProject(projectName) });
+    }); // So it would become: projectName, projectNote, resources
+    if (authenticated) {
+      ajax.mergeProjects(dispatch, projects, () => {
         dispatch({
           type: ActionTypes.MERGE_PROJECTS_FULLFILLED,
         });
       });
-    }
-    // Only for debugging!!!!
-    else {
-      setTimeout(()=>{
+    } else { // Only for debugging!!!!
+      setTimeout(() => {
         dispatch({
           type: ActionTypes.MERGE_PROJECTS_FULLFILLED,
         });
       }, 3000);
-      setTimeout(()=>{
+      setTimeout(() => {
         dispatch({
           type: ActionTypes.POST_MERGE_PROJECTS,
         });
       }, 5000);
     }
     //
-  }
-}
+  };
+};
 
 const newProjectAlias = (req) => {
   return (dispatch, getState) => {
     const { authenticated } = getState().auth;
     const projectName = req.payload;
-    if(authenticated){
+    if (authenticated) {
       ajax.newProject(dispatch, projectName);
     } else {
       dispatch({
@@ -64,28 +61,28 @@ const newProjectAlias = (req) => {
 };
 
 const deleteProjectAlias = (req) => {
-    return (dispatch, getState) => {
-      const projectName = req.payload;
-      const { authenticated } = getState().auth;
-      const { synchronize } = getState().preferences;
-      const { projectList, currentProject } = getState().projects;
-      const localUpdate = () => {
-        removeProject(projectName);
-      }
-      if(authenticated){
-        ajax.updateProject(dispatch, currentProject.projectName, updatedProj, synchronize ? localUpdate:null);
-      } else{
-        const projInd = projectList.indexOf(projectName);
-        if (projInd > -1) projectList.splice(projInd, 1);
-        localUpdate();
-        dispatch({
-          type: ActionTypes.DELETE_PROJECT_FULLFILLED,
-          projectList,
-          projectName
-        });
-      }
+  return (dispatch, getState) => {
+    const projectName = req.payload;
+    const { authenticated } = getState().auth;
+    const { synchronize } = getState().preferences;
+    const { projectList, currentProject } = getState().projects;
+    const localUpdate = () => {
+      removeProject(projectName);
+    };
+    if (authenticated) {
+      ajax.deleteProject(dispatch, currentProject.projectName, synchronize ? localUpdate : null);
+    } else {
+      const projInd = projectList.indexOf(projectName);
+      if (projInd > -1) projectList.splice(projInd, 1);
+      localUpdate();
+      dispatch({
+        type: ActionTypes.DELETE_PROJECT_FULLFILLED,
+        projectList,
+        projectName,
+      });
     }
-}
+  };
+};
 
 
 const updateProjectAlias = (req) => {
@@ -97,12 +94,12 @@ const updateProjectAlias = (req) => {
     const localUpdate = () => {
       if (updatedProj.projectName !== currentProject.projectName) {
         removeProject(currentProject.projectName);
-        projectList[projectList.findIndex((p)=>(p==currentProject.projectName))] = updatedProj.projectName;
+        projectList[projectList.findIndex((p) => (p === currentProject.projectName))] = updatedProj.projectName;
       }
-    }
-    if(authenticated){
-      ajax.updateProject(dispatch, currentProject.projectName, updatedProj, synchronize ? localUpdate:null);
-    } else{
+    };
+    if (authenticated) {
+      ajax.updateProject(dispatch, currentProject.projectName, updatedProj, synchronize ? localUpdate : null);
+    } else {
       localUpdate();
       currentProject.projectName = updatedProj.projectName;
       currentProject.projectNote = updatedProj.projectNote;
@@ -111,17 +108,17 @@ const updateProjectAlias = (req) => {
         activeProj: updatedProj.projectName,
         currentProject,
         projectList,
-      })
+      });
     }
-  }
-}
+  };
+};
 
 const addResourcesAlias = (req) => {
   return (dispatch, getState) => {
     const { authenticated } = getState().auth;
     const { currentProject } = getState().projects;
     const { tabs } = req.payload;
-    if(authenticated){
+    if (authenticated) {
       const tabResources = {};
       tabs.forEach((tab) => {
         tabResources[tab.url] = {
@@ -130,9 +127,9 @@ const addResourcesAlias = (req) => {
           title: tab.title,
           tags: [],
         };
-      }); 
-      ajax.addResources(dispatch,  currentProject.projectName, tabResources);
-    } else{
+      });
+      ajax.addResources(dispatch, currentProject.projectName, tabResources);
+    } else {
       tabs.forEach((tab) => {
         currentProject.resources[tab.url] = {
           url: tab.url,
@@ -143,7 +140,7 @@ const addResourcesAlias = (req) => {
       });
       dispatch({
         type: ActionTypes.ADD_RESOURCES_FULLFILLED,
-        currentProject
+        currentProject,
       });
     }
   };
@@ -154,35 +151,35 @@ const deleteResourcesAlias = (req) => {
     const { authenticated } = getState().auth;
     const { currentProject } = getState().projects;
     const { urls } = req.payload;
-    if(authenticated){
-      ajax.deleteResources(dispatch,  currentProject.projectName, urls);
-    } else{
+    if (authenticated) {
+      ajax.deleteResources(dispatch, currentProject.projectName, urls);
+    } else {
       urls.forEach((url) => {
-        delete currentProject.resources[tab.url];
-      })
+        delete currentProject.resources[url];
+      });
       dispatch({
         type: ActionTypes.DELETE_RESOURCES_FULLFILLED,
-        currentProject
+        currentProject,
       });
     }
   };
-}
+};
 
 const loadResourcesAlias = (req) => {
   return (dispatch, getState) => {
     const projectName = req.payload;
     const { authenticated } = getState().auth;
-    const { projectNote, resources } = loadcurrentProject(projectName);
-    if(authenticated){
-      ajax.loadResources(projectName, projectNote, resources); // Compare data and return new current proj info
+    if (authenticated) {
+      ajax.loadResources(projectName);
     } else {
+      const { projectNote, resources } = loadcurrentProject(projectName);
       dispatch({
         type: ActionTypes.LOAD_RESOURCES_FULLFILLED,
         currentProject: {
           projectName,
           projectNote,
           resources,
-        }
+        },
       });
     }
   };

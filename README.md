@@ -59,32 +59,117 @@ Responsibility:
 * Database
 * collaborate with the other teams
 
-
-
 ### Front-end: 
- * Welcome...
- * A button for history
-     * Could open new tab altogether
- * A button for project folders
-     * Button for view change / straightforward UI
-     * List (grid view?) of Tabs in this project
-         * Icon
-         * URL
-         * Title
-         * Tags/description
-         * Importance?
-     * delete button
-     * search button (specific tab or tags)
- * Div of options for this particular tab...
-     * Add to database (specify options)
+#### App
+  * Routing to 3 pages and a modal
+  * A footer to control login status
+
+#### TabManager:  
+  What works:
+  * TabView
+    * Filter tabs according to title
+    * Switch between grid view and list view
+    * Click to go to a tab
+    * Click to close a tab
+    * Drag a tab to a project
+  * PojectList:
+    * Show projectlist (projectName + tabName + and n other tabs)
+    * Project with tabs that fullfill the filter would be assigned to a class: fits-filter 
+    * Switch active project (class : choosen)
+    * Create a new project (check if the name exists)
+
+  Todo:
+    * Implement grid view
+    * Error display for creating project
+    * A better UI
+
+#### ProjectDetail:
+  What works:
+  * ProjectEditor:
+    * Edit the name and note of a project
+  * TabView:
+    * Basicly the same as tab manager (open/close), but can not drag a tab
+    * Add a tab to current project
+  * ResourceView:
+    * Filter: select box + input, filter by tab or title
+    * OpenAll: open all the tabs that fits the filter
+    * Resource: Display the name and title of a resource
+  * Delete Project:
+    * Delete project and go back to tab manager if succeed
+
+  Todo: 
+  * Change filter status
+  * Filter the tabs
+  * Delete a tab, show tab detail (url and tags), change tags 
+
+#### Login  
+  What works:
+  * Basic UI with two input boxes and a button
+  * Click button to the synchronize modal
+
+  Todo:
+  * Get input values
+  * Actually log in functions (and maybe also sign in)
+  * A better UI
+
+#### Modal
+  Recently we only have one synchronize modal
+  What works:
+  * Click the background to close the modal and go back
+  
+  ##### Synchronize modal
+    * To switch the synchronize status
+    * When synchronize is choosen, wait for synchronizing
+
+### Store
+* For the front end, data is stored in the background
+* Pop up page use actions (redux for chrome would send them as messages) to change data in store 
+* Since direct communication can not handle promises or handle error, we use aliases to conduct actions in background pages
+* Data in store:
+```js
+const initialState = {
+  tabs: {
+    tabList: {},
+    activeTab: -1,
+    activeWindow: -1,
+    movingTab: null,
+  },
+  projects: {
+    projectList: loadProjectList(), // An array of projects, Load from local storage
+    currentProject: { projectName: '', projectNote: '', resources: {} },
+    activeProj: Values.defaultProject,
+    error: '',
+    synchronizing: 0, 
+  },
+  preferences: loadPreferences(), 
+  // View: 0 -> ListView, 1 -> GridView
+  // Synchronize: -1 -> unknown, 0 -> don't synchronize, 1 -> synchronize
+  auth: {
+    authenticated: false,
+    userName: '', 
+    error: '',
+  },  
+};
+```
+A listener is added to store. If the state of store has been changed, write the new preferences to local storage. If has been logged in and not using synchronize, would not update project info, otherwise write the new project list and new current project
+
+### Communicate with Backend
+
+* Methods are defined in src/modules/ajax.js
+* Methods are called from src/background/aliases4project;  
+  Could refer to local methods for inspiration!
      
 ### Back-end: 
+
+
  * Tab Model
-     * Opened At
+     * Opened At  
+     // 'Open at' time of a tab is not provided by chrome.tabs, so PLZ get rid of it for now!  
      * URL
      * Name
      * Tags 
-     * Custom Notes
+     * Custom Notes  
+     // Don't have this info, and maybe not necessary? 
  * Project/Folder Model
      * Name
      * List of tabs
@@ -99,8 +184,14 @@ Because this is an extension, prior to publication on the Chrome webstore, users
 * First, make sure to clone this repo with `git clone https://github.com/dartmouth-cs52-20S/project-2-many-tabz.git` in a directory of your choice. 
 * Next, simply fire up Chrome and navigate to [chrome://extensions/](chrome://extensions/). 
 * Ensure Developer Mode is activated (click the radio button at the top right of this page).
-* Click the Load Unpacked button, and select the /src folder of this github repository.
+<!-- * Click the Load Unpacked button, and select the /src folder of this github repository. -->
+<!-- Then We'll do something different to use react！  -->
+* Enter the project-2-many-tabs folder, do yarn install.
+* Do yarn build (if you are using Windows system, do yarn winbuild)
+* Click the Load Unpacked button, and select the /dist folder of this github repository.
+<!-- Then the same -->
 * Turn on the extension by clicking the blue radio button at the bottom right corner of the extension box.
+* Click the refresh icon on the extension box anytime you pull a new update from this repository. Turn on the extension by clicking the blue radio button at the bottom right corner of the extension box.
 * Click the refresh icon on the extension box anytime you pull a new update from this repository.
 
 ## Deployment

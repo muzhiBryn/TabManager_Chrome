@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { requestUpdateProject } from '../../../../shared/actions/projectactions';
 
-class ProjectEditor extends Component{
-  constructor(props){
+class ProjectEditor extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       isEditing: false,
@@ -25,14 +25,13 @@ class ProjectEditor extends Component{
     const { isEditing, updatedProject } = this.state;
     const { projectList, currentProject } = this.props;
     if (isEditing) {
-      if(updatedProject.projectName !== currentProject.projectName && projectList.includes(updatedProject.projectName)) {
-        console.log("exists!");
+      if (updatedProject.projectName !== currentProject.projectName && projectList.includes(updatedProject.projectName)) {
+        console.log('exists!');
         // Todo: show the message!
         return;
-      }
-      else if(updatedProject.projectName === currentProject.projectName &&
-        updatedProject.projectNote === currentProject.projectNote) {
-        console.log("Nothing changed");
+      } else if (updatedProject.projectName === currentProject.projectName
+        && updatedProject.projectNote === currentProject.projectNote) {
+        console.log('Nothing changed');
         this.setState({ isEditing: false });
         return;
       }
@@ -48,28 +47,27 @@ class ProjectEditor extends Component{
       this.setState({ isEditing: true });
     }
   }
-  
+
+  onNameChange(event) {
+    const projectName = event.target.value;
+    this.setState((prevState) => ({
+      updatedProject: { ...prevState.updatedProject, projectName },
+    }));
+  }
+
+  onNoteChange(event) {
+    const projectNote = event.target.value;
+    this.setState((prevState) => ({
+      updatedProject: { ...prevState.updatedProject, projectNote },
+    }));
+  }
+
   renderEdit() {
     return (
       <button type="button" onClick={this.onEditClick} className="note-button"><FontAwesomeIcon icon={['far', 'edit']} size="2x" /> </button>
     );
   }
-  
-  onNameChange(event) {
-    const projectName = event.target.value;
-    this.setState((prevState)=>({
-      updatedProject: { ...prevState.updatedProject, projectName},
-    }));
-  }
-  
-  onNoteChange(event) {
-    const projectNote = event.target.value;
-    this.setState((prevState)=>({
-      updatedProject: { ...prevState.updatedProject, projectNote},
-    }));
-  }
-  
-  
+
   renderTitle() {
     const { currentProject } = this.props;
     if (this.state.isEditing) {
@@ -90,7 +88,7 @@ class ProjectEditor extends Component{
       );
     }
   }
-  
+
   renderNote() {
     const { currentProject } = this.props;
     if (this.state.isEditing) {
@@ -110,7 +108,7 @@ class ProjectEditor extends Component{
     }
   }
 
-  render(){
+  render() {
     return (
       <div>
         {this.renderTitle()}
@@ -126,4 +124,3 @@ const mapStateToProps = (reduxState) => ({
 });
 
 export default connect(mapStateToProps, { requestUpdateProject })(ProjectEditor);
-

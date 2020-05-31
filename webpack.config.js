@@ -1,6 +1,7 @@
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 const CopyPlugin = require('copy-webpack-plugin');
-const HtmlPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 require('@babel/register');
@@ -13,8 +14,8 @@ const env = process.env.NODE_ENV || 'development';
 
 const finalCSSLoader = (env === 'production') ? MiniCssExtractPlugin.loader : { loader: 'style-loader' };
 
-function generateHtmlPlugins(items) {
-  return items.map((name) => new HtmlPlugin(
+function generateHtmlWebpackPlugins(items) {
+  return items.map((name) => new HtmlWebpackPlugin(
     {
       filename: `.ss/${name}.html`,
       chunks: [name],
@@ -42,7 +43,10 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: ['babel-loader'],
+        use: [
+          { loader: 'babel-loader' },
+          { loader: 'eslint-loader' },
+        ],
       },
       {
         test: /\.jpe?g$|\.gif$|\.png$|\.ttf$|\.eot$|\.svg$/,
@@ -90,7 +94,7 @@ module.exports = {
         },
       ],
     ),
-    ...generateHtmlPlugins(
+    ...generateHtmlWebpackPlugins(
       [
         'background',
         'popup',

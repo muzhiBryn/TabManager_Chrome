@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import ActionTypes from '../../shared/actionTypes';
 
 const chromeError = (dispatch, error) => {
@@ -9,22 +10,22 @@ const chromeError = (dispatch, error) => {
 };
 
 const updateTabs = (dispatch, activeProj, prevState) => {
-  try{
+  try {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
       const activeWindow = tabs.length ? tabs[0].windowId : -1;
-      const tabList = prevState.tabs.tabList;
+      const { tabList } = prevState.tabs;
       const prevTabs = prevState.tabs.tabList[activeWindow];
       if (!prevTabs) tabList[activeWindow] = {};
       let activeTab = -1; // check active tab
       tabs.forEach((tab) => {
-        if(tab.active)activeTab = tab.id;
-        const project = (prevTabs && prevTabs[tab.id])? prevTabs[tab.id].project : activeProj;
+        if (tab.active)activeTab = tab.id;
+        const project = (prevTabs && prevTabs[tab.id]) ? prevTabs[tab.id].project : activeProj;
         tabList[activeWindow][tab.id] = {
           icon: tab.favIconUrl,
           title: tab.title,
           url: tab.url,
           id: tab.id,
-          project
+          project,
         };
       });
       dispatch({
@@ -35,7 +36,7 @@ const updateTabs = (dispatch, activeProj, prevState) => {
         activeProj,
       });
     });
-  } catch(error){
+  } catch (error) {
     chromeError(dispatch, error);
   }
 };
@@ -46,7 +47,7 @@ const getTabsAlias = (req) => {
 
 const switchTabAlias = (req) => {
   return (dispatch) => {
-    try{
+    try {
       chrome.tabs.query({ currentWindow: true }, (tbs) => {
         tbs.forEach((tab) => {
           if (tab.active) {
@@ -59,15 +60,15 @@ const switchTabAlias = (req) => {
           activeTab: req.payload,
         });
       });
-    }catch(error){
+    } catch (error) {
       chromeError(dispatch, error);
-    };
-  }
+    }
+  };
 };
 
 const closeTabsAlias = (req) => {
   return (dispatch, getState) => {
-    try{
+    try {
       chrome.tabs.remove(req.payload.ids, () => {
         dispatch({
           type: ActionTypes.CLOSE_TABS_FULLFILLED,
@@ -75,7 +76,7 @@ const closeTabsAlias = (req) => {
         setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState()); }, 200);
         setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState()); }, 500); // Well... Just in case
       });
-    }catch(error){
+    } catch (error) {
       chromeError(dispatch, error);
     }
   };
@@ -83,7 +84,7 @@ const closeTabsAlias = (req) => {
 
 const openTabsAlias = (req) => {
   return (dispatch) => {
-    try{
+    try {
       if (req.payload.urls instanceof Array) {
         req.payload.urls.forEach((url) => {
           chrome.tabs.query({ currentWindow: true, url }, (tabs) => {
@@ -101,7 +102,7 @@ const openTabsAlias = (req) => {
         type: ActionTypes.OPEN_TABS_FULLFILLED,
       });
       setTimeout(() => { updateTabs(dispatch, req.payload.activeProj); }, 200);
-    }catch(error){
+    } catch (error) {
       chromeError(dispatch, error);
     }
   };

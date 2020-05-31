@@ -38,16 +38,16 @@ class ProjectDetail extends Component {
     this.setState({ filter });
   }
 
-  handleDeleteProject(){
-    this.setState({deleteRequested:1})
+  handleDeleteProject() {
+    this.setState({ deleteRequested: 1 });
     this.props.requestDeleteProject(this.props.activeProj);
   }
 
   render() {
     const { activeWindow, activeProj, tabs } = this.props;
     const tabShow = [];
-    if(activeProj === Values.defaultProject && this.state.deleteRequested) {
-      return <Redirect to='/'/>;
+    if (activeProj === Values.defaultProject && this.state.deleteRequested) {
+      return <Redirect to="/" />;
     }
     if (activeWindow !== -1) {
       Object.values(tabs[activeWindow]).forEach((tab) => {
@@ -79,4 +79,6 @@ const mapStateToProps = (reduxState) => ({
   activeProj: reduxState.projects.activeProj,
 });
 
-export default connect(mapStateToProps, { requestGetTabs, requestDeleteProject, requestLoadResources, switchProject })(ProjectDetail);
+export default connect(mapStateToProps, {
+  requestGetTabs, requestDeleteProject, requestLoadResources, switchProject,
+})(ProjectDetail);

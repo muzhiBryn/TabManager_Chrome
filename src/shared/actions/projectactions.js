@@ -16,7 +16,7 @@ export function requestLoadProjects() {
 export function requestMergeProjects() {
   return {
     type: ActionTypes.MERGE_PROJECTS_REQUESTED,
-  }
+  };
 }
 
 export function requestNewProject(projectName) {

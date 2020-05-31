@@ -27,23 +27,23 @@ const initialState = {
     currentProject: { projectName: '', projectNote: '', resources: {} },
     activeProj: Values.defaultProject,
     error: '',
-    synchronizing: 0, 
+    synchronizing: 0,
   },
-  preferences: loadPreferences(), 
+  preferences: loadPreferences(),
   // View: 0 -> ListView, 1 -> GridView
   // Synchronize: -1 -> unknown, 0 -> don't synchronize, 1 -> synchronize
   auth: {
     authenticated: false,
-    userName: '', 
+    userName: '',
     error: '',
-  },  
+  },
 };
 
 const store = createStore(
   reducer,
   initialState,
   applyMiddleware(
-    alias({...tabAliases, ...projectAliases}),
+    alias({ ...tabAliases, ...projectAliases }),
     thunk,
     logger, // NOTE: logger _must_ be last in middleware chain
   ),
@@ -60,8 +60,8 @@ store.subscribe(throttle(() => {
   const { currentProject, activeProj, synchronizing } = store.getState().projects;
   const { authenticated } = store.getState().auth;
   const { synchronize } = store.getState().preferences;
-  if(!authenticated || (synchronize===1) && synchronizing!==1) {
-    if(currentProject.projectName === activeProj) savecurrentProject(currentProject.projectName, currentProject.projectNote, currentProject.resources);
+  if (!authenticated || (synchronize === 1 && synchronizing !== 1)) {
+    if (currentProject.projectName === activeProj) savecurrentProject(currentProject.projectName, currentProject.projectNote, currentProject.resources);
   }
 }, 1000));
 
