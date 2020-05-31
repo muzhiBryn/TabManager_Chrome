@@ -1,8 +1,15 @@
 import ActionTypes from '../actionTypes';
 
-export default function requestSwitchView(view) {
+export function switchView(view) {
   return {
-    type: ActionTypes.SWITCH_VIEW_REQUESTED,
-    payload: view,
+    type: ActionTypes.SWITCH_VIEW,
+    view,
+  };
+}
+
+export function switchSynchronize(syn) {
+  return {
+    type: ActionTypes.SWITCH_SYNCHRONIZE,
+    syn,
   };
 }

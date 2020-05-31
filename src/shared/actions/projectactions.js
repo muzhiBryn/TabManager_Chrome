@@ -1,9 +1,9 @@
 import ActionTypes from '../actionTypes';
 
-export function requestSwitchProject(projectName) {
+export function switchProject(projectName) {
   return {
-    type: ActionTypes.SWITCH_PROJECT_REQUESTED,
-    payload: projectName,
+    type: ActionTypes.SWITCH_PROJECT,
+    projectName,
   };
 }
 
@@ -11,6 +11,12 @@ export function requestLoadProjects() {
   return {
     type: ActionTypes.LOAD_PROJECTS_REQUESTED,
   };
+}
+
+export function requestMergeProjects() {
+  return {
+    type: ActionTypes.MERGE_PROJECTS_REQUESTED,
+  }
 }
 
 export function requestNewProject(projectName) {
@@ -21,36 +27,43 @@ export function requestNewProject(projectName) {
   };
 }
 
-export function requestDeleteProject(projectId) {
+export function requestDeleteProject(projectName) {
   return {
     type: ActionTypes.DELETE_PROJECT_REQUESTED,
-    payload: projectId,
+    payload: projectName,
   };
 }
 
-export function requestLoadResources(projectId) {
+export function requestUpdateProject(updatedProj) {
+  return {
+    type: ActionTypes.UPDATE_PROJECT_REQUESTED,
+    payload: updatedProj,
+  };
+}
+
+export function requestLoadResources(projectName) {
   return {
     type: ActionTypes.LOAD_RESOURCES_REQUESTED,
-    payload: projectId,
+    payload: projectName,
   };
 }
 
-export function requestAddResource(projectId, tab) {
+export function requestAddResources(tabs, projectName) {
   return {
-    type: ActionTypes.ADD_RESOURCE_REQUESTED,
+    type: ActionTypes.ADD_RESOURCES_REQUESTED,
     payload: {
-      projectId,
-      tab,
+      tabs,
+      projectName,
     },
   };
 }
 
-export function requestDeleteResource(projectId, tabId) {
+export function requestDeleteResource(urls, projectName) {
   return {
-    type: ActionTypes.DELETE_RESOUECE_REQUESTED,
+    type: ActionTypes.DELETE_RESOURCES_REQUESTED,
     payload: {
-      projectId,
-      tabId,
+      urls,
+      projectName,
     },
   };
 }

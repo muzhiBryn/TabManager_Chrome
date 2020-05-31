@@ -18,7 +18,6 @@ export function requestGetTabs(activeProj) {
 }
 
 export function requestCloseTabs(ids, activeProj) {
-  console.log('request close a tab');
   return {
     type: ActionTypes.CLOSE_TABS_REQUESTED,
     payload: {
@@ -29,9 +28,23 @@ export function requestCloseTabs(ids, activeProj) {
 }
 
 export function requestSwitchTab(id) {
-  console.log('request switch a tab');
   return {
     type: ActionTypes.SWITCH_TAB_REQUESTED,
     payload: id,
+  };
+}
+
+export function moveTab(movingTab) {
+  return {
+    type: ActionTypes.MOVE_TAB,
+    movingTab,
+  };
+}
+
+export function updateTabProj(tabId, project) {
+  return {
+    type: ActionTypes.UPDATE_TAB_PROJ,
+    tabId,
+    project,
   };
 }

@@ -1,64 +1,73 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import DisplaySetting from './displayset';
-import TabGrid from './tabgrid';
-import TabList from './tablist';
-import ResourceList from './resourcelist';
+import { Link, Redirect } from 'react-router-dom';
+import Values from '../../../shared/values';
+import ProjectEditor from './detailview/projecteditor';
+import TabView from './sharedview/tabview';
+import ResourceView from './detailview/resourceview';
+import Footer from './sharedview/footer';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
-import { requestSwitchProject } from '../../../shared/actions/projectactions';
+import { requestLoadResources, requestDeleteProject, switchProject } from '../../../shared/actions/projectactions';
+
 
 class ProjectDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       filter: {},
+      deleteRequested: 0,
     };
+    // Tabs could be edited seperately
+    // Read tabs from props
     this.setFilter = this.setFilter.bind(this);
+    this.handleDeleteProject = this.handleDeleteProject.bind(this);
   }
 
   componentDidMount() {
-    const { tabs, activeProj } = this.props;
-    console.log(this.props.match.params.proj);
-    if (activeProj !== this.props.match.params.proj) {
-      this.props.requestSwitchProject(activeProj);
+    const { activeProj } = this.props;
+    const newActive = this.props.match.params.proj.substr(1);
+    console.log(newActive);
+    if (activeProj !== newActive) {
+      this.props.switchProject(newActive);
     }
-    if (tabs.size === undefined) {
-      this.props.requestGetTabs(this.props.match.params.proj);
-    }
+    this.props.requestGetTabs(activeProj);
+    this.props.requestLoadResources(newActive);
   }
 
   setFilter(filter) {
     this.setState({ filter });
   }
 
-  render() {
-    let tabView;
-    const tabShow = [];
-    Object.values(this.props.tabs).forEach((tab) => {
-      if (tab.project !== this.props.activeProj) return;
-      let flag = true;
-      Object.keys(this.state.filter).forEach((key) => {
-        if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
-      });
-      if (flag) tabShow.push(tab);
-    });
-    switch (this.props.displayType) {
-      case '1':
-        tabView = (<TabGrid tabs={tabShow} filter={this.state.filter} />);
-        break;
-      default:
-        tabView = (<TabList tabs={tabShow} filter={this.state.filter} />);
-        break;
-    }
+  handleDeleteProject(){
+    this.setState({deleteRequested:1})
+    this.props.requestDeleteProject(this.props.activeProj);
+  }
 
+  render() {
+    const { activeWindow, activeProj, tabs } = this.props;
+    const tabShow = [];
+    if(activeProj === Values.defaultProject && this.state.deleteRequested) {
+      return <Redirect to='/'/>;
+    }
+    if (activeWindow !== -1) {
+      Object.values(tabs[activeWindow]).forEach((tab) => {
+        if (tab.project !== activeProj) return;
+        let flag = true;
+        Object.keys(this.state.filter).forEach((key) => {
+          if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
+        });
+        if (flag) tabShow.push(tab);
+      });
+    }
     return (
       <div>
-        <NavLink to="/">Back</NavLink>
-        <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
-        { tabView }
-        <ResourceList />
+        <Link to="/">Back</Link>
+        {/* <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} /> */}
+        <ProjectEditor />
+        <TabView editing tabs={tabShow} filter={this.state.filter} />
+        <ResourceView />
+        <button type="button" onClick={this.handleDeleteProject}>Delete Project</button>
+        <Footer />
       </div>
     );
   }
@@ -66,8 +75,8 @@ class ProjectDetail extends Component {
 
 const mapStateToProps = (reduxState) => ({
   tabs: reduxState.tabs.tabList,
+  activeWindow: reduxState.tabs.activeWindow,
   activeProj: reduxState.projects.activeProj,
-  displayType: reduxState.preferences.displayType,
 });
 
-export default connect(mapStateToProps, { requestGetTabs, requestSwitchProject })(ProjectDetail);
+export default connect(mapStateToProps, { requestGetTabs, requestDeleteProject, requestLoadResources, switchProject })(ProjectDetail);
