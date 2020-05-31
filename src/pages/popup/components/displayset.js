@@ -4,10 +4,14 @@ import requestSwitchView from '../../../shared/actions/preferenceactions';
 
 const DisplaySetting = (props) => {
   return (
-    <div>
-      <input type="text" onChange={(e) => { props.setFilter({ title: e.target.value }); }} />
+    <div id="tabtop">
+      <input type="text" placeholder="Search tabs..." onChange={(e) => { props.setFilter({ title: e.target.value }); }} />
       <input type="radio" value="0" name="viewType" checked={props.displayType === '0'} onChange={(e) => { props.requestSwitchView(e.target.value); }} />
       <input type="radio" value="1" name="viewType" checked={props.displayType === '1'} onChange={(e) => { props.requestSwitchView(e.target.value); }} />
+      <label className="switch">
+        <input type="checkbox" />
+        <span className="slider round"></span>
+      </label>
     </div>
   );
 };

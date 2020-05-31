@@ -12,7 +12,7 @@ const App = () => {
   return (
     <div className="container">
       <h1> Welcome to 2ManyTabz! </h1>
-      <h2> Your new favorite chrome extension </h2>
+      {/* <h2> Your new favorite chrome extension </h2> */}
       <Router>
         <Switch>
           <Route exact path="/project/:proj" component={ProjectDetail} />

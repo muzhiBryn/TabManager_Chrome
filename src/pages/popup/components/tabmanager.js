@@ -49,7 +49,7 @@ class TabManager extends Component {
     }
 
     return (
-      <div>
+      <div id="tabview">
         <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
         { tabView }
         <ProjectList />

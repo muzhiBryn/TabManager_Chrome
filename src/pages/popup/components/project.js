@@ -10,7 +10,7 @@ const Project = (props) => {
   return (
     <li style={style} onClick={() => { props.requestSwitchProject(projectTitle); }}>
       {projectTitle}
-      <button><NavLink exact to={`/project/:${projectTitle}`}>Edit</NavLink></button>
+      <button id="submit"><NavLink exact to={`/project/:${projectTitle}`}>Edit</NavLink></button>
     </li>
   );
 };

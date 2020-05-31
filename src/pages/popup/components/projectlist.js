@@ -38,10 +38,13 @@ class ProjectList extends Component {
     return (
       <ul id="project-list">
         {projectView}
-        <form onSubmit={this.handleSubmitNew}>
-          <input type="text" name="title" onBlur={this.handleNameChange} />
-          <button type="submit"> Add project </button>
+        <form id="addform" onSubmit={this.handleSubmitNew}>
+          <input id="addbar" type="text" name="title" placeholder="Project Name" onBlur={this.handleNameChange} />
+          <button id="submit" type="submit"> Add project </button>
         </form>
+        <div id="login">
+          <h2>Login to save your project</h2>
+        </div>
       </ul>
     );
   }
