@@ -15,7 +15,7 @@ const GridTab = (props) => {
       onMouseUp={() => { props.requestSwitchTab(tab.id); }}
     >
       <img alt=" " src={tab.icon} />
-      <span>{tab.title}</span>
+      {/* <span>{tab.title}</span> */}
       {editing ? (
         <SaveTabBtn tab={tab} />
       ) : null}

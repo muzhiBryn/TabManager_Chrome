@@ -1,30 +1,25 @@
 Arguments: 
-  D:\Application\node\node.exe D:\Application\Yarn\bin\yarn.js add @fontawesome/free-regular-svg-icons
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js winbuild
 
 PATH: 
-  D:\Application\python3\Scripts\;D:\Application\python3\;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files (x86)\PharosSystems\Core;D:\Application\Git\cmd;C:\Program Files\dotnet\;D:\Application\node\;D:\Application\Putty\;D:\Application\Anaconda;D:\Application\Anaconda\Scripts;D:\Application\Anaconda\Library\bin;D:\Application\cmake-3.15.3-win64-x64\bin;D:\Application\Yarn\bin\;D:\Dartmouth\courses\FullStack\workshop-database\mysql-8.0.20-winx64\bin;D:\Application\Ruby26-x64\bin;D:\Application\Microsoft VS Code\bin;C:\Users\Purslane\AppData\Local\Yarn\bin
+  C:\Users\kjtay\OneDrive\Documents\19S\Lib\site-packages\PyQt5;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\PharosSystems\Core;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Common Files\Propellerhead Software\ReWire\;C:\Program Files\Common Files\Propellerhead Software\ReWire\;C:\Program Files\MATLAB\R2020a\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Ruby26-x64\bin;C:\Users\kjtay\AppData\Local\Programs\Python\Python38;C:\Users\kjtay\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\kjtay\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin;C:\Users\kjtay\AppData\Roaming\npm
 
 Yarn version: 
   1.22.4
 
 Node version: 
-  12.14.0
+  12.16.3
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@fontawesome%2ffree-regular-svg-icons: Not found
-      at Request.params.callback [as _callback] (D:\Application\Yarn\lib\cli.js:66096:18)
-      at Request.self.callback (D:\Application\Yarn\lib\cli.js:140748:22)
-      at Request.emit (events.js:210:5)
-      at Request.<anonymous> (D:\Application\Yarn\lib\cli.js:141720:10)
-      at Request.emit (events.js:210:5)
-      at IncomingMessage.<anonymous> (D:\Application\Yarn\lib\cli.js:141642:12)
-      at Object.onceWrapper (events.js:299:28)
-      at IncomingMessage.emit (events.js:215:7)
-      at endReadableNT (_stream_readable.js:1184:12)
-      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+  SyntaxError: C:\Users\kjtay\OneDrive\Desktop\Desktop things\School\20S\COSC 52\labs\project-2-many-tabz\package.json: Unexpected token < in JSON at position 1865
+      at JSON.parse (<anonymous>)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:310:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:321:13
 
 npm manifest: 
   {
@@ -35,8 +30,9 @@ npm manifest:
     "author": "project-2-many-tabz group",
     "license": "MIT",
     "scripts": {
-      "winbuild": "yarn clean & SET WEBPACK_ENV=production& webpack --colors",
-      "clean": "rimraf dist"
+      "clean": "rimraf dist",
+      "build": "yarn clean; NODE_ENV=production webpack --colors",
+      "winbuild": "yarn clean & SET WEBPACK_ENV=production& webpack --colors"
     },
     "devDependencies": {
       "@babel/core": "^7.10.0",
@@ -74,10 +70,14 @@ npm manifest:
       "@babel/register": "^7.9.0",
       "@fortawesome/fontawesome-svg-core": "^1.2.28",
       "@fortawesome/free-brands-svg-icons": "^5.13.0",
+      "@fortawesome/free-regular-svg-icons": "^5.13.0",
       "@fortawesome/free-solid-svg-icons": "^5.13.0",
       "@fortawesome/react-fontawesome": "^0.1.9",
       "@material-ui/core": "^4.10.0",
+  <<<<<<< HEAD
+  =======
       "@material-ui/icons": "^4.9.1",
+  >>>>>>> 349797edbd99e57b22e561508804d559926acbee
       "axios": "^0.16.2",
       "babel-plugin-transform-decorators-legacy": "^1.3.4",
       "babel-polyfill": "^6.23.0",
@@ -1037,6 +1037,13 @@ Lockfile:
     dependencies:
       "@fortawesome/fontawesome-common-types" "^0.2.28"
   
+  "@fortawesome/free-regular-svg-icons@^5.13.0":
+    version "5.13.0"
+    resolved "https://registry.yarnpkg.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-5.13.0.tgz#925a13d8bdda0678f71551828cac80ab47b8150c"
+    integrity sha512-70FAyiS5j+ANYD4dh9NGowTorNDnyvQHHpCM7FpnF7GxtDjBUCKdrFqCPzesEIpNDFNd+La3vex+jDk4nnUfpA==
+    dependencies:
+      "@fortawesome/fontawesome-common-types" "^0.2.28"
+  
   "@fortawesome/free-solid-svg-icons@^5.13.0":
     version "5.13.0"
     resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.13.0.tgz#44d9118668ad96b4fd5c9434a43efc5903525739"
@@ -1069,6 +1076,8 @@ Lockfile:
       react-is "^16.8.0"
       react-transition-group "^4.4.0"
   
+  <<<<<<< HEAD
+  =======
   "@material-ui/icons@^4.9.1":
     version "4.9.1"
     resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.9.1.tgz#fdeadf8cb3d89208945b33dbc50c7c616d0bd665"
@@ -1076,6 +1085,7 @@ Lockfile:
     dependencies:
       "@babel/runtime" "^7.4.4"
   
+  >>>>>>> 349797edbd99e57b22e561508804d559926acbee
   "@material-ui/styles@^4.10.0":
     version "4.10.0"
     resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.10.0.tgz#2406dc23aa358217aa8cc772e6237bd7f0544071"
