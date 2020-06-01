@@ -44,16 +44,18 @@ class TabManager extends Component {
     });
     if (activeWindow !== -1) {
       Object.values(tabs[activeWindow]).forEach((tab) => {
-        projectOverview[tab.project].ids.push(tab.id);
-        if (projectOverview[tab.project].example === '')projectOverview[tab.project].example = tab.title;
-        let flag = true;
-        Object.keys(this.state.filter).forEach((key) => {
-          if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
-        });
-        if (!flag) return;
-        if (Object.keys(this.state.filter).length)projectOverview[tab.project].contains = true; // Contains tabs that fits the filter
-        if (tab.project === activeProj) {
-          tabShow.push(tab);
+        if (projectOverview[tab.project]) { // Might not exist when deleting a project just finished
+          projectOverview[tab.project].ids.push(tab.id);
+          if (projectOverview[tab.project].example === '')projectOverview[tab.project].example = tab.title;
+          let flag = true;
+          Object.keys(this.state.filter).forEach((key) => {
+            if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
+          });
+          if (!flag) return;
+          if (Object.keys(this.state.filter).length)projectOverview[tab.project].contains = true; // Contains tabs that fits the filter
+          if (tab.project === activeProj) {
+            tabShow.push(tab);
+          }
         }
       });
     }

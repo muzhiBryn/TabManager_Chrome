@@ -22,9 +22,14 @@ const Resource = (props) => {
           className="tags-input"
           defaultValue={tab.tags.join(', ')}
           onBlur={(e) => {
-            const tags = e.target.value.split(',').map((tag) => { return tag.replace(/(^\s*)|(\s*$)/g, ''); });
+            const tags = e.target.value.split(',').map((tag) => {
+              return tag.replace(/(^\s*)|(\s*$)/g, '');
+            }).filter((tag) => {
+              if (tag.length === 0) return false;
+              return true;
+            });
             console.log(tags);
-            props.requestUpdateResource(tab.url, { tags }, activeProj);
+            if (tags.length > 0 || tab.tags.length !== 0) { props.requestUpdateResource(tab.url, { tags }, activeProj); }
           }}
         />
         </div>

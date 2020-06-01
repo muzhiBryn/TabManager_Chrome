@@ -9,17 +9,23 @@ const chromeError = (dispatch, error) => {
   });
 };
 
-const updateTabs = (dispatch, activeProj, _tabs) => {
+const updateTabs = (dispatch, activeProj, prevState) => {
   try {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
       const activeWindow = tabs.length ? tabs[0].windowId : -1;
-      const tabList = _tabs;
-      const prevTabs = _tabs.tabList[activeWindow];
+      const { tabList } = prevState.tabs;
+      const { projectList } = prevState.projects;
+      const prevTabs = tabList[activeWindow];
       tabList[activeWindow] = {};
+      const projectMap = {};
+      projectList.forEach((projectName) => {
+        projectMap[projectName] = 1;
+      });
       let activeTab = -1; // check active tab
       tabs.forEach((tab) => {
         if (tab.active)activeTab = tab.id;
-        const project = (prevTabs && prevTabs[tab.id]) ? prevTabs[tab.id].project : activeProj;
+        const project = (prevTabs && prevTabs[tab.id] && projectMap[prevTabs[tab.id].project])
+          ? prevTabs[tab.id].project : activeProj;
         tabList[activeWindow][tab.id] = {
           icon: tab.favIconUrl,
           title: tab.title,
@@ -42,7 +48,7 @@ const updateTabs = (dispatch, activeProj, _tabs) => {
 };
 
 const getTabsAlias = (req) => {
-  return (dispatch, getState) => { updateTabs(dispatch, req.payload, getState().tabs); };
+  return (dispatch, getState) => { updateTabs(dispatch, req.payload, getState()); };
 };
 
 const switchTabAlias = (req) => {
@@ -73,8 +79,8 @@ const closeTabsAlias = (req) => {
         dispatch({
           type: ActionTypes.CLOSE_TABS_FULLFILLED,
         });
-        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState().tabs); }, 200);
-        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState().tabs); }, 500); // Well... Just in case
+        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState()); }, 200);
+        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState()); }, 500); // Well... Just in case
       });
     } catch (error) {
       chromeError(dispatch, error);
@@ -94,11 +100,11 @@ const openTabsAlias = (req) => {
         for (const tab of Object.values(prevTabs)) {
           if (tab.url === url && tab.project === activeProj) {
             existTab = tab;
-            if (currentProject.resouces[url]) {
-              const prevResource = currentProject.resouces[url];
+            if (currentProject.resources[url]) {
+              const prevResource = currentProject.resources[url];
               if (tab.title !== prevResource.title
                 || tab.icon !== prevResource.icon) {
-                updatedResource = { title: tab.title, icon: tab.icon };
+                const updatedResource = { title: tab.title, icon: tab.icon };
                 dispatch({
                   type: ActionTypes.UPDATE_RESOURCE_REQUESTED,
                   payload: {
@@ -124,7 +130,7 @@ const openTabsAlias = (req) => {
       dispatch({
         type: ActionTypes.OPEN_TABS_FULLFILLED,
       });
-      setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState().tabs); }, 200);
+      setTimeout(() => { updateTabs(dispatch, activeProj, getState()); }, 200);
     } catch (error) {
       chromeError(dispatch, error);
     }
