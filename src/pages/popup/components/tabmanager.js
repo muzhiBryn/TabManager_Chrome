@@ -59,7 +59,7 @@ class TabManager extends Component {
     }
 
     return (
-      <div id="tabview" className={movingTab ? 'grab-tab' : ''}>
+      <div id="tab-manager" className={movingTab ? 'grab-tab' : ''}>
         <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
         <TabView tabs={tabShow} filter={this.state.filter} />
         <ProjectList projectOverview={projectOverview} />

@@ -86,7 +86,7 @@ const openTabsAlias = (req) => {
   return (dispatch, getState) => {
     try {
       const { tabList, activeWindow } = getState().tabs;
-      const { activeProj } = getState().projects;
+      const { activeProj, currentProject } = getState().projects;
       const prevTabs = tabList[activeWindow];
       const { urls } = req.payload;
       const openTab = (url, setActive) => {
@@ -94,6 +94,19 @@ const openTabsAlias = (req) => {
         for (const tab of Object.values(prevTabs)) {
           if (tab.url === url && tab.project === activeProj) {
             existTab = tab;
+            if (currentProject.resouces[url]) {
+              const prevResource = currentProject.resouces[url];
+              if (tab.title !== prevResource.title
+                || tab.icon !== prevResource.icon) {
+                updatedResource = { title: tab.title, icon: tab.icon };
+                dispatch({
+                  type: ActionTypes.UPDATE_RESOURCE_REQUESTED,
+                  payload: {
+                    url, activeProj, updatedResource,
+                  },
+                });// Update the resource!!
+              }
+            }
             break;
           }
         }// We don't want to open a url that already exists in the project

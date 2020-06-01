@@ -56,6 +56,18 @@ export function newProject(dispatch, projectName) {
   });
 }
 
+export function loadProject(dispatch, projectName) {
+  dispatch(() => {
+    axios.get(`${rootUrl}/projects/${projectName}`).then((response) => {
+      dispatch({
+        type: ActionTypes.LOAD_RESOURCES_FULLFILLED,
+        currentProject: response.data,
+      }); // Should return current project
+    }).catch((error) => {
+      serverError(dispatch, error);
+    });
+  });
+}
 
 export function deleteProject(dispatch, projectName) {
   dispatch(() => {
@@ -105,7 +117,7 @@ export function addResources(dispatch, projectName, tabResources) {
 
 export function deleteResources(dispatch, projectName, urls) {
   dispatch(() => {
-    axios.delete(`${rootUrl}/projects/${projectName}`, urls).then((response) => {
+    axios.delete(`${rootUrl}/resources/${projectName}`, urls).then((response) => {
       // Find the urls in the array tabUrls
       dispatch({
         type: ActionTypes.DELETE_RESOURCES_REQUESTED,
@@ -117,15 +129,15 @@ export function deleteResources(dispatch, projectName, urls) {
   });
 }
 
-export function loadResources(dispatch, projectName) {
-  dispatch(() => {
-    axios.get(`${rootUrl}/projects/${projectName}`).then((response) => {
-      dispatch({
-        type: ActionTypes.LOAD_RESOURCES_FULLFILLED,
-        currentProject: response.data,
-      }); // Should return current project
-    }).catch((error) => {
-      serverError(dispatch, error);
+export function updateResource(dispatch, updatedResource, projectName) {
+  axios.put(`${rootUrl}/resources/${projectName}/`, updatedResource).then((response) => {
+    dispatch({
+      type: ActionTypes.UPDATE_RESOURCE_FULLFILLED,
+      resource: response.data,
     });
+    // updatedResource would always contain the url, but may not contain other keys
+    // Should return the updated resource
+  }).catch((error) => {
+    serverError(dispatch, error);
   });
 }

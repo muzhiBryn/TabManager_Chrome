@@ -93,14 +93,19 @@ Responsibility:
   * ResourceView:
     * Filter: select box + input, filter by tab or title
     * OpenAll: open all the tabs that fits the filter
-    * Resource: Display the name and title of a resource
+    * Open one tab: by clicking a resource
+    * Update the resource: when the title and icon of the resource doesn't match the tab with same url
+    * Resource: Display the title and tags of a resource
+    * Click the down button to show detail of the resource and edit the tags
+    * Bluring event would upload the change of the tags
+    * Delete the resource
   * Delete Project:
     * Delete project and go back to tab manager if succeed
 
   Todo: 
   * Change filter status
-  * Filter the tabs
-  * Delete a tab, show tab detail (url and tags), change tags 
+  * Filter the tabs by tabs or by title
+  * handle error
 
 #### Login  
   What works:
@@ -110,6 +115,7 @@ Responsibility:
   Todo:
   * Get input values
   * Actually log in functions (and maybe also sign in)
+  * Log in reducer
   * A better UI
 
 #### Modal
@@ -160,7 +166,6 @@ A listener is added to store. If the state of store has been changed, write the 
   Could refer to local methods for inspiration!
      
 ### Back-end: 
-
 
  * Tab Model
      * Opened At  

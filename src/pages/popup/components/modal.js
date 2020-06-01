@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react';
 import Synchronize from './modals/synchronize';
+import '../scss/modal.scss';
 
 class Modal extends Component {
   constructor(props) {

@@ -1,0 +1,15 @@
+#resource-list{
+  span.tag{
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+
+  input.tags-input{
+    border: solid 1px transparent;
+  }
+
+  input.tags-input:focus{
+    border: solid 1px #ddd;
+  }
+}

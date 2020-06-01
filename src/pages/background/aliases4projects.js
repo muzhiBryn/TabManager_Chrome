@@ -146,6 +146,25 @@ const addResourcesAlias = (req) => {
   };
 };
 
+const updateResourceAlia = (req) => {
+  return (dispatch, getState) => {
+    const { authenticated } = getState().auth;
+    const { url, projectName, updatedResource } = req.payload;
+    if (authenticated) {
+      ajax.updateResource({ ...updatedResource, url }, projectName);
+    } else {
+      const resource = getState().projects.currentProject.resources[url];
+      Object.keys(updatedResource).forEach((key) => {
+        resource[key] = updatedResource[key];
+      });
+      dispatch({
+        type: ActionTypes.UPDATE_RESOURCE_FULLFILLED,
+        resource,
+      });
+    }
+  };
+};
+
 const deleteResourcesAlias = (req) => {
   return (dispatch, getState) => {
     const { authenticated } = getState().auth;
@@ -170,7 +189,7 @@ const loadResourcesAlias = (req) => {
     const projectName = req.payload;
     const { authenticated } = getState().auth;
     if (authenticated) {
-      ajax.loadResources(projectName);
+      ajax.loadProject(projectName);
     } else {
       const { projectNote, resources } = loadcurrentProject(projectName);
       dispatch({
@@ -195,4 +214,5 @@ export default {
   ADD_RESOURCES_REQUESTED: addResourcesAlias,
   DELETE_RESOURCES_REQUESTED: deleteResourcesAlias,
   LOAD_RESOURCES_REQUESTED: loadResourcesAlias,
+  UPDATE_RESOURCE_REQUESTED: updateResourceAlia,
 };

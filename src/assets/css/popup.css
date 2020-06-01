@@ -5,11 +5,16 @@ body{
   margin: 0px;
 }
 
-#tabview {
+/* To leave some space for the footer */ 
+#tab-manager, #project-detail {
+  padding-bottom: 30px;
+} 
+
+#tab-manager {
   margin-left: 5px;
 }
 
-#tabview div {
+#tab-manager div {
   display: flex;
   justify-content: center;
   margin-top: 10px;
@@ -49,15 +54,6 @@ body{
   justify-content: center;
 }
 
-/* .grab-tab #tab-list,
-.grab-tab #tab-grid{
-  cursor: grabbing;
-}
-
-.grab-tab #project-list{
-  cursor: grab;
-} */
-
 h1{
   color: #264653;
   font-family: 'Poiret One', cursive;
@@ -82,7 +78,7 @@ li:hover{
   background-color: whitesmoke;
 }
 
-li span:first-of-type {
+li>span:first-of-type {
   width: calc(480px - 7rem);
   display: inline-block;
   margin-right: 1rem;
@@ -236,38 +232,4 @@ input:checked + .slider:before {
 
 #moving-tab:hover{
   cursor: grabbing;
-}
-
-#footer{
-  position: fixed;
-  bottom: 0;
-  background-color: white;
-  width: 100%;
-  height: 25px;
-  background-color: #AFCFFF;
-}
-
-#footer span {
-  font-size: large;
-}
-
-/* From: https://blog.logrocket.com/building-a-modal-module-for-react-with-react-router/ */
-.modal-wrapper {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(50, 50, 50, 0.5);
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-.modal{
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
 }

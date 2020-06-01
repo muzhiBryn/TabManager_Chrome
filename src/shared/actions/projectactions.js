@@ -58,6 +58,17 @@ export function requestAddResources(tabs, projectName) {
   };
 }
 
+export function requestUpdateResource(url, updatedResource, projectName) {
+  return {
+    type: ActionTypes.UPDATE_RESOURCE_REQUESTED,
+    payload: {
+      url,
+      updatedResource,
+      projectName,
+    },
+  };
+}
+
 export function requestDeleteResource(urls, projectName) {
   return {
     type: ActionTypes.DELETE_RESOURCES_REQUESTED,

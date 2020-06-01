@@ -60,7 +60,7 @@ class ProjectDetail extends Component {
       });
     }
     return (
-      <div>
+      <div id="project-detail">
         <Link to="/">Back</Link>
         {/* <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} /> */}
         <ProjectEditor />

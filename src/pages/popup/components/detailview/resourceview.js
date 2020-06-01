@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Resource from './resource';
 import { requestOpenTabs } from '../../../../shared/actions/tabactions';
+import '../../scss/resourceview.scss';
 
 class ResourceView extends Component {
   constructor(props) {
@@ -11,8 +12,10 @@ class ResourceView extends Component {
       //   type: 0,
       //   content: '',
       // },
+      displayResource: '',
     };
     this.setFilter = this.setFilter.bind(this);
+    this.setDisplayResource = this.setDisplayResource.bind(this);
   }
 
   // Todo: Update filter values
@@ -20,10 +23,14 @@ class ResourceView extends Component {
     this.setState({});
   }
 
+  setDisplayResource(url) {
+    this.setState({ displayResource: url });
+  }
+
   render() {
     const { resources, activeProj } = this.props;
     const resourceList = Object.values(resources).map((tab) => {
-      return <Resource key={tab.url} tab={tab} />;
+      return <Resource key={tab.url} tab={tab} displayResource={this.state.displayResource} setDisplay={this.setDisplayResource} />;
     });
 
     // Todo: filter resources and send them to resouce list
