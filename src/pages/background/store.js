@@ -24,8 +24,8 @@ const initialState = {
   },
   projects: {
     projectList: loadProjectList(), // An array of projects
-    currentProject: { projectName: '', projectNote: '', resources: {} },
-    activeProj: Values.defaultProject,
+    currentProject: JSON.parse(Values.emptyProject), // { projectName: '', projectNote: '', resources: {} }
+    activeProj: Values.defaultProject, // General
     error: '',
     synchronizing: 0,
   },

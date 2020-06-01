@@ -9,13 +9,13 @@ const chromeError = (dispatch, error) => {
   });
 };
 
-const updateTabs = (dispatch, activeProj, prevState) => {
+const updateTabs = (dispatch, activeProj, _tabs) => {
   try {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
       const activeWindow = tabs.length ? tabs[0].windowId : -1;
-      const { tabList } = prevState.tabs;
-      const prevTabs = prevState.tabs.tabList[activeWindow];
-      if (!prevTabs) tabList[activeWindow] = {};
+      const tabList = _tabs;
+      const prevTabs = _tabs.tabList[activeWindow];
+      tabList[activeWindow] = {};
       let activeTab = -1; // check active tab
       tabs.forEach((tab) => {
         if (tab.active)activeTab = tab.id;
@@ -42,7 +42,7 @@ const updateTabs = (dispatch, activeProj, prevState) => {
 };
 
 const getTabsAlias = (req) => {
-  return (dispatch, getState) => { updateTabs(dispatch, req.payload, getState()); };
+  return (dispatch, getState) => { updateTabs(dispatch, req.payload, getState().tabs); };
 };
 
 const switchTabAlias = (req) => {
@@ -73,8 +73,8 @@ const closeTabsAlias = (req) => {
         dispatch({
           type: ActionTypes.CLOSE_TABS_FULLFILLED,
         });
-        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState()); }, 200);
-        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState()); }, 500); // Well... Just in case
+        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState().tabs); }, 200);
+        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState().tabs); }, 500); // Well... Just in case
       });
     } catch (error) {
       chromeError(dispatch, error);
@@ -83,25 +83,35 @@ const closeTabsAlias = (req) => {
 };
 
 const openTabsAlias = (req) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     try {
-      if (req.payload.urls instanceof Array) {
+      const { tabList, activeWindow } = getState().tabs;
+      const { activeProj } = getState().projects;
+      const prevTabs = tabList[activeWindow];
+      const { urls } = req.payload;
+      const openTab = (url, setActive) => {
+        let existTab = null;
+        for (const tab of Object.values(prevTabs)) {
+          if (tab.url === url && tab.project === activeProj) {
+            existTab = tab;
+            break;
+          }
+        }// We don't want to open a url that already exists in the project
+        if (!existTab)chrome.tabs.create({ url, active: setActive });
+        else if (setActive) chrome.tabs.update(existTab.id, { active: true });
+      };
+
+      if (urls instanceof Array) {
         req.payload.urls.forEach((url) => {
-          chrome.tabs.query({ currentWindow: true, url }, (tabs) => {
-            if (tabs.length === 0) chrome.tabs.create({ url });
-          });// We don't want to open a url that already exists
+          openTab(url, false);
         });
       } else {
-        const url = req.payload.urls;
-        chrome.tabs.query({ currentWindow: true, url }, (tabs) => {
-          if (tabs.length === 0) chrome.tabs.create({ url, active: true });
-          else chrome.tabs.update(tabs[0].id, { active: true });
-        });
+        openTab(urls, true);
       }
       dispatch({
         type: ActionTypes.OPEN_TABS_FULLFILLED,
       });
-      setTimeout(() => { updateTabs(dispatch, req.payload.activeProj); }, 200);
+      setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState().tabs); }, 200);
     } catch (error) {
       chromeError(dispatch, error);
     }

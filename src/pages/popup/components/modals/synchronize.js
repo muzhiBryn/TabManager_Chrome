@@ -11,6 +11,12 @@ class Synchronize extends Component {
     this.noSyncrhonizeClick = this.noSyncrhonizeClick.bind(this);
   }
 
+  componentDidUpdate() {
+    if (this.props.locked !== 1) {
+      if (this.props.synchronizing === 1 && this.props.synchronize === 1) { this.props.lockModal(); }
+    }
+  }
+
   synchronizeClick() {
     this.props.switchSynchronize(1);
     this.props.requestMergeProjects();
@@ -26,7 +32,6 @@ class Synchronize extends Component {
     if (this.props.synchronize === 0 || this.props.synchronizing === 2) {
       return <Redirect to="/" />;
     } else if (this.props.synchronizing === 1 && this.props.synchronize === 1) {
-      this.props.lockModal();
       return (
         <div>Synchronizing... this may take some time</div>
       );

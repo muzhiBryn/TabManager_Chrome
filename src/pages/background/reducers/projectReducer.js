@@ -1,8 +1,6 @@
 import ActionTypes from '../../../shared/actionTypes';
 import Values from '../../../shared/values';
 
-const defaultProjct = { projectName: '', projectNote: '', resources: {} };
-
 export default function projectReducer(state = {}, action) {
   const newState = state;
   switch (action.type) {
@@ -22,7 +20,7 @@ export default function projectReducer(state = {}, action) {
     case ActionTypes.DELETE_PROJECT_FULLFILLED:
       if (state.activeProj === action.projectName) {
         newState.activeProj = Values.defaultProject;
-        newState.currentProject = { ...defaultProjct };// default value
+        newState.currentProject = JSON.parse(Values.emptyProject);// default value
       }
       return { ...newState, projectList: action.projectList };
     case ActionTypes.POST_MERGE_PROJECTS:

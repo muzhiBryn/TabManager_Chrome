@@ -27,7 +27,9 @@ class Modal extends Component {
           className="modal"
           onClick={(e) => e.stopPropagation()}
         >
-          {this.props.match.params.id.substr(1) === 'synchronize' ? <Synchronize lockModal={this.lockModal} /> : 'Unknown modal'}
+          {this.props.match.params.id.substr(1) === 'synchronize'
+            ? <Synchronize locked={this.state.locked} lockModal={this.lockModal} />
+            : 'Unknown modal'}
         </div>
       </div>
     );

@@ -136,14 +136,14 @@ const initialState = {
   },
   projects: {
     projectList: loadProjectList(), // An array of projects, Load from local storage
-    currentProject: { projectName: '', projectNote: '', resources: {} },
+    currentProject: JSON.parse(Values.emptyProject), // { projectName: '', projectNote: '', resources: {} },
     activeProj: Values.defaultProject,
     error: '',
     synchronizing: 0, 
   },
   preferences: loadPreferences(), 
-  // View: 0 -> ListView, 1 -> GridView
-  // Synchronize: -1 -> unknown, 0 -> don't synchronize, 1 -> synchronize
+  // displayType: 0 -> ListView, 1 -> GridView
+  // synchronize: -1 -> unknown, 0 -> don't synchronize, 1 -> synchronize
   auth: {
     authenticated: false,
     userName: '', 
