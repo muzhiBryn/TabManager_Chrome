@@ -1,54 +1,8 @@
-/* eslint-disable no-undef */
-import ActionTypes from '../../shared/actionTypes';
-
-const chromeError = (dispatch, error) => {
-  console.log(error);
-  return dispatch({
-    type: ActionTypes.CHROME_ERROR,
-    error: error.toString(),
-  });
-};
-
-const updateTabs = (dispatch, activeProj, prevState) => {
-  try {
-    chrome.tabs.query({ currentWindow: true }, (tabs) => {
-      const activeWindow = tabs.length ? tabs[0].windowId : -1;
-      const { tabList } = prevState.tabs;
-      const { projectList } = prevState.projects;
-      const prevTabs = tabList[activeWindow];
-      tabList[activeWindow] = {};
-      const projectMap = {};
-      projectList.forEach((projectName) => {
-        projectMap[projectName] = 1;
-      });
-      let activeTab = -1; // check active tab
-      tabs.forEach((tab) => {
-        if (tab.active)activeTab = tab.id;
-        const project = (prevTabs && prevTabs[tab.id] && projectMap[prevTabs[tab.id].project])
-          ? prevTabs[tab.id].project : activeProj;
-        tabList[activeWindow][tab.id] = {
-          icon: tab.favIconUrl,
-          title: tab.title,
-          url: tab.url,
-          id: tab.id,
-          project,
-        };
-      });
-      dispatch({
-        type: ActionTypes.GET_TABS_FULLFILLED,
-        tabList,
-        activeTab,
-        activeWindow,
-        activeProj,
-      });
-    });
-  } catch (error) {
-    chromeError(dispatch, error);
-  }
-};
+import ActionTypes from '../../../shared/actionTypes';
+import { chromeError, updateTabs, chrome } from '../chrome';
 
 const getTabsAlias = (req) => {
-  return (dispatch, getState) => { updateTabs(dispatch, req.payload, getState()); };
+  return (dispatch, getState) => { updateTabs(dispatch, getState(), req.payload); };
 };
 
 const switchTabAlias = (req) => {
@@ -79,8 +33,8 @@ const closeTabsAlias = (req) => {
         dispatch({
           type: ActionTypes.CLOSE_TABS_FULLFILLED,
         });
-        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState()); }, 200);
-        setTimeout(() => { updateTabs(dispatch, req.payload.activeProj, getState()); }, 500); // Well... Just in case
+        // setTimeout(() => { updateTabs(dispatch, getState(), req.payload.activeProj); }, 200);
+        // setTimeout(() => { updateTabs(dispatch, getState(), req.payload.activeProj); }, 500); // Well... Just in case
       });
     } catch (error) {
       chromeError(dispatch, error);
@@ -130,7 +84,7 @@ const openTabsAlias = (req) => {
       dispatch({
         type: ActionTypes.OPEN_TABS_FULLFILLED,
       });
-      setTimeout(() => { updateTabs(dispatch, activeProj, getState()); }, 200);
+      // setTimeout(() => { updateTabs(dispatch, getState(), activeProj); }, 200);
     } catch (error) {
       chromeError(dispatch, error);
     }

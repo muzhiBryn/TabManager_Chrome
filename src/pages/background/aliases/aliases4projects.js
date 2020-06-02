@@ -1,6 +1,6 @@
-import ActionTypes from '../../shared/actionTypes';
-import { loadcurrentProject, removeProject } from './localstorage';
-import * as ajax from '../../modules/ajax';
+import ActionTypes from '../../../shared/actionTypes';
+import { loadcurrentProject, removeProject } from '../localstorage';
+import * as ajax from '../../../modules/ajax';
 
 // TODO: Methods below should be updated with communication with the server
 

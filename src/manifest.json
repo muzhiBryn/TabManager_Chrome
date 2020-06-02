@@ -8,7 +8,8 @@
         "scripts": ["pages/background.js"]
     },
     "permissions": [
-		"tabs",
+        "tabs",
+        "activeTab",
 		"contextMenus",
 		"storage"
 	],

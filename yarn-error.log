@@ -1,8 +1,8 @@
 Arguments: 
-  D:\Application\node\node.exe D:\Application\Yarn\bin\yarn.js add dist First Team Meeting Worksheet.md node_modules other_img package.json README.md Spec_Assignment.md src webpack.config.js yarn.lock yarn-error.log
+  D:\Application\node\node.exe D:\Application\Yarn\bin\yarn.js add puppeteer PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
 
 PATH: 
-  C:\Users\Purslane\bin;D:\Application\Git\mingw64\bin;D:\Application\Git\usr\local\bin;D:\Application\Git\usr\bin;D:\Application\Git\usr\bin;D:\Application\Git\mingw64\bin;D:\Application\Git\usr\bin;C:\Users\Purslane\bin;D:\Application\python3\Scripts;D:\Application\python3;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files (x86)\PharosSystems\Core;D:\Application\Git\cmd;C:\Program Files\dotnet;D:\Application\node;D:\Application\Putty;D:\Application\Anaconda;D:\Application\Anaconda\Scripts;D:\Application\Anaconda\Library\bin;D:\Application\cmake-3.15.3-win64-x64\bin;D:\Application\Yarn\bin;D:\Dartmouth\courses\FullStack\workshop-database\mysql-8.0.20-winx64\bin;D:\Application\Ruby26-x64\bin;D:\Application\Microsoft VS Code\bin;C:\Users\Purslane\AppData\Local\Yarn\bin;D:\Application\Git\usr\bin\vendor_perl;D:\Application\Git\usr\bin\core_perl
+  D:\Application\python3\Scripts\;D:\Application\python3\;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files (x86)\PharosSystems\Core;D:\Application\Git\cmd;C:\Program Files\dotnet\;D:\Application\node\;D:\Application\Putty\;D:\Application\Anaconda;D:\Application\Anaconda\Scripts;D:\Application\Anaconda\Library\bin;D:\Application\cmake-3.15.3-win64-x64\bin;D:\Application\Yarn\bin\;D:\Dartmouth\courses\FullStack\workshop-database\mysql-8.0.20-winx64\bin;D:\Application\Ruby26-x64\bin;D:\Application\Microsoft VS Code\bin;C:\Users\Purslane\AppData\Local\Yarn\bin
 
 Yarn version: 
   1.22.4
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/First%20Team%20Meeting%20Worksheet.md: Not found
+  Error: https://registry.yarnpkg.com/PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: Not found
       at Request.params.callback [as _callback] (D:\Application\Yarn\lib\cli.js:66096:18)
       at Request.self.callback (D:\Application\Yarn\lib\cli.js:140748:22)
       at Request.emit (events.js:210:5)

@@ -4,8 +4,8 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import throttle from 'lodash.throttle';
 import Values from '../../shared/values';
-import tabAliases from './aliases4tabs';
-import projectAliases from './aliases4projects';
+import tabAliases from './aliases/aliases4tabs';
+import projectAliases from './aliases/aliases4projects';
 import {
   loadProjectList, loadPreferences, saveProjectList, savecurrentProject, savePreferences,
 } from './localstorage';

@@ -41,6 +41,11 @@ body{
   flex-wrap: wrap;
 }
 
+#tab-grid img {
+  height: 50px;
+  width: 50px;
+}
+
 #project-list,
 #resource-list {
   padding: 0;
