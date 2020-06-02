@@ -7,9 +7,16 @@ export default function tabReducer(state = {}, action) {
       console.log(action.error);
       return state;
     case ActionTypes.GET_TABS_FULLFILLED:
-      if (!action.activeWindow || action.activeWindow === -1) return state;
       return {
-        ...state, tabList: action.tabList, activeWindow: action.activeWindow, activeTab: action.activeTab,
+        ...state, ...action.tabs,
+      };
+    case ActionTypes.TABS_REMOVED:
+      return {
+        ...state, ...action.tabs,
+      };
+    case ActionTypes.TABS_UPDATED:
+      return {
+        ...state, ...action.tabs,
       };
     case ActionTypes.SWITCH_TAB_FULLFILLED:
       return { ...state, activeTab: action.activeTab };

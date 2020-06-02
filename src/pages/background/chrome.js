@@ -46,59 +46,110 @@ function captureTab(callback) {
   }
 }
 
+function updateTab(prevTab, tab, activeProj, projectList, projectMap) {
+  const noChange = (prevTab
+    && (projectMap ? projectMap[prevTab.project] : projectList.includes(prevTab.project))
+    && (prevTab.url === tab.url));
+  const project = noChange ? prevTab.project : activeProj;
+  const screenshot = noChange ? prevTab.screenshot : null;
+  return {
+    icon: tab.favIconUrl,
+    title: tab.title,
+    url: tab.url,
+    id: tab.id,
+    project,
+    screenshot,
+  };
+}
+
+function handleUpdateEvent(dispatch, prevState, listenerMessage) {
+  if (listenerMessage) { // method is called by listener, don't need to fetch all tabs
+    const { type, tabId } = listenerMessage;
+    const { tabList } = prevState.tabs;
+    const tabWinList = {};
+    switch (type) {
+      case 'update':
+        _chrome.tabs.get(tabId, (tab) => {
+          const { projectList, activeProj } = prevState.projects;
+          if (!tabList[tab.windowId])tabList[tab.windowId] = {};
+          tabList[tab.windowId][tab.id] = updateTab(tabList[tab.windowId][tab.id], tab, activeProj, projectList);
+          if (tab.active === true && tab.status === 'complete') { // Only capture when the active tab has been loaded
+            captureTab((screenshot) => {
+              tabList[tab.windowId][tab.id].screenshot = screenshot;
+              dispatch({
+                type: ActionTypes.GET_TABS_FULLFILLED,
+                tabs: { tabList, activeTab: tab.id },
+              });
+            });
+          } else {
+            dispatch({
+              type: ActionTypes.TABS_UPDATED,
+              tabs: { tabList },
+            });
+          }
+        });
+        return;
+      case 'remove':
+        for (const window of Object.keys(tabList)) {
+          if (tabList[window][tabId]) {
+            Object.keys(tabList[window]).forEach((id) => {
+              if (id !== `${tabId}`) { tabWinList[id] = tabList[window][id]; }
+            });
+            tabList[window] = tabWinList;
+            break;
+          }
+        }
+        dispatch({
+          type: ActionTypes.TABS_REMOVED,
+          tabs: { tabList },
+          removed: tabId,
+        });
+        return;
+      default:
+        handleUpdateEvent(dispatch, prevState, null);
+    }
+  }
+}
+
 function updateTabs(dispatch, prevState, _activeProj) {
+  const { projectList } = prevState.projects;
   try {
+    const { tabList } = prevState.tabs;
+    const activeProj = _activeProj || prevState.projects.activeProj;
+    let activeTab = -1;
     _chrome.tabs.query({ currentWindow: true }, (tabs) => {
       const activeWindow = tabs.length ? tabs[0].windowId : -1;
-      const { tabList } = prevState.tabs;
-      const { projectList } = prevState.projects;
-      const prevTabs = tabList[activeWindow];
+      const prevTabs = tabList[activeWindow] || {};
       tabList[activeWindow] = {};
+      activeTab = -1; // check active tab
+      let activeTabStatus = '';
       const projectMap = {};
       projectList.forEach((projectName) => {
         projectMap[projectName] = 1;
       });
-      const activeProj = _activeProj || prevState.projects.activeProj;
-      let activeTab = -1; // check active tab
-      let activeTabStatus = '';
       tabs.forEach((tab) => {
         if (tab.active) {
           activeTab = tab.id;
           activeTabStatus = tab.status;
         }
-        const noChange = (prevTabs
-          && prevTabs[tab.id]
-          && projectMap[prevTabs[tab.id].project]
-          && prevTabs[tab.id].url === tab.url);
-        const project = noChange ? prevTabs[tab.id].project : activeProj;
-        const screenshot = noChange ? prevTabs[tab.id].screenshot : null;
-        tabList[activeWindow][tab.id] = {
-          icon: tab.favIconUrl,
-          title: tab.title,
-          url: tab.url,
-          id: tab.id,
-          project,
-          screenshot,
-        };
+        tabList[activeWindow][tab.id] = updateTab(prevTabs[tab.id], tab, activeProj, projectList, projectMap);
       });
       if (activeTab !== -1 && activeTabStatus === 'complete') { // Only capture when the active tab has been loaded
         captureTab((screenshot) => {
           tabList[activeWindow][activeTab].screenshot = screenshot;
           dispatch({
             type: ActionTypes.GET_TABS_FULLFILLED,
-            tabList,
-            activeTab,
-            activeWindow,
-            activeProj,
+            tabs: {
+              tabList, activeTab, activeWindow,
+            },
           });
         });
       } else {
         dispatch({
           type: ActionTypes.GET_TABS_FULLFILLED,
-          tabList,
-          activeTab,
-          activeWindow,
-          activeProj,
+          tabs: {
+            tabList, activeTab, activeWindow,
+          },
         });
       }
     });
@@ -110,5 +161,6 @@ function updateTabs(dispatch, prevState, _activeProj) {
 export {
   chromeError,
   updateTabs,
+  handleUpdateEvent,
   _chrome as chrome,
 };

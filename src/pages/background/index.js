@@ -2,9 +2,9 @@
 import axios from 'axios';
 // import throttle from 'lodash.throttle';
 import store from './store';
-import { updateTabs, chrome } from './chrome';
+import { handleUpdateEvent, chrome } from './chrome';
 
 // chrome.tabs.onCreated.addListener(() => { updateTabs(store.dispatch, store.getState()); });
-chrome.tabs.onActivated.addListener(() => { updateTabs(store.dispatch, store.getState()); });
-chrome.tabs.onUpdated.addListener(() => { updateTabs(store.dispatch, store.getState()); });
-chrome.tabs.onRemoved.addListener(() => { updateTabs(store.dispatch, store.getState()); });
+chrome.tabs.onActivated.addListener((info) => { handleUpdateEvent(store.dispatch, store.getState(), { type: 'update', tabId: info.tabId }); }); // Use the same method as update
+chrome.tabs.onUpdated.addListener((tabId) => { handleUpdateEvent(store.dispatch, store.getState(), { type: 'update', tabId }); });
+chrome.tabs.onRemoved.addListener((tabId) => { handleUpdateEvent(store.dispatch, store.getState(), { type: 'remove', tabId }); });
