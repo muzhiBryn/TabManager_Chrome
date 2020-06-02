@@ -28,7 +28,6 @@ const Resource = (props) => {
               if (tag.length === 0) return false;
               return true;
             });
-            console.log(tags);
             if (tags.length > 0 || tab.tags.length !== 0) { props.requestUpdateResource(tab.url, { tags }, activeProj); }
           }}
         />
@@ -38,7 +37,6 @@ const Resource = (props) => {
       </li>
     );
   } else {
-    console.log(tab);
     return (
       <li key={tab.url} onClick={() => { props.requestOpenTabs(tab.url, activeProj); }}>
         <div>

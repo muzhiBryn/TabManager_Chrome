@@ -55,7 +55,6 @@ wrapStore(store, {
 
 store.subscribe(throttle(() => {
   saveProjectList(store.getState().projects.projectList);
-  // console.log(store.getState().preferences);
   savePreferences(store.getState().preferences);
   const { currentProject, activeProj, synchronizing } = store.getState().projects;
   const { authenticated } = store.getState().auth;

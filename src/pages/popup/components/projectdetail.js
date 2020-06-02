@@ -26,7 +26,6 @@ class ProjectDetail extends Component {
   componentDidMount() {
     const { activeProj } = this.props;
     const newActive = this.props.match.params.proj.substr(1);
-    console.log(newActive);
     if (activeProj !== newActive) {
       this.props.switchProject(newActive);
     }
