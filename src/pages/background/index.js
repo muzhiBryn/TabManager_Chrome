@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
-import throttle from 'lodash.throttle';
+// import throttle from 'lodash.throttle';
 import store from './store';
 import { updateTabs, chrome } from './chrome';
 
