@@ -11,7 +11,7 @@ const ListTab = (props) => {
     <li
       title={tab.title}
       className={`list-tab${tab.id === activeTab ? ' active' : ''}`}
-      onMouseDown={(e) => { if (!editing) handleDragTab(e, props.moveTab, tab); }}
+      onMouseDown={(e) => { if (!editing) handleDragTab(e, props.moveTab, tab, tab.id === activeTab); }}
       onMouseUp={() => { props.requestSwitchTab(tab.id); }}
     >
       <img alt=" " src={tab.icon} />

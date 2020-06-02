@@ -17,10 +17,12 @@ function chromeError(dispatch, error) {
 function captureTab(callback) {
   try {
     _chrome.tabs.captureVisibleTab((imgUrl) => {
-      if (!imgUrl)callback();
+      if (!imgUrl) {
+        callback();
+        return;
+      }
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
-
       // set its dimension to target size
       canvas.width = 50;
       canvas.height = 50;
@@ -79,7 +81,7 @@ function updateTabs(dispatch, prevState, _activeProj) {
           screenshot,
         };
       });
-      if (activeTab !== -1 && activeTabStatus === 'complete') { // Only capture when the active tab is loaded
+      if (activeTab !== -1 && activeTabStatus === 'complete') { // Only capture when the active tab has been loaded
         captureTab((screenshot) => {
           tabList[activeWindow][activeTab].screenshot = screenshot;
           dispatch({
