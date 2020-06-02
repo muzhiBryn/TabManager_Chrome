@@ -49,7 +49,9 @@ const Resource = (props) => {
           />
         </div>
         <div>
-          { tab.tags.map((tag) => (<span className="tag" key={tag}>{tag}</span>)) }
+          { tab.tags.map((tag) => (
+            <button className="tag" type="button" key={tag} onClick={(e) => { e.stopPropagation(); props.setFilterContent(tag); }}>{tag}</button>
+          )) }
         </div>
       </li>
     );

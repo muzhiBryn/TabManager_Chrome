@@ -19,15 +19,13 @@ class ResourceView extends Component {
     this.setDisplayResource = this.setDisplayResource.bind(this);
   }
 
-  setFilterType(e) {
-    const type = e.target.value;
+  setFilterType(type) {
     this.setState((prevState) => (
       { filter: { ...prevState.filter, type } }
     ));
   }
 
-  setFilterContent(e) {
-    const content = e.target.value.toLowerCase();
+  setFilterContent(content) {
     this.setState((prevState) => (
       { filter: { ...prevState.filter, content } }
     ));
@@ -41,28 +39,34 @@ class ResourceView extends Component {
     const { resources, activeProj } = this.props;
     const { filter } = this.state;
     const filteredResources = {};
+    const content = filter.content.toLowerCase();
     Object.values(resources).forEach((tab) => {
-      if (filter.content === ''
-      || (filter.type === '0' && (tab.tags && tab.tags.includes(filter.content)))
-      || (filter.type === '1' && tab.title.toLowerCase().indexOf(filter.content) !== -1)) {
+      if (content === ''
+      || (filter.type === '0' && (tab.tags && tab.tags.includes(content)))
+      || (filter.type === '1' && tab.title.toLowerCase().indexOf(content) !== -1)) {
         filteredResources[tab.url] = tab;
       }
     });
     const resourceList = Object.values(filteredResources).map((tab) => {
-      return <Resource key={tab.url} tab={tab} displayResource={this.state.displayResource} setDisplay={this.setDisplayResource} />;
+      return (
+        <Resource key={tab.url}
+          tab={tab}
+          displayResource={this.state.displayResource}
+          setDisplay={this.setDisplayResource}
+          setFilterContent={(tag) => { if (this.state.filter.type !== '1') this.setFilterType('0'); this.setFilterContent(tag); }}
+        />
+      );
     });
     return (
       <div>
         <div>
-          <select name="type" defaultValue="0" onChange={this.setFilterType}>
+          <select name="type" value={filter.type} onChange={(e) => { this.setFilterType(e.target.value); }}>
             <option value="0">tag</option>
             <option value="1">title</option>
           </select>
-          <input type="text" name="content" onChange={this.setFilterContent} />
+          <input type="text" name="content" value={filter.content} onChange={(e) => { this.setFilterContent(e.target.value); }} />
           <button type="button"
-            onClick={() => {
-              this.props.requestOpenTabs(Object.keys(filteredResources), activeProj);
-            }}
+            onClick={() => { this.props.requestOpenTabs(Object.keys(filteredResources), activeProj); }}
           >Open All
           </button>
         </div>
