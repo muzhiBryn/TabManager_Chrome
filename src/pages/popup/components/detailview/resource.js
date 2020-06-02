@@ -23,7 +23,7 @@ const Resource = (props) => {
           defaultValue={tab.tags.join(', ')}
           onBlur={(e) => {
             const tags = e.target.value.split(',').map((tag) => {
-              return tag.replace(/(^\s*)|(\s*$)/g, '');
+              return tag.replace(/(^\s*)|(\s*$)/g, '').toLowerCase();
             }).filter((tag) => {
               if (tag.length === 0) return false;
               return true;

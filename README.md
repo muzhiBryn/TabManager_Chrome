@@ -69,6 +69,7 @@ Responsibility:
   * TabView
     * Filter tabs according to title
     * Switch between grid view and list view
+    * Show the screenshot for the grid view
     * Click to go to a tab
     * Click to close a tab
     * Drag a tab to a project
@@ -79,7 +80,6 @@ Responsibility:
     * Create a new project (check if the name exists)
 
   Todo:
-    * Implement grid view
     * Error display for creating project
     * A better UI
 
@@ -103,8 +103,6 @@ Responsibility:
     * Delete project and go back to tab manager if succeed
 
   Todo: 
-  * Change filter status
-  * Filter the tabs by tabs or by title
   * handle error
 
 #### Login  
@@ -130,12 +128,13 @@ Responsibility:
 ### Store
 * For the front end, data is stored in the background
 * Pop up page use actions (redux for chrome would send them as messages) to change data in store 
-* Since direct communication can not handle promises or handle error, we use aliases to conduct actions in background pages
+* Several listeners are added to listen to tab update/ activate / remove events
+* Since direct communication (through stringified js objects, could not convey functions) can not handle promises or handle error, we use aliases to conduct actions in background pages
 * Data in store:
 ```js
 const initialState = {
   tabs: {
-    tabList: {},
+    tabList: {}, 
     activeTab: -1,
     activeWindow: -1,
     movingTab: null,
