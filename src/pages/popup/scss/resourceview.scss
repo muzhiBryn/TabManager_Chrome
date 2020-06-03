@@ -1,0 +1,42 @@
+#resource-list{
+  li {
+    padding: 0.5rem;
+  }
+  
+  li>span:first-of-type {
+    width: calc(480px - 7rem);
+    display: inline-block;
+    margin-right: 1rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  li img{
+    width: 1rem;
+    height: 1rem;
+    margin-top: 1px;
+    margin-right: 1rem; 
+  }
+
+  li .btn{
+    float: right;
+    padding: 0 0.4rem;
+    color: #aaa;
+    transition: color ease-in-out 0.2s;
+  }
+
+  span.tag{
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+
+  input.tags-input{
+    border: solid 1px transparent;
+  }
+
+  input.tags-input:focus{
+    border: solid 1px #ddd;
+  }
+}
