@@ -83,6 +83,7 @@ class ProjectEditor extends Component {
         <div className="projectName">
           {/* <h1 className="project-projectName">{this.props.currentProject.projectName}</h1> */}
           <h1 className="project-name">{ currentProject.projectName }</h1>
+          {this.props.back}
           {this.renderEdit()}
         </div>
       );

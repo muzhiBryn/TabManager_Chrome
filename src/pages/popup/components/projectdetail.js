@@ -48,11 +48,11 @@ class ProjectDetail extends Component {
         tabShow.push(tab);
       });
     }
+    const back = <Link to="/">Back</Link>;
     return (
       <div id="project-detail">
-        <Link to="/">Back</Link>
         {/* <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} /> */}
-        <ProjectEditor />
+        <ProjectEditor back={back} />
         <TabView editing tabs={tabShow} filter={this.state.filter} />
         <ResourceView />
         <button type="button" onClick={this.handleDeleteProject}>Delete Project</button>
