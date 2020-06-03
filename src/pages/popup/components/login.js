@@ -8,7 +8,9 @@ const logIn = () => {
 
 const Login = (props) => {
   return (
-    <div>
+    <div id="login">
+      <h1> Welcome to 2ManyTabz! </h1>
+      <h2> Your new favorite chrome extension </h2>
       <div><NavLink to="/">Back</NavLink></div>
       <div><input /></div>
       <div><input /></div>

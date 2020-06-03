@@ -62,6 +62,8 @@ class TabManager extends Component {
 
     return (
       <div id="tab-manager" className={movingTab ? 'grab-tab' : ''}>
+        <h1> Welcome to 2ManyTabz! </h1>
+        <h2> Your new favorite chrome extension </h2>
         <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
         <TabView tabs={tabShow} filter={this.state.filter} />
         <ProjectList projectOverview={projectOverview} />

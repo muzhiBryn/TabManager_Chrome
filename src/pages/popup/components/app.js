@@ -39,8 +39,6 @@ class App extends Component {
 
     return (
       <div className="container">
-        <h1> Welcome to 2ManyTabz! </h1>
-        <h2> Your new favorite chrome extension </h2>
         <Switch location={isModal ? this.previousLocation : location}>
           <Route path="/project/:proj" component={ProjectDetail} />
           <Route path="/login" component={Login} />

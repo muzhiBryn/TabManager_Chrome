@@ -14,12 +14,10 @@ class ProjectDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filter: {},
       deleteRequested: 0,
     };
     // Tabs could be edited seperately
     // Read tabs from props
-    this.setFilter = this.setFilter.bind(this);
     this.handleDeleteProject = this.handleDeleteProject.bind(this);
   }
 
@@ -31,10 +29,6 @@ class ProjectDetail extends Component {
     }
     this.props.requestGetTabs(activeProj);
     this.props.requestLoadResources(newActive);
-  }
-
-  setFilter(filter) {
-    this.setState({ filter });
   }
 
   handleDeleteProject() {
@@ -51,11 +45,7 @@ class ProjectDetail extends Component {
     if (activeWindow !== -1) {
       Object.values(tabs[activeWindow]).forEach((tab) => {
         if (tab.project !== activeProj) return;
-        let flag = true;
-        Object.keys(this.state.filter).forEach((key) => {
-          if (!tab[key].toLowerCase().includes(this.state.filter[key].toLowerCase()))flag = false;
-        });
-        if (flag) tabShow.push(tab);
+        tabShow.push(tab);
       });
     }
     return (

@@ -2,6 +2,7 @@
 import React from 'react';
 import Project from './project';
 import ProjectCreator from './projectcreator';
+import '../../scss/projectlist.scss';
 
 const ProjectList = (props) => {
   const { projectOverview } = props;
