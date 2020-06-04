@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Values from '../../../shared/values';
 import ProjectEditor from './detailview/projecteditor';
 import TabView from './sharedview/tabview';
 import ResourceView from './detailview/resourceview';
+import Header from './sharedview/header';
 import Footer from './sharedview/footer';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
 import { requestLoadResources, requestDeleteProject, switchProject } from '../../../shared/actions/projectactions';
+import '../scss/projectdetail.scss';
 
 
 class ProjectDetail extends Component {
@@ -48,14 +50,14 @@ class ProjectDetail extends Component {
         tabShow.push(tab);
       });
     }
-    const back = <Link to="/">Back</Link>;
     return (
       <div id="project-detail">
+        <Header title={activeProj} />
         {/* <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} /> */}
-        <ProjectEditor back={back} />
+        <ProjectEditor />
         <TabView editing tabs={tabShow} filter={this.state.filter} />
         <ResourceView />
-        <button type="button" onClick={this.handleDeleteProject}>Delete Project</button>
+        <div className="thin-row-container"><button type="button" onClick={this.handleDeleteProject}>Delete Project</button></div>
         <Footer />
       </div>
     );

@@ -27,10 +27,11 @@ const Project = (props) => {
           onMouseUp={() => { if (movingTab) props.updateTabProj(movingTab.tab.id, projectTitle); }}
         />
       ) : null}
+      <FontAwesomeIcon icon={['far', 'folder']} />&nbsp;
       {projectTitle}&nbsp;
       {example ? `: ${exampleTrim} ` : ''}
       {ids.length > 1 ? `and ${ids.length - 1} other tabs ` : ''}
-      {projectTitle === Values.defaultProject ? null : <button id="submit"><Link to={`/project/:${projectTitle}`}>Edit</Link></button> }
+      {projectTitle === Values.defaultProject ? null : <button className="submit"><Link to={`/project/:${projectTitle}`}>Edit</Link></button> }
       {ids.length > 0 ? (
         <FontAwesomeIcon
           className="btn"

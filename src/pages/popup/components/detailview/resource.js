@@ -8,7 +8,7 @@ const Resource = (props) => {
   const { tab, activeProj, displayResource } = props;
   if (tab.url === displayResource) {
     return (
-      <li key={tab.url}>
+      <li key={tab.url} className="edit-resource">
         <div>
           <img alt=" " src={tab.icon} />
           { tab.title }
@@ -18,7 +18,8 @@ const Resource = (props) => {
             onClick={(e) => { e.stopPropagation(); props.setDisplay(''); }}
           />
         </div>
-        <div><input type="text"
+        <div> { tab.url } </div>
+        <div className="resource-control"><input type="text"
           className="tags-input"
           defaultValue={tab.tags.join(', ')}
           onBlur={(e) => {
@@ -31,9 +32,10 @@ const Resource = (props) => {
             if (tags.length > 0 || tab.tags.length !== 0) { props.requestUpdateResource(tab.url, { tags }, activeProj); }
           }}
         />
+          <button type="button" onClick={() => props.requestDeleteResource([tab.url], activeProj)}>
+            <FontAwesomeIcon icon={['far', 'trash-alt']} />
+          </button>
         </div>
-        <div> { tab.url } </div>
-        <button type="button" onClick={() => props.requestDeleteResource([tab.url], activeProj)}>Delete Resource</button>
       </li>
     );
   } else {

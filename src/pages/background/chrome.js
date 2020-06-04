@@ -24,7 +24,7 @@ function captureTab(callback) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       // set its dimension to target size
-      canvas.width = 64;
+      canvas.width = 108;
       canvas.height = (canvas.width / 4) * 3;
       const img = new Image();
       img.src = imgUrl;

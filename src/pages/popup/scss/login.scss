@@ -1,6 +1,11 @@
 #login{
   position: absolute;
+  width: 80%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  input,button{
+    margin-bottom: 1rem;
+  }
 }

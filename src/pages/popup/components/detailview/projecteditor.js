@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -69,23 +70,18 @@ class ProjectEditor extends Component {
   }
 
   renderTitle() {
-    const { currentProject } = this.props;
     if (this.state.isEditing) {
       return (
-        <div>
-          <h3>Title</h3>
+        <span>
+          <label>Title</label>
           <input id="projectName-change" type="text" onChange={this.onNameChange} value={this.state.updatedProject.projectName} placeholder="update projectName" />
-          {this.renderEdit()}
-        </div>
+        </span>
       );
     } else {
       return (
-        <div className="projectName">
+        <span className="projectName">
           {/* <h1 className="project-projectName">{this.props.currentProject.projectName}</h1> */}
-          <h1 className="project-name">{ currentProject.projectName }</h1>
-          {this.props.back}
-          {this.renderEdit()}
-        </div>
+        </span>
       );
     }
   }
@@ -94,24 +90,26 @@ class ProjectEditor extends Component {
     const { currentProject } = this.props;
     if (this.state.isEditing) {
       return (
-        <div>
-          <h3>Note</h3>
+        <span>
+          <label>Note</label>
           <input id="note-change" type="text" onChange={this.onNoteChange} placeholder="update note" value={this.state.updatedProject.projectNote} />
-        </div>
+          {this.renderEdit()}
+        </span>
       );
     } else {
       return (
-        <div className="background">
+        <span className="background">
           {/* <p className="project-note" dangerouslySetInnerHTML={{ __html: marked(currentProject.note || '') }} /> */}
-          <p className="project-note">{ currentProject.projectNote }</p>
-        </div>
+          <span className="project-note">{ currentProject.projectNote }</span>
+          {this.renderEdit()}
+        </span>
       );
     }
   }
 
   render() {
     return (
-      <div>
+      <div id="project-editor" className="row-container">
         {this.renderTitle()}
         {this.renderNote()}
       </div>

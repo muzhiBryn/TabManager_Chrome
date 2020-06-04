@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import Header from './sharedview/header';
 import '../scss/login.scss';
 
 const logIn = () => {
@@ -10,13 +10,11 @@ const logIn = () => {
 const Login = (props) => {
   return (
     <div>
-      <h1> Welcome to 2ManyTabz! </h1>
-      <h2> Your new favorite chrome extension </h2>
-      <div><NavLink to="/">Back</NavLink></div>
+      <Header />
       <div id="login">
-        <div><input /></div>
-        <div><input /></div>
-        <div>
+        <div className="thin-row-container"><input /></div>
+        <div className="thin-row-container"><input /></div>
+        <div className="thin-row-container">
           <button
             type="button"
             onClick={() => {

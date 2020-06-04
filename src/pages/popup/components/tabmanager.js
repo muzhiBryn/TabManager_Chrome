@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import DisplaySetting from './managerview/displayset';
 import TabView from './sharedview/tabview';
 import ProjectList from './managerview/projectlist';
+import ProjectCreator from './managerview/projectcreator';
 import MovingTab from './managerview/movingtab';
+import Header from './sharedview/header';
 import Footer from './sharedview/footer';
 import { requestGetTabs } from '../../../shared/actions/tabactions';
 import { requestLoadProjects } from '../../../shared/actions/projectactions';
+import '../scss/tabmanager.scss';
 
 class TabManager extends Component {
   constructor(props) {
@@ -62,12 +65,12 @@ class TabManager extends Component {
 
     return (
       <div id="tab-manager" className={movingTab ? 'grab-tab' : ''}>
-        <h1> Welcome to 2ManyTabz! </h1>
-        <h2> Your new favorite chrome extension </h2>
+        <Header />
         <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
         <TabView tabs={tabShow} filter={this.state.filter} />
         <ProjectList projectOverview={projectOverview} />
         { movingTab ? <MovingTab /> : null }
+        <div className="thin-row-container"><ProjectCreator /></div>
         <Footer />
       </div>
     );

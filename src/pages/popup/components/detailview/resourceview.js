@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Resource from './resource';
 import { requestOpenTabs } from '../../../../shared/actions/tabactions';
-import '../../scss/resourceview.scss';
 
 class ResourceView extends Component {
   constructor(props) {
@@ -57,18 +56,23 @@ class ResourceView extends Component {
         />
       );
     });
+    if (resourceList.length === 0) {
+      resourceList.push(<div key={0} className="row-container">{'The project doesn\'t have any resource or nothing fits the filter.'} </div>);
+    }
     return (
       <div>
-        <div>
-          <select name="type" value={filter.type} onChange={(e) => { this.setFilterType(e.target.value); }}>
-            <option value="0">tag</option>
-            <option value="1">title</option>
-          </select>
-          <input type="text" name="content" value={filter.content} onChange={(e) => { this.setFilterContent(e.target.value); }} />
-          <button type="button"
-            onClick={() => { this.props.requestOpenTabs(Object.keys(filteredResources), activeProj); }}
-          >Open All
-          </button>
+        <div className="thin-row-container">
+          <div className="input-group">
+            <select name="type" value={filter.type} onChange={(e) => { this.setFilterType(e.target.value); }}>
+              <option value="0">tag</option>
+              <option value="1">title</option>
+            </select>
+            <input type="text" name="content" value={filter.content} onChange={(e) => { this.setFilterContent(e.target.value); }} />
+            <button type="button"
+              onClick={() => { this.props.requestOpenTabs(Object.keys(filteredResources), activeProj); }}
+            >Open All
+            </button>
+          </div>
         </div>
         <ul id="resource-list">{resourceList}</ul>
       </div>
