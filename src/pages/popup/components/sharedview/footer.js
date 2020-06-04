@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { requestSignOut } from '../../../../shared/actions/loginactions';
 
 const Footer = (props) => {
   return (
@@ -11,10 +12,9 @@ const Footer = (props) => {
           <div id="footer">
             <div>Welcome, {props.userName}</div>
             <div>
-              <button type="button"
+              <button type="submit"
                 onClick={() => {
-                  // Handle signout
-                  // Remember to set preference.synchronize back to -1, projects.synchronize back to 0
+                  props.requestSignOut();
                 }}
               >
                 <FontAwesomeIcon className="btn" icon="sign-out-alt" />
@@ -41,4 +41,4 @@ const mapStateToProps = (reduxState) => ({
   userName: reduxState.auth.userName,
 });
 
-export default connect(mapStateToProps, null)(Footer);
+export default connect(mapStateToProps, { requestSignOut })(Footer);

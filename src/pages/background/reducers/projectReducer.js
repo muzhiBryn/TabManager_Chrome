@@ -55,6 +55,9 @@ export default function projectReducer(state = {}, action) {
     case ActionTypes.LOAD_RESOURCES_FULLFILLED:
       return { ...state, currentProject: action.currentProject, error: '' };
 
+    case ActionTypes.DEAUTH_USER:
+      return { ...state, synchronizing: 0 };
+
     default:
       return state;
   }

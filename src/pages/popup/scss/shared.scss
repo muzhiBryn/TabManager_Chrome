@@ -1,7 +1,18 @@
+@import "./variables.scss";
+
+body{
+  background-color: $base-color-light;
+}
+
+input:focus {
+  border: solid 2px $base-color-darker;
+}
+
 .container{
   padding: 0 5px;
 }
-.submit {
+
+button.submit {
   height:24px;
   border: none;
   text-align: center;
@@ -15,6 +26,13 @@
     text-decoration: none;
     color: black; 
   }
+}
+
+button.primary{
+  background-color: $base-color-darker;
+  color: white;
+  height: auto;
+  border-color: transparent;
 }
 
 .row-container{
@@ -65,7 +83,7 @@
   padding: 0.75rem 1rem;
   justify-content: space-between;
   align-items: baseline;
-  background-color: #AFCFFF;
+  background-color: $base-color;
 
   svg{
     color: #333;
@@ -148,7 +166,7 @@
     height: 1.35rem;
   }
   svg:nth-of-type(2){
-    color: #c5b30c;
+    color: $resource-color;
   }
 }
 
@@ -192,7 +210,7 @@
       right: -10px;
     }
     svg:nth-of-type(2){
-      color: #f5de0c;
+      color: $resource-color;
       right: 5px;
     }
     div:last-of-type{

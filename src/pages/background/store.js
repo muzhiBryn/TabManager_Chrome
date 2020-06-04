@@ -4,8 +4,10 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import throttle from 'lodash.throttle';
 import Values from '../../shared/values';
+import { checkSignStatus } from '../../modules/ajax';
 import tabAliases from './aliases/aliases4tabs';
 import projectAliases from './aliases/aliases4projects';
+import loginAliases from './aliases/aliases4login';
 import {
   loadProjectList, loadPreferences, saveProjectList, savecurrentProject, savePreferences,
 } from './localstorage';
@@ -43,7 +45,7 @@ const store = createStore(
   reducer,
   initialState,
   applyMiddleware(
-    alias({ ...tabAliases, ...projectAliases }),
+    alias({ ...tabAliases, ...projectAliases, ...loginAliases }),
     thunk,
     logger, // NOTE: logger _must_ be last in middleware chain
   ),
@@ -52,6 +54,8 @@ const store = createStore(
 wrapStore(store, {
   portName: 'Tabs Comminication',
 });
+
+checkSignStatus(store.dispatch);
 
 store.subscribe(throttle(() => {
   saveProjectList(store.getState().projects.projectList);

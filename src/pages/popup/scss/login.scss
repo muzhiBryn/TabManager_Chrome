@@ -1,11 +1,101 @@
-#login{
-  position: absolute;
-  width: 80%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+@import './variables.scss';
 
-  input,button{
-    margin-bottom: 1rem;
+#login{
+  .sign-container{
+    position: absolute;
+    width: 65%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1.5rem 2rem;
+  
+    .tabs{
+      position: relative;
+      min-height: 25rem; 
+      clear: both;
+    }
+  
+    input, button{
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      width: 100%;
+      padding: 0.6rem;
+    }
+  
+    #sign-up-page~.content input,
+    #sign-up-page~.content button{
+      line-height: 1.2;
+      margin-bottom: 15px;
+    }
+   
+    .tab {
+      float: left;
+      width: 50%;
+      text-align: center;
+      color: $base-color;
+    }
+    
+    .tab label {
+      padding: 1.5rem 0;
+      color: $base-color-darker;
+      display: inline-block;
+      position: relative;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    
+    .tab [type="radio"] {
+      display: none;
+    }
+    
+    .content {
+      position: absolute;
+      top: calc(6.5rem);
+      left: 0;
+      background: white;
+      right: 0;
+      bottom: 0;
+      padding: 0 1rem;
+      overflow: hidden;
+    }
+    .content > * {
+      opacity: 0;
+      transform: translateX(-100%);
+      transition: all 0.6s ease;
+    }
+    [type="radio"]:checked ~ label {
+      background: white;
+      border-bottom: 2px solid transparentize($base-color, $amount: 0.5);
+      z-index: 2;
+    }
+    
+    [type="radio"]:checked ~ label ~ .content {
+      z-index: 1;
+    }
+    
+    [type="radio"]:checked ~ label ~ .content > * {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes shake {
+    0%   {transform: translate(-2px, 0px);}
+    25%   {transform: translate(2px, 0px);}
+    50%   {transform: translate(0px, 2px);}
+    75%   {transform: translate(0px, -2px);}
+  }
+  
+  .error-msg{
+    text-align: left;
+    color: red;
+    margin: .5rem auto;
+    animation-name: shake;
+    animation-duration: 0.5s;
+    animation-iteration-count: 2;
   }
 }

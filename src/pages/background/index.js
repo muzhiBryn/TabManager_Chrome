@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import axios from 'axios';
 // import throttle from 'lodash.throttle';
 import store from './store';
 import { handleUpdateEvent, chrome } from './chrome';
