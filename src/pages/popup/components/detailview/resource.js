@@ -45,14 +45,14 @@ const Resource = (props) => {
       <li key={tab.url} onClick={() => { props.requestOpenTabs(tab.url, activeProj); }}>
         <div>
           <img alt=" " src={tab.icon} />
-          { tab.title.length > 50 ? `${tab.title.substr(0, 47)}...` : tab.title }
+          <span>{ tab.title.length > 50 ? `${tab.title.substr(0, 47)}...` : tab.title }</span>
           <FontAwesomeIcon
             className="btn"
             icon="chevron-down"
             onClick={(e) => { e.stopPropagation(); props.setDisplay(tab.url); }}
           />
         </div>
-        <div>
+        <div className="tags-container">
           { tab.tags.map((tag) => (
             <button className="tag" type="button" key={tag} onClick={(e) => { e.stopPropagation(); props.setFilterContent(tag); }}>{tag}</button>
           )) }

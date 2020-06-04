@@ -1,4 +1,6 @@
-
+.container{
+  padding: 0 5px;
+}
 .submit {
   border: none;
   text-align: center;
@@ -56,55 +58,25 @@
 
 #header, #footer{
   display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
   padding: 0.75rem 1rem;
   justify-content: space-between;
   align-items: baseline;
   background-color: #AFCFFF;
 }
-
+#header{
+  top: 0px;
+}
 #footer{
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 /* To leave some space for the footer */ 
 #tab-manager, #project-detail {
   padding-bottom: 30px;
-}
-
-#page-manager{
-  display: flex;
-  justify-content: center;
-  z-index: 10;
-  opacity: 0.9;
-
-  div{
-    border: solid 1px #7BDFF2;
-    border-left: none;
-    width: 2rem;
-    height: 2rem;
-    color: #7BDFF2;
-    line-height: 2rem;
-    text-align: center;
-    transition: background-color ease-in 0.2s;
-  }
-
-  div:hover{
-    cursor: pointer;
-    color: white;
-    background-color: transparentize($color: #7BDFF2, $amount: 0.5);
-  }
-
-  div:first-child{
-     border-left: solid 1px #7BDFF2;
-  }
-
-  div.active{
-    color: white;
-    background-color: #7BDFF2;
-  }
 }
 
 #tabtop {
@@ -125,12 +97,16 @@
   color: #888;
 }
 
-#tab-list {
+#tab-list,
+#tab-grid{
   padding: 0;
-  height: 232px;
+  height: 228px;
+  background-color: white;
   overflow-y: scroll;
   user-select: none;
+}
 
+#tab-list {
   li {
     padding: 0.8rem;
   }
@@ -158,12 +134,12 @@
   svg{
     height: 1.35rem;
   }
+  svg:nth-of-type(2){
+    color: #c5b30c;
+  }
 }
 
 #tab-grid {
-  padding: 0;
-  height: 232px;
-  user-select: none;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -203,7 +179,8 @@
       right: -10px;
     }
     svg:nth-of-type(2){
-      right: 0px;
+      color: #e0cb0d;
+      right: 5px;
     }
   }
 }
@@ -212,7 +189,6 @@
 #resource-list {
   padding: 0;
   height: 120px;
-  user-select: none;
   overflow-y: scroll;
 }
 

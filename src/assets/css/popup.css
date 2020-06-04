@@ -4,10 +4,12 @@ html{
 
 body{
   /* color: #f4a261; */
-  width: 480px;
-  height: 520px;
+  width: 490px;
+  height: 480px;
   padding: 0px;
+  padding-top: 40px;
   margin: 0px;
+  background-color: rgba(175, 207, 255, 0.2);
   font-size: 1rem;
   color: #333;
 }
@@ -51,7 +53,7 @@ button, input, select {
   border-radius: calc(5px + 0.5rem);
   box-sizing: border-box;
   font-size: 1rem;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   border: solid 1px #b4b4b4;
 }
 

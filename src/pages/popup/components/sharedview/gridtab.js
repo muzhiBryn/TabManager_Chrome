@@ -16,10 +16,10 @@ const GridTab = (props) => {
     >
       <div className={`${tab.screenshot ? 'screenshot' : 'icon'}-container`}><img alt=" " src={tab.screenshot || tab.icon} /></div>
       <div>{ tab.title.length > 30 ? `${tab.title.substr(0, 27)}...` : tab.title }</div>
+      <CloseTabBtn tab={tab} />
       {editing ? (
         <SaveTabBtn tab={tab} />
       ) : null}
-      <CloseTabBtn tab={tab} />
     </li>
   );
 };

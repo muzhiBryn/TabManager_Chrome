@@ -16,10 +16,10 @@ const ListTab = (props) => {
     >
       <img alt=" " src={tab.icon} />
       <span>{tab.title}</span>
+      <CloseTabBtn tab={tab} />
       {editing ? (
         <SaveTabBtn tab={tab} />
       ) : null}
-      <CloseTabBtn tab={tab} />
     </li>
   );
 };

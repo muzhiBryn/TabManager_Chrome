@@ -68,9 +68,11 @@ class TabManager extends Component {
         <Header />
         <DisplaySetting setFilter={this.setFilter} switchView={this.props.requestSwitchView} />
         <TabView tabs={tabShow} filter={this.state.filter} />
-        <ProjectList projectOverview={projectOverview} />
-        { movingTab ? <MovingTab /> : null }
-        <div className="thin-row-container"><ProjectCreator /></div>
+        <div id="project-view">
+          <ProjectList projectOverview={projectOverview} />
+          { movingTab ? <MovingTab /> : null }
+          <div className="thin-row-container"><ProjectCreator /></div>
+        </div>
         <Footer />
       </div>
     );

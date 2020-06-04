@@ -60,7 +60,7 @@ class ResourceView extends Component {
       resourceList.push(<div key={0} className="row-container">{'The project doesn\'t have any resource or nothing fits the filter.'} </div>);
     }
     return (
-      <div>
+      <div id="resource-view">
         <div className="thin-row-container">
           <div className="input-group">
             <select name="type" value={filter.type} onChange={(e) => { this.setFilterType(e.target.value); }}>

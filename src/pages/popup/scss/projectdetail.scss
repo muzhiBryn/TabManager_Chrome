@@ -1,6 +1,6 @@
 #project-detail{
   #tab-grid, #tab-list {
-    height: 200px;
+    height: 194px;
   }
 
   #project-editor{
@@ -17,6 +17,11 @@
   #tab-list li > span:first-of-type{
     width: calc(480px - 11rem);
   }
+}
+
+#resource-view{
+  padding-top: 6px;
+  background-color: white;
 }
 
 #resource-list{
@@ -36,16 +41,20 @@
   li img{
     width: 1.35rem;
     height: 1.35rem;
-    margin-top: 1px;
     margin-right: 1rem; 
+    transform: translateY(2px);
   }
 
   li .btn{
     float: right;
     height: 1.35rem;
-    padding: 0 0.4rem;
+    padding: 0 0.6rem;
     color: #aaa;
     transition: color ease-in-out 0.2s;
+  }
+
+  .tags-container{
+    margin-left: 28px;
   }
 
   button.tag {
@@ -55,10 +64,6 @@
     line-height: 18px;
     border: solid 1px #ddd;
     border-radius: 5px;
-  }
-
-  button.tag:first-child{
-    margin-left: 28px;
   }
 
   input.tags-input{
@@ -73,8 +78,13 @@
     cursor: default;
   }
 
+  span{
+    position:inline-block;
+  }
+
   .url{
     margin-left: 28px;
+    word-wrap: break-word;
   }
 
   .resource-control{
@@ -82,12 +92,11 @@
     input{
       height: 24px;
       margin-left: 21px;
-      width: 75%;
+      width: calc(100% - 48px);
     }
     button{
-      margin-left: 15%;
       height: 24px;
-      width: 24px;
+      margin-left: 3px;
       background-color: transparent;
       border-style: none;
       text-align: center;
