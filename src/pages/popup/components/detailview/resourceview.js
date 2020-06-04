@@ -52,7 +52,7 @@ class ResourceView extends Component {
           tab={tab}
           displayResource={this.state.displayResource}
           setDisplay={this.setDisplayResource}
-          setFilterContent={(tag) => { if (this.state.filter.type !== '1') this.setFilterType('0'); this.setFilterContent(tag); }}
+          setFilterContent={(tag) => { if (this.state.filter.type !== '0') this.setFilterType('0'); this.setFilterContent(tag); }}
         />
       );
     });

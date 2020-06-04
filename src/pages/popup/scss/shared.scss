@@ -43,6 +43,10 @@
     flex-grow: 0;
   }
 
+  :nth-last-child(2){
+    flex-grow: 1;
+  }
+
   :last-child {
     border-radius: 0 12px 12px 0;
     margin-left: 0;
@@ -132,7 +136,7 @@
   }
 
   li>span:first-of-type {
-    width: calc(480px - 7rem);
+    width: calc(480px - 9.5rem);
     display: inline-block;
     margin-right: 1rem;
     white-space: nowrap;
