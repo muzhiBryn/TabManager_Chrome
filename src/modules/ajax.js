@@ -13,9 +13,45 @@ const serverError = (dispatch, error) => {
   });
 };
 
+export const signInUserApi = (user) => {
+  return new Promise((resolve, reject) => {
+    const fields = {
+      email: user.email, password: user.password,
+    };
+    console.log(fields);
+    axios.post(`${rootUrl}/signin`, fields)
+      .then((response) => {
+        // response.data should have {token}
+        console.log(response.data);
+        resolve(response.data.token);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const signUpUserApi = (user) => {
+  return new Promise((resolve, reject) => {
+    const fields = {
+      email: user.email, password: user.password,
+    };
+    console.log(fields);
+    axios.post(`${rootUrl}/signup`, fields)
+      .then((response) => {
+        console.log(response.data);
+        resolve(response.data.token);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+
 export function loadProjects(dispatch) {
   dispatch(() => {
-    axios.get(`${rootUrl}/projects`).then((response) => {
+    axios.get(`${rootUrl}/projects`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       dispatch({
         type: ActionTypes.LOAD_PROJECTS_FULLFILLED,
         projectList: response.data,
@@ -28,7 +64,7 @@ export function loadProjects(dispatch) {
 
 export function mergeProjects(dispatch, projects, callback) {
   dispatch(() => {
-    axios.put(`${rootUrl}/projects`, projects).then((response) => {
+    axios.put(`${rootUrl}/projects`, projects, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       dispatch({
         type: ActionTypes.MERGE_PROJECTS_FULLFILLED,
         projectList: response.data,
@@ -47,7 +83,7 @@ export function mergeProjects(dispatch, projects, callback) {
 
 export function newProject(dispatch, projectName) {
   dispatch(() => {
-    axios.post(`${rootUrl}/projects`, projectName).then((response) => {
+    axios.post(`${rootUrl}/projects`, projectName, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       dispatch({
         type: ActionTypes.NEW_PROJECT_FULLFILLED,
         projectName,
@@ -60,7 +96,7 @@ export function newProject(dispatch, projectName) {
 
 export function loadProject(dispatch, projectName) {
   dispatch(() => {
-    axios.get(`${rootUrl}/projects/${projectName}`).then((response) => {
+    axios.get(`${rootUrl}/projects/${projectName}`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       dispatch({
         type: ActionTypes.LOAD_RESOURCES_FULLFILLED,
         currentProject: response.data,
@@ -73,7 +109,7 @@ export function loadProject(dispatch, projectName) {
 
 export function deleteProject(dispatch, projectName) {
   dispatch(() => {
-    axios.delete(`${rootUrl}/projects`, projectName).then((response) => {
+    axios.delete(`${rootUrl}/projects`, projectName, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       dispatch({
         type: ActionTypes.DELETE_PROJECT_FULLFILLED,
         projectName,
@@ -89,7 +125,7 @@ export function deleteProject(dispatch, projectName) {
 // Should check the keys in updatedProject
 export function updateProject(dispatch, projectName, updatedProj, callback) {
   dispatch(() => {
-    axios.put(`${rootUrl}/projects/${projectName}`, updatedProj).then((response) => {
+    axios.put(`${rootUrl}/projects/${projectName}`, updatedProj, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       dispatch({
         type: ActionTypes.UPDATE_PROJECT_FULLFILLED,
         activeProj: updatedProj.projectName,
@@ -105,7 +141,7 @@ export function updateProject(dispatch, projectName, updatedProj, callback) {
 
 export function addResources(dispatch, projectName, tabResources) {
   dispatch(() => {
-    axios.put(`${rootUrl}/projects/${projectName}`, { resources: tabResources }).then((response) => {
+    axios.put(`${rootUrl}/projects/${projectName}`, { resources: tabResources }, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       // We want to add the resource to our resources (or maybe update it)
       dispatch({
         type: ActionTypes.ADD_RESOURCES_FULLFILLED,
@@ -119,7 +155,7 @@ export function addResources(dispatch, projectName, tabResources) {
 
 export function deleteResources(dispatch, projectName, urls) {
   dispatch(() => {
-    axios.delete(`${rootUrl}/resources/${projectName}`, urls).then((response) => {
+    axios.delete(`${rootUrl}/resources/${projectName}`, urls, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       // Find the urls in the array tabUrls
       dispatch({
         type: ActionTypes.DELETE_RESOURCES_REQUESTED,
@@ -132,7 +168,7 @@ export function deleteResources(dispatch, projectName, urls) {
 }
 
 export function updateResource(dispatch, updatedResource, projectName) {
-  axios.put(`${rootUrl}/resources/${projectName}/`, updatedResource).then((response) => {
+  axios.put(`${rootUrl}/resources/${projectName}/`, updatedResource, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
     dispatch({
       type: ActionTypes.UPDATE_RESOURCE_FULLFILLED,
       resource: response.data,

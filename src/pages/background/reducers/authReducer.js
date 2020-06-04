@@ -5,7 +5,7 @@ const authReducer = (state = {}, action) => {
     case ActionTypes.AUTH_USER:
       return { authenticated: true, userName: action.userName, error: null };
     case ActionTypes.DEAUTH_USER:
-      return { authenticated: false, error: null };
+      return { authenticated: false, userName: '', error: null };
     case ActionTypes.AUTH_ERROR:
       return { authenticated: false, error: action.message };
     default:

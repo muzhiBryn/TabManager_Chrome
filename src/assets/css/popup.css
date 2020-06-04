@@ -238,3 +238,11 @@ input:checked + .slider:before {
 #moving-tab:hover{
   cursor: grabbing;
 }
+
+.login-input div{
+  padding: 10px;
+}
+
+.login-input button{
+  padding: 10px;
+}

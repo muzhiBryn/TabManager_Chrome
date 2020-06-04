@@ -49,3 +49,11 @@ export function removeProject(projectName) {
 export function savePreferences(preferences) {
   return saveFile('preferences', preferences);
 }
+
+export function saveUserToken(token) {
+  return saveFile('token', token);
+}
+
+export function removeUserToken() {
+  localStorage.removeItem('token');
+}
