@@ -45,7 +45,7 @@ const Resource = (props) => {
       <li key={tab.url} onClick={() => { props.requestOpenTabs(tab.url, activeProj); }}>
         <div>
           <img alt=" " src={tab.icon} />
-          <span>{ tab.title.length > 50 ? `${tab.title.substr(0, 47)}...` : tab.title }</span>
+          <span>{ tab.title.length > 70 ? `${tab.title.substr(0, 67)}...` : tab.title }</span>
           <FontAwesomeIcon
             className="btn"
             icon="chevron-down"

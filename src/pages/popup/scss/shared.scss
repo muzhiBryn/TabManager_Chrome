@@ -2,6 +2,7 @@
   padding: 0 5px;
 }
 .submit {
+  height:24px;
   border: none;
   text-align: center;
   text-decoration: none;
@@ -65,9 +66,21 @@
   justify-content: space-between;
   align-items: baseline;
   background-color: #AFCFFF;
+
+  svg{
+    color: #333;
+    transition: ease-in-out;
+  }
+
+  svg:hover{
+    color: #555;
+  }
 }
 #header{
   top: 0px;
+  svg{
+    font-size: 1.25rem;
+  }
 }
 #footer{
   position: fixed;
@@ -108,7 +121,7 @@
 
 #tab-list {
   li {
-    padding: 0.8rem;
+    padding: 9px;
   }
 
   li>span:first-of-type {
@@ -179,8 +192,11 @@
       right: -10px;
     }
     svg:nth-of-type(2){
-      color: #e0cb0d;
+      color: #f5de0c;
       right: 5px;
+    }
+    div:last-of-type{
+      padding: 5px;
     }
   }
 }

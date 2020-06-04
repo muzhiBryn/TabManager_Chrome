@@ -21,12 +21,13 @@
 
 #resource-view{
   padding-top: 6px;
+  border-radius: 16px 0 0 0;
   background-color: white;
 }
 
 #resource-list{
   li {
-    padding: 0.8rem;
+    padding: 9px;
   }
   
   li>span:first-of-type {
