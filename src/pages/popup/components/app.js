@@ -5,7 +5,7 @@ import {
   faEdit as faEditRegular, faFolder, faTrashAlt,
 } from '@fortawesome/free-regular-svg-icons';
 import {
-  faWindowClose, faPlus, faSave, faChevronDown, faChevronUp, faUser, faSignOutAlt, faHome, faEdit as faEditSolid,
+  faWindowClose, faPlus, faStar, faChevronDown, faChevronUp, faUser, faSignOutAlt, faHome, faEdit as faEditSolid,
 } from '@fortawesome/free-solid-svg-icons';
 import TabManager from './tabmanager';
 import ProjectDetail from './projectdetail';
@@ -16,7 +16,7 @@ import '../scss/shared.scss';
 // FontAwesome notes: https://www.digitalocean.com/community/tutorials/how-to-use-font-awesome-5-with-react
 
 library.add(faEditRegular, faFolder, faTrashAlt);
-library.add(faWindowClose, faPlus, faSave, faChevronDown, faChevronUp, faUser, faSignOutAlt, faHome, faEditSolid);
+library.add(faWindowClose, faPlus, faStar, faChevronDown, faChevronUp, faUser, faSignOutAlt, faHome, faEditSolid);
 
 class App extends Component {
   constructor(props) {

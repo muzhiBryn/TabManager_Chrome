@@ -12,8 +12,8 @@ const Login = (props) => {
     <div>
       <Header />
       <div id="login">
-        <div className="thin-row-container"><input /></div>
-        <div className="thin-row-container"><input /></div>
+        <div className="thin-row-container"><input placeholder="User name" /></div>
+        <div className="thin-row-container"><input placeholder="Password" /></div>
         <div className="thin-row-container">
           <button
             type="button"

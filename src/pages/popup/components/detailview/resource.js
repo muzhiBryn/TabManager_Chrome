@@ -18,20 +18,22 @@ const Resource = (props) => {
             onClick={(e) => { e.stopPropagation(); props.setDisplay(''); }}
           />
         </div>
-        <div> { tab.url } </div>
-        <div className="resource-control"><input type="text"
-          className="tags-input"
-          defaultValue={tab.tags.join(', ')}
-          onBlur={(e) => {
-            const tags = e.target.value.split(',').map((tag) => {
-              return tag.replace(/(^\s*)|(\s*$)/g, '').toLowerCase();
-            }).filter((tag) => {
-              if (tag.length === 0) return false;
-              return true;
-            });
-            if (tags.length > 0 || tab.tags.length !== 0) { props.requestUpdateResource(tab.url, { tags }, activeProj); }
-          }}
-        />
+        <div className="url"> { tab.url } </div>
+        <div className="resource-control">
+          <input type="text"
+            className="tags-input"
+            placeholder="Enter tags for the resource. Split by ','"
+            defaultValue={tab.tags.join(', ')}
+            onBlur={(e) => {
+              const tags = e.target.value.split(',').map((tag) => {
+                return tag.replace(/(^\s*)|(\s*$)/g, '').toLowerCase();
+              }).filter((tag) => {
+                if (tag.length === 0) return false;
+                return true;
+              });
+              if (tags.length > 0 || tab.tags.length !== 0) { props.requestUpdateResource(tab.url, { tags }, activeProj); }
+            }}
+          />
           <button type="button" onClick={() => props.requestDeleteResource([tab.url], activeProj)}>
             <FontAwesomeIcon icon={['far', 'trash-alt']} />
           </button>

@@ -7,7 +7,7 @@ const SaveTabBtn = (props) => {
   return (
     <FontAwesomeIcon
       className="btn"
-      icon="save"
+      icon="star"
       onMouseDown={(e) => { e.stopPropagation(); }}
       onMouseUp={(e) => {
         e.stopPropagation();

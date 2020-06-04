@@ -1,7 +1,7 @@
 #display-setting{
   display: flex;
   justify-content: center;
-  margin: 1rem 0;
+  margin: 0.6rem 0;
 
   /* The switch - the box around the slider */
   .switch {
@@ -82,6 +82,9 @@
   li {
     padding: 0.8rem;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   li>span:first-of-type {

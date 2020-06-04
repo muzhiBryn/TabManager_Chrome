@@ -26,7 +26,10 @@ class ProjectEditor extends Component {
     const { isEditing, updatedProject } = this.state;
     const { projectList, currentProject } = this.props;
     if (isEditing) {
-      if (updatedProject.projectName !== currentProject.projectName && projectList.includes(updatedProject.projectName)) {
+      if (updatedProject.projectName.replace(/(^\s*)|(\s*$)/g, '').length === 0) {
+        console.log('Project Name can not be empty!');
+        return;
+      } else if (updatedProject.projectName !== currentProject.projectName && projectList.includes(updatedProject.projectName)) {
         console.log('exists!');
         // Todo: show the message!
         return;
@@ -74,7 +77,13 @@ class ProjectEditor extends Component {
       return (
         <span>
           <label>Title</label>
-          <input id="projectName-change" type="text" onChange={this.onNameChange} value={this.state.updatedProject.projectName} placeholder="update projectName" />
+          <input
+            id="projectName-change"
+            type="text"
+            onChange={this.onNameChange}
+            value={this.state.updatedProject.projectName}
+            placeholder="update projectName"
+          />
         </span>
       );
     } else {
@@ -92,7 +101,13 @@ class ProjectEditor extends Component {
       return (
         <span>
           <label>Note</label>
-          <input id="note-change" type="text" onChange={this.onNoteChange} placeholder="update note" value={this.state.updatedProject.projectNote} />
+          <input
+            id="note-change"
+            type="text"
+            onChange={this.onNoteChange}
+            placeholder="update note"
+            value={this.state.updatedProject.projectNote}
+          />
           {this.renderEdit()}
         </span>
       );

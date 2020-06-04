@@ -13,6 +13,10 @@
   .note-button{
     border-style: none;
   }
+
+  #tab-list li > span:first-of-type{
+    width: calc(480px - 11rem);
+  }
 }
 
 #resource-list{
@@ -21,7 +25,7 @@
   }
   
   li>span:first-of-type {
-    width: calc(480px - 9rem);
+    width: calc(480px - 10rem);
     display: inline-block;
     margin-right: 1rem;
     white-space: nowrap;
@@ -30,14 +34,15 @@
   }
 
   li img{
-    width: 1rem;
-    height: 1rem;
+    width: 1.35rem;
+    height: 1.35rem;
     margin-top: 1px;
     margin-right: 1rem; 
   }
 
   li .btn{
     float: right;
+    height: 1.35rem;
     padding: 0 0.4rem;
     color: #aaa;
     transition: color ease-in-out 0.2s;
@@ -45,12 +50,15 @@
 
   button.tag {
     height: 20px;
-    margin-right: 5px;
-    margin-top: 5px;
-    line-height: 20px;
+    margin-right: 4px;
+    margin-top: 4px;
+    line-height: 18px;
     border: solid 1px #ddd;
     border-radius: 5px;
-    font-size: 10px;
+  }
+
+  button.tag:first-child{
+    margin-left: 28px;
   }
 
   input.tags-input{
@@ -65,14 +73,21 @@
     cursor: default;
   }
 
+  .url{
+    margin-left: 28px;
+  }
+
   .resource-control{
     width: 100%;
     input{
-      width: 80%;
+      height: 24px;
+      margin-left: 21px;
+      width: 75%;
     }
     button{
-      margin-left: 10%;
-      width: 9%;
+      margin-left: 15%;
+      height: 24px;
+      width: 24px;
       background-color: transparent;
       border-style: none;
       text-align: center;

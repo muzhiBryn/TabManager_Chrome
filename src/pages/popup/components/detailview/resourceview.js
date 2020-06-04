@@ -67,7 +67,7 @@ class ResourceView extends Component {
               <option value="0">tag</option>
               <option value="1">title</option>
             </select>
-            <input type="text" name="content" value={filter.content} onChange={(e) => { this.setFilterContent(e.target.value); }} />
+            <input type="text" name="content" placeholder="Find a resource.." value={filter.content} onChange={(e) => { this.setFilterContent(e.target.value); }} />
             <button type="button"
               onClick={() => { this.props.requestOpenTabs(Object.keys(filteredResources), activeProj); }}
             >Open All
