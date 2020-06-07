@@ -8,6 +8,8 @@ export default function preferenceReducer(state = {}, action) {
       return { ...state, synchronize: action.syn };
     case ActionTypes.DEAUTH_USER:
       return { ...state, synchronize: -1 };
+    case ActionTypes.AUTH_ERROR:
+      return { ...state, synchronize: -1 };
     default:
       return state;
   }

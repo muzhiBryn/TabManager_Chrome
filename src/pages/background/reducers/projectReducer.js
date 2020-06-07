@@ -58,6 +58,9 @@ export default function projectReducer(state = {}, action) {
     case ActionTypes.DEAUTH_USER:
       return { ...state, synchronizing: 0 };
 
+    case ActionTypes.AUTH_ERROR:
+      return { ...state, synchronizing: 0 };
+
     default:
       return state;
   }

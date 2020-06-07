@@ -29,7 +29,7 @@ class TabManager extends Component {
     // }
     const { activeProj } = this.props;
     this.props.requestGetTabs(activeProj);
-    // this.props.requestLoadProjects();
+    this.props.requestLoadProjects();
   }
 
   setFilter(filter) {

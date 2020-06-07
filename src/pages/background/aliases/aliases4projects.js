@@ -1,5 +1,5 @@
 import ActionTypes from '../../../shared/actionTypes';
-import { loadcurrentProject, removeProject } from '../localstorage';
+import { loadcurrentProject, loadProjectList, removeProject } from '../localstorage';
 import * as ajax from '../../../modules/ajax';
 
 // TODO: Methods below should be updated with communication with the server
@@ -9,8 +9,12 @@ const loadProjectsAlias = () => {
     const { authenticated } = getState().auth;
     if (authenticated) {
       ajax.loadProjects(dispatch);
+    } else {
+      dispatch({
+        type: ActionTypes.LOAD_PROJECTS_FULLFILLED,
+        projectList: loadProjectList(),
+      });
     }
-    // else: Use local data
   };
 };
 
@@ -21,8 +25,10 @@ const mergeProjectsAlias = () => {
     const { projectList } = getState().projects;
     const { authenticated } = getState().auth;
     projectList.forEach((projectName) => {
-      projects.push({ projectName, ...loadcurrentProject(projectName) });
+      const { projectNote, resources } = loadcurrentProject(projectName);
+      projects.push({ projectName, projectNote, resources });
     }); // So it would become: projectName, projectNote, resources
+    console.log(projects);
     if (authenticated) {
       ajax.mergeProjects(dispatch, projects, () => {
         dispatch({
@@ -151,7 +157,7 @@ const updateResourceAlia = (req) => {
     const { authenticated } = getState().auth;
     const { url, projectName, updatedResource } = req.payload;
     if (authenticated) {
-      ajax.updateResource({ ...updatedResource, url }, projectName);
+      ajax.updateResource(dispatch, { ...updatedResource, url }, projectName);
     } else {
       const resource = getState().projects.currentProject.resources[url];
       Object.keys(updatedResource).forEach((key) => {
@@ -189,7 +195,7 @@ const loadResourcesAlias = (req) => {
     const projectName = req.payload;
     const { authenticated } = getState().auth;
     if (authenticated) {
-      ajax.loadProject(projectName);
+      ajax.loadProject(dispatch, projectName);
     } else {
       const { projectNote, resources } = loadcurrentProject(projectName);
       dispatch({

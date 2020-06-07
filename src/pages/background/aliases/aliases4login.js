@@ -21,8 +21,8 @@ const signInAlias = (req) => {
         dispatch({ type: ActionTypes.AUTH_USER, userName });
       },
     ).catch((error) => {
-      console.log('bad');
-      dispatch(authError(`Sign In Failed: ${error.response.data}`));
+      // console.log(error.toString());
+      dispatch(authError(`Sign In Failed: ${error}`));
     });
   };
 };
@@ -36,8 +36,8 @@ const signUpAlias = (req) => {
         dispatch({ type: ActionTypes.AUTH_USER, userName });
       },
     ).catch((error) => {
-      console.log('bad');
-      dispatch(authError(`Sign Un Failed: ${error.response.data}`));
+      // console.log(error.toString());
+      dispatch(authError(`Sign Up Failed: ${error}`));
     });
   };
 };
@@ -51,6 +51,11 @@ const signOutAlias = () => {
         type: ActionTypes.DEAUTH_USER,
       });
     }
+    setTimeout(() => {
+      dispatch({
+        type: ActionTypes.LOAD_PROJECTS_REQUESTED,
+      });
+    }, 200);
   };
 };
 

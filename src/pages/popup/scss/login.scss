@@ -29,7 +29,7 @@
     #sign-up-page~.content input,
     #sign-up-page~.content button{
       line-height: 1.2;
-      margin-bottom: 15px;
+      margin-bottom: 8px;
     }
    
     .tab {
@@ -91,7 +91,7 @@
   }
   
   .error-msg{
-    text-align: left;
+    text-align: center;
     color: red;
     margin: .5rem auto;
     animation-name: shake;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { requestSignOut } from '../../../../shared/actions/loginactions';
 
@@ -12,13 +12,13 @@ const Footer = (props) => {
           <div id="footer">
             <div>Welcome, {props.userName}</div>
             <div>
-              <button type="submit"
+              <FontAwesomeIcon className="btn"
                 onClick={() => {
                   props.requestSignOut();
+                  props.history.push('/');
                 }}
-              >
-                <FontAwesomeIcon className="btn" icon="sign-out-alt" />
-              </button>
+                icon="sign-out-alt"
+              />
             </div>
           </div>
         )
@@ -41,4 +41,4 @@ const mapStateToProps = (reduxState) => ({
   userName: reduxState.auth.userName,
 });
 
-export default connect(mapStateToProps, { requestSignOut })(Footer);
+export default withRouter(connect(mapStateToProps, { requestSignOut })(Footer));

@@ -51,7 +51,7 @@ export function savePreferences(preferences) {
 }
 
 export function saveUserToken(token) {
-  return saveFile('token', token);
+  localStorage.setItem('token', token);
 }
 
 export function removeUserToken() {

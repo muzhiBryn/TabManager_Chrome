@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import Header from './sharedview/header';
 import { requestSignIn, requestSignUp } from '../../../shared/actions/loginactions';
 import '../scss/login.scss';
@@ -32,9 +31,9 @@ class Login extends Component {
     this.checkConfPw = this.checkConfPw.bind(this);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { authenticated } = this.props;
-    if (authenticated) {
+    if (authenticated && !prevProps.authenticated) {
       this.props.history.push({ pathname: '/modal:synchronize', state: { modal: true } });
     }
   }
@@ -135,88 +134,83 @@ class Login extends Component {
       userName, email, password, confpw, error,
     } = this.state;
     const { rmError } = this.props;
-    console.log(this.props.authenticated);
-    if (!this.props.authenticated) {
-      const signInBtn = (
-        <button
-          type="button"
-          className="primary"
-          onClick={() => {
-            this.submitSignIn();
-          }}
-        >SignIn
-        </button>
-      );
+    const signInBtn = (
+      <button
+        type="button"
+        className="primary"
+        onClick={() => {
+          this.submitSignIn();
+        }}
+      >SignIn
+      </button>
+    );
 
-      const signUpBtn = (
-        <button
-          type="button"
-          className="primary"
-          onClick={() => {
-            this.submitSignUp();
-          }}
-        >SignUp
-        </button>
-      );
+    const signUpBtn = (
+      <button
+        type="button"
+        className="primary"
+        onClick={() => {
+          this.submitSignUp();
+        }}
+      >SignUp
+      </button>
+    );
 
-      const nameDiv = (
-        <input type="text" placeholder="Name(should contain only charactors)" defaultValue={userName} onBlur={this.checkName} />
-      );
+    const nameDiv = (
+      <input type="text" placeholder="Name(should contain only charactors)" defaultValue={userName} onBlur={this.checkName} />
+    );
 
-      const emailDiv = (
-        <input type="text" placeholder="Email" defaultValue={email} onBlur={this.checkEmail} />
-      );
+    const emailDiv = (
+      <input type="text" placeholder="Email" defaultValue={email} onBlur={this.checkEmail} />
+    );
 
-      const passDiv = (
-        <input type="password" placeholder="Password" defaultValue={password} onBlur={this.checkPassword} />
-      );
+    const passDiv = (
+      <input type="password" placeholder="Password" defaultValue={password} onBlur={this.checkPassword} />
+    );
 
-      const confPwDiv = (
-        <input type="password" placeholder="Comfirmed Password" defaultValue={confpw} onBlur={this.checkConfPw} />
-      );
+    const confPwDiv = (
+      <input type="password" placeholder="Comfirmed Password" defaultValue={confpw} onBlur={this.checkConfPw} />
+    );
 
-      const errorDiv = error || rmError
-        ? (
-          <div className="error-msg">{ error
-        || rmError }
-          </div>
-        ) : null;
+    const errorDiv = error || rmError
+      ? (
+        <div className="error-msg">{ error
+      || rmError }
+        </div>
+      ) : null;
 
-      return (
-        <div id="login">
-          <Header />
-          <div className="sign-container">
-            <div className="tabs">
-              <div className="tab">
-                <input type="radio" id="sign-in-page" name="sign-type" value="0" onChange={this.onTypeChange} defaultChecked />
-                <label htmlFor="sign-in-page">Sign in</label>
-                <div className="content">
-                  {emailDiv}
-                  {passDiv}
-                  {signInBtn}
-                  {errorDiv}
-                </div>
+    return (
+      <div id="login">
+        <Header />
+        <div className="sign-container">
+          <div className="tabs">
+            <div className="tab">
+              <input type="radio" id="sign-in-page" name="sign-type" value="0" onChange={this.onTypeChange} defaultChecked />
+              <label htmlFor="sign-in-page">Sign in</label>
+              <div className="content">
+                {emailDiv}
+                {passDiv}
+                {signInBtn}
+                {errorDiv}
               </div>
+            </div>
 
-              <div className="tab">
-                <input type="radio" id="sign-up-page" name="sign-type" value="1" onChange={this.onTypeChange} />
-                <label htmlFor="sign-up-page">Sign up</label>
-                <div className="content">
-                  {nameDiv}
-                  {emailDiv}
-                  {passDiv}
-                  {confPwDiv}
-                  {signUpBtn}
-                  {errorDiv}
-                </div>
+            <div className="tab">
+              <input type="radio" id="sign-up-page" name="sign-type" value="1" onChange={this.onTypeChange} />
+              <label htmlFor="sign-up-page">Sign up</label>
+              <div className="content">
+                {nameDiv}
+                {emailDiv}
+                {passDiv}
+                {confPwDiv}
+                {signUpBtn}
+                {errorDiv}
               </div>
             </div>
           </div>
         </div>
-      );
-    } else {
-      return <Redirect to="/" />;
-    }
+      </div>
+    );
   }
 }
 

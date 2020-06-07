@@ -178,6 +178,10 @@ button.primary{
   overflow-y: scroll;
   user-select: none;
 
+  .grid-tab.active{
+    background-color: #e7e7e7;
+  }
+  
   .grid-tab{
     width: 96px;
     padding: 0;

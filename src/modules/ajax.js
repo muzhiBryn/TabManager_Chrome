@@ -1,7 +1,7 @@
 import axios from 'axios';
 import ActionTypes from '../shared/actionTypes';
 
-const rootUrl = 'http://localhost:8080';
+const rootUrl = 'http://localhost:9090/api';
 // the next line is where our database will be stored!
 // const rootUrl = 'https://too-many-tabz.herokuapp.com/api';
 
@@ -20,9 +20,10 @@ export function checkSignStatus(dispatch) {
       console.log('Not logged in');
       return;
     }
-    axios.get(`${rootUrl}/signin`, { headers: { authorization: token } }).then((response) => {
+    axios.get(`${rootUrl}/signin`, { headers: { Authorization: `Bearer ${token}` } }).then((response) => {
       dispatch({
         type: ActionTypes.AUTH_USER,
+        userName: response.data.userName,
       });
     }).catch((error) => {
       dispatch({
@@ -38,7 +39,6 @@ export const signInUserApi = (user) => {
     const fields = {
       email: user.email, password: user.password,
     };
-    console.log(fields);
     axios.post(`${rootUrl}/signin`, fields)
       .then((response) => {
         // response.data should have {token, userName}
@@ -72,7 +72,7 @@ export const signUpUserApi = (user) => {
 
 export function loadProjects(dispatch) {
   dispatch(() => {
-    axios.get(`${rootUrl}/projects`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    axios.get(`${rootUrl}/projects`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then((response) => {
       dispatch({
         type: ActionTypes.LOAD_PROJECTS_FULLFILLED,
         projectList: response.data,
@@ -85,7 +85,7 @@ export function loadProjects(dispatch) {
 
 export function mergeProjects(dispatch, projects, callback) {
   dispatch(() => {
-    axios.put(`${rootUrl}/projects`, projects, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    axios.put(`${rootUrl}/projects`, projects, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then((response) => {
       dispatch({
         type: ActionTypes.MERGE_PROJECTS_FULLFILLED,
         projectList: response.data,
@@ -104,7 +104,7 @@ export function mergeProjects(dispatch, projects, callback) {
 
 export function newProject(dispatch, projectName) {
   dispatch(() => {
-    axios.post(`${rootUrl}/projects`, projectName, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    axios.post(`${rootUrl}/projects`, { projectName }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then((response) => {
       dispatch({
         type: ActionTypes.NEW_PROJECT_FULLFILLED,
         projectName,
@@ -117,7 +117,7 @@ export function newProject(dispatch, projectName) {
 
 export function loadProject(dispatch, projectName) {
   dispatch(() => {
-    axios.get(`${rootUrl}/projects/${projectName}`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    axios.get(`${rootUrl}/project/${projectName}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then((response) => {
       dispatch({
         type: ActionTypes.LOAD_RESOURCES_FULLFILLED,
         currentProject: response.data,
@@ -130,7 +130,7 @@ export function loadProject(dispatch, projectName) {
 
 export function deleteProject(dispatch, projectName) {
   dispatch(() => {
-    axios.delete(`${rootUrl}/projects`, projectName, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    axios.delete(`${rootUrl}/project/${projectName}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then((response) => {
       dispatch({
         type: ActionTypes.DELETE_PROJECT_FULLFILLED,
         projectName,
@@ -146,7 +146,7 @@ export function deleteProject(dispatch, projectName) {
 // Should check the keys in updatedProject
 export function updateProject(dispatch, projectName, updatedProj, callback) {
   dispatch(() => {
-    axios.put(`${rootUrl}/projects/${projectName}`, updatedProj, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    axios.put(`${rootUrl}/project/${projectName}`, updatedProj, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then((response) => {
       dispatch({
         type: ActionTypes.UPDATE_PROJECT_FULLFILLED,
         activeProj: updatedProj.projectName,
@@ -162,7 +162,7 @@ export function updateProject(dispatch, projectName, updatedProj, callback) {
 
 export function addResources(dispatch, projectName, tabResources) {
   dispatch(() => {
-    axios.put(`${rootUrl}/projects/${projectName}`, { resources: tabResources }, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    axios.post(`${rootUrl}/resources/${projectName}`, tabResources, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then((response) => {
       // We want to add the resource to our resources (or maybe update it)
       dispatch({
         type: ActionTypes.ADD_RESOURCES_FULLFILLED,
@@ -176,20 +176,23 @@ export function addResources(dispatch, projectName, tabResources) {
 
 export function deleteResources(dispatch, projectName, urls) {
   dispatch(() => {
-    axios.delete(`${rootUrl}/resources/${projectName}`, urls, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    console.log(urls);
+    axios.delete(`${rootUrl}/resources/${projectName}`,
+      { data: urls, headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }) // Super tricky!
+      .then((response) => {
       // Find the urls in the array tabUrls
-      dispatch({
-        type: ActionTypes.DELETE_RESOURCES_REQUESTED,
-        currentProject: response.data,
-      }); // Should return new current project
-    }).catch((error) => {
-      serverError(dispatch, error);
-    });
+        dispatch({
+          type: ActionTypes.DELETE_RESOURCES_FULLFILLED,
+          currentProject: response.data,
+        }); // Should return new current project
+      }).catch((error) => {
+        serverError(dispatch, error);
+      });
   });
 }
 
 export function updateResource(dispatch, updatedResource, projectName) {
-  axios.put(`${rootUrl}/resources/${projectName}/`, updatedResource, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+  axios.put(`${rootUrl}/resources/${projectName}`, updatedResource, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }).then((response) => {
     dispatch({
       type: ActionTypes.UPDATE_RESOURCE_FULLFILLED,
       resource: response.data,
