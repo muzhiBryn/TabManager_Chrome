@@ -31,9 +31,9 @@ class SignIn extends Component {
     this.checkConfPw = this.checkConfPw.bind(this);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { authenticated } = this.props;
-    if (authenticated) {
+    if (authenticated && !prevProps.authenticated) {
       this.props.history.push({ pathname: '/modal:synchronize', state: { modal: true } });
     }
   }
@@ -188,8 +188,6 @@ class SignIn extends Component {
           </div>
         </div>
       );
-    } else {
-      return <Redirect to="/" />;
     }
   }
 }

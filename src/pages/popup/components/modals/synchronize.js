@@ -24,8 +24,6 @@ class Synchronize extends Component {
 
   noSyncrhonizeClick() {
     this.props.switchSynchronize(0);
-    this.props.history.goBack();
-    this.props.history.goBack();
   }
 
   render() {
