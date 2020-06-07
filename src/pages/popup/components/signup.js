@@ -188,6 +188,8 @@ class SignIn extends Component {
           </div>
         </div>
       );
+    } else {
+      return <Redirect to="/" />;
     }
   }
 }

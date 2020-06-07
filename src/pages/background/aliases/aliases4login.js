@@ -17,6 +17,7 @@ const signInAlias = (req) => {
   return (dispatch) => {
     ajax.signInUserApi({ email, password }, req.history).then(
       ({ token, userName }) => {
+        console.log(userName);
         saveUserToken(token);
         dispatch({ type: ActionTypes.AUTH_USER, userName });
       },
