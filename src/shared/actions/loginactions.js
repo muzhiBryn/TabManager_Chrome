@@ -7,6 +7,7 @@ export function requestSignIn({ email, password }, history) {
       email,
       password,
     },
+    history,
   };
 }
 
@@ -18,6 +19,7 @@ export function requestSignUp({ email, password, userName }, history) {
       password,
       userName,
     },
+    history,
   };
 }
 

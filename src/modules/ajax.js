@@ -1,7 +1,7 @@
 import axios from 'axios';
 import ActionTypes from '../shared/actionTypes';
 
-const rootUrl = 'http://localhost:8080';
+const rootUrl = 'http://localhost:8080/api';
 // the next line is where our database will be stored!
 // const rootUrl = 'https://too-many-tabz.herokuapp.com/api';
 
@@ -33,7 +33,7 @@ export function checkSignStatus(dispatch) {
   }); // To check login status at the very beginning
 }
 
-export const signInUserApi = (user) => {
+export const signInUserApi = (user, history) => {
   return new Promise((resolve, reject) => {
     const fields = {
       email: user.email, password: user.password,
@@ -45,6 +45,7 @@ export const signInUserApi = (user) => {
         console.log(response.data);
         const { token, userName } = response.data;
         resolve({ token, userName });
+        history.push('/');
       })
       .catch((error) => {
         reject(error);
@@ -52,7 +53,7 @@ export const signInUserApi = (user) => {
   });
 };
 
-export const signUpUserApi = (user) => {
+export const signUpUserApi = (user, history) => {
   return new Promise((resolve, reject) => {
     const fields = {
       email: user.email, password: user.password, userName: user.userName,
@@ -62,6 +63,7 @@ export const signUpUserApi = (user) => {
       .then((response) => {
         console.log(response.data);
         resolve({ token: response.data.token });
+        history.push('/');
       })
       .catch((error) => {
         reject(error);

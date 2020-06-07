@@ -26,7 +26,7 @@ const Footer = (props) => {
           <div id="footer">
             <div>Login to synchronize your data to cloud</div>
             <div>
-              <Link to="/login">
+              <Link to="/signin">
                 <FontAwesomeIcon className="btn" icon="user" />
               </Link>
             </div>

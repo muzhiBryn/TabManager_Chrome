@@ -9,7 +9,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import TabManager from './tabmanager';
 import ProjectDetail from './projectdetail';
-import Login from './login';
+import SignIn from './signin';
+import SignUp from './signup';
 import Modal from './modal';
 import '../scss/shared.scss';
 
@@ -43,7 +44,8 @@ class App extends Component {
       <div className="container">
         <Switch location={isModal ? this.previousLocation : location}>
           <Route path="/project/:proj" component={ProjectDetail} />
-          <Route path="/login" component={Login} />
+          <Route path="/signin" component={SignIn} />
+          <Route path="/signup" component={SignUp} />
           <Route component={TabManager} />
         </Switch>
         {isModal

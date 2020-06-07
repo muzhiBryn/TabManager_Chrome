@@ -15,7 +15,7 @@ export function authError(error) {
 const signInAlias = (req) => {
   const { email, password } = req.payload;
   return (dispatch) => {
-    ajax.signInUserApi({ email, password }).then(
+    ajax.signInUserApi({ email, password }, req.history).then(
       ({ token, userName }) => {
         saveUserToken(token);
         dispatch({ type: ActionTypes.AUTH_USER, userName });
@@ -29,15 +29,16 @@ const signInAlias = (req) => {
 
 const signUpAlias = (req) => {
   const { email, password, userName } = req.payload;
+  console.log(req);
   return (dispatch) => {
-    ajax.signUpUserApi({ email, password, userName }).then(
+    ajax.signUpUserApi({ email, password, userName }, req.history).then(
       ({ token }) => {
         saveUserToken(token);
         dispatch({ type: ActionTypes.AUTH_USER, userName });
       },
     ).catch((error) => {
       console.log('bad');
-      dispatch(authError(`Sign Un Failed: ${error.response.data}`));
+      dispatch(authError(`Sign Up Failed: ${error.response.data}`));
     });
   };
 };
