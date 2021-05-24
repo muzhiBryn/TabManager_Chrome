@@ -1,9 +1,8 @@
 # 2 Many Tabz
 
-![Team Photo](other_img/2.png)
-[*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
+2 Many Tabs is a chrome extention that helps manage all the tabs in the browser. This chrome extention frees you from looking for a certain tab when there are tons of tabs opened in your browser. You can search, delete, manage the tab you want in a second! Whats's more, you can save those tabs you frequently use into files and go back to them the next time you open a new browser. Your preference never get lost when you close your browser!
 
-TODO: short project description, some sample screenshots or mockups
+Let's have a glympse of how this chrome extention works!
 
 ## Work flow and updates
 5.19 update( A prototype):
@@ -181,7 +180,6 @@ A listener is added to store. If the state of store has been changed, write the 
  * User model?
      * Definitely don't want on front-end, should be able to derive info from computer/browser..
 
-TODO:  descriptions of code organization and tools and libraries used
 
 ## Setup
 Because this is an extension, prior to publication on the Chrome webstore, users need to do a teeny bit of work to view the extension for themselves (as opposed to having an already-hosted web application).
