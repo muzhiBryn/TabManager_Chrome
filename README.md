@@ -25,18 +25,14 @@ In this part, we will explain how did our team split things up and collaborate w
 
 In general, we have three teams each working on a specific task.
 
-### Team 1: UI team
-Members: Katherine Taylor, Yunjin Tong（Jackson Harris）
-
+### Task 1: UI 
 Responsibility: 
 * design popup UI (finished)
 * implement the popup interface
 * cooperate with the other 2 teams.
 
 
-### Team 2: Tab management team
-Members: Yaorui Zhang, Jialing Wu
-
+### Task 2: Tab management
 Responsibility:
 * offer tab management api methods(basically developed from chrome.tabs)
 * interact with all the tab changes in the chrome browser
@@ -50,9 +46,7 @@ Responsibility:
 4. open tab: facilitate the history data to be opened in the chrome browser. In general, The history data are stored in different project folders, each time we want to open one tab, this method can help open the current tab in the chrome browser(this method is for the server team and UI team).
 5. open tabs: this method is also for the server team. This method can opens all the tabs in one project folder(this method is for the server team and UI team).
 
-### Team 3: Server team
-Members: Nathan Albrinck, Jackson Harris
-
+### Task 3: Server
 Responsibility:
 * User Auth
 * Database
